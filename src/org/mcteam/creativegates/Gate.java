@@ -76,9 +76,11 @@ public class Gate {
 		for (Block currentBlock : contentBlocks) {
 			for (BlockFace face : expandFaces) {
 				Block potentialBlock = currentBlock.getFace(face);
-				if ( ! contentBlocks.contains(potentialBlock) && potentialBlock != sourceBlock) {
+				if ( ! contentBlocks.contains(potentialBlock)) {
 					frameBlocks.add(potentialBlock);
-					frameMaterialIds.add(potentialBlock.getTypeId());
+					if (potentialBlock != sourceBlock) {
+						frameMaterialIds.add(potentialBlock.getTypeId());
+					}
 				}
 			}
 		}
