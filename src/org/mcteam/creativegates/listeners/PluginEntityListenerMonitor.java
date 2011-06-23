@@ -14,6 +14,8 @@ public class PluginEntityListenerMonitor extends EntityListener {
 	}
 	
 	// Destroy the gate if the frame breaks
+	// This was a little bit tricky to find out.
+	// When blocks are destroyed by TNT they do NOT trigger the block break event.
 	@Override
 	public void onEntityExplode(EntityExplodeEvent event) {
 		if (event.isCancelled()) {

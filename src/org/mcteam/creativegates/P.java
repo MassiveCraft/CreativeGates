@@ -40,6 +40,9 @@ public class P extends JavaPlugin {
 	public P() {
 		p = this;
 		
+		// As you can see I use a custom comparator here.
+		// I sort on the gate location.
+		// This is used to find the target gate. Which other gate a gate is linked to. 
 		this.gates = new TreeSet<Gate>(new Comparator<Gate>() {
 			@Override
 			public int compare(Gate me, Gate you) {
@@ -76,6 +79,7 @@ public class P extends JavaPlugin {
 		
 		pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListenerMonitor, Event.Priority.High, this);
 		
+		log("I was enabled (:");
 	}
 	
 	public void onDisable() {

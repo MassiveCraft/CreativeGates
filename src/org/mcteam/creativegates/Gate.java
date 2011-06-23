@@ -10,13 +10,12 @@ import org.bukkit.entity.Player;
 import org.mcteam.creativegates.util.BlockUtil;
 import org.mcteam.creativegates.util.TextUtil;
 
-
 public class Gate {
 	public Set<WorldCoord> contentCoords = new HashSet<WorldCoord>();
 	public Set<WorldCoord> frameCoords = new HashSet<WorldCoord>();
 	public WorldCoord sourceCoord;
 	public Set<Integer> frameMaterialIds = new TreeSet<Integer>();
-	public boolean frameDirIsNS; // false means WE direction. True means NS direction.
+	public boolean frameDirIsNS; // True means NS direction. false means WE direction.
 	
 	private static final Set<BlockFace> expandFacesWE = new HashSet<BlockFace>();
 	private static final Set<BlockFace> expandFacesNS = new HashSet<BlockFace>();
@@ -128,7 +127,7 @@ public class Gate {
 	public ArrayList<Gate> getNetworkGatePath() {
 		ArrayList<Gate> networkGatePath = new ArrayList<Gate>();
 		
-		// As P.p.gates is a TreeSet it is always sorted the same way (after location).
+		// As P.p.gates is a TreeSet it is always sorted the same way (after gate source location).
 		for (Gate gate : P.p.gates) {
 			if (this.frameMaterialIds.equals(gate.frameMaterialIds)) {
 				networkGatePath.add(gate);
@@ -182,6 +181,7 @@ public class Gate {
 			secondChoice.setYaw(270);
 		}
 		
+		// We want to stand in the middle of the block. Not in the corner.
 		firstChoice.add(0.5, 0, 0.5);
 		secondChoice.add(0.5, 0, 0.5);
 		

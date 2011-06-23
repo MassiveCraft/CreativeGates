@@ -33,7 +33,7 @@ public class PluginBlockListener extends BlockListener {
 		}
 	}
 	
-	// The gate content is in invulnerable
+	// The gate content is invulnerable
 	@Override
 	public void onBlockPlace(BlockPlaceEvent event) {
 		if (event.isCancelled()) {
