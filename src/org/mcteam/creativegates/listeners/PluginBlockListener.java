@@ -1,11 +1,13 @@
 package org.mcteam.creativegates.listeners;
 
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.mcteam.creativegates.Gate;
 import org.mcteam.creativegates.P;
+import org.mcteam.creativegates.Permission;
 
 
 public class PluginBlockListener extends BlockListener {
@@ -42,6 +44,24 @@ public class PluginBlockListener extends BlockListener {
 		
 		Gate gate = p.getGateFromContentBlock(event.getBlock()); 
 		if (gate != null) {
+			event.setCancelled(true);
+		}
+	}
+	
+	// Is the player allowed to destroy gates?
+	@Override
+	public void onBlockBreak(BlockBreakEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+		
+		Gate gate = p.getGateFromFrameBlock(event.getBlock());
+		if (gate == null) {
+			return;
+		}
+		
+		// A player is attempting to destroy a gate. Can he?
+		if ( ! Permission.DESTROY.test(event.getPlayer())) {
 			event.setCancelled(true);
 		}
 	}

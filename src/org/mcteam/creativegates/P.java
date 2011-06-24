@@ -5,15 +5,18 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcteam.creativegates.listeners.*;
 import org.mcteam.creativegates.util.DiscUtil;
 import org.mcteam.creativegates.util.TextUtil;
+
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 
 public class P extends JavaPlugin {
@@ -30,12 +33,10 @@ public class P extends JavaPlugin {
 	public PluginPlayerListener playerListener;
 	public PluginBlockListener blockListener;
 	public PluginBlockListenerMonitor blockListenerMonitor;
-	public PluginEntityListenerMonitor entityListenerMonitor;
+	public PluginEntityListener entityListener;
 	
-	// Some static config
-	public static ChatColor colorDefault = ChatColor.AQUA;
-	public static ChatColor colorHighlight = ChatColor.GREEN;
-	
+	// Permission handler
+	public static PermissionHandler permissionHandler;
 	
 	public P() {
 		p = this;
@@ -53,10 +54,11 @@ public class P extends JavaPlugin {
 		this.playerListener = new PluginPlayerListener(this);
 		this.blockListener = new PluginBlockListener(this);
 		this.blockListenerMonitor = new PluginBlockListenerMonitor(this);
-		this.entityListenerMonitor = new PluginEntityListenerMonitor(this);
+		this.entityListener = new PluginEntityListener(this);
 	}
 
 	public void onEnable() {
+		log("===== ENABLE START");
 		// Ensure the data folder exists!
 		this.getDataFolder().mkdirs();
 		
@@ -64,6 +66,7 @@ public class P extends JavaPlugin {
 		this.file = new File(this.getDataFolder(), "gates.txt");
 		
 		// Load gates from disc
+		Conf.load();
 		this.load();
 		
 		// Register events
@@ -75,17 +78,41 @@ public class P extends JavaPlugin {
 		
 		pm.registerEvent(Event.Type.BLOCK_FROMTO, this.blockListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.BLOCK_PLACE, this.blockListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.BLOCK_BREAK, this.blockListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this.blockListenerMonitor, Event.Priority.Monitor, this);
 		
-		pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListenerMonitor, Event.Priority.High, this);
+		pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Normal, this);
 		
-		log("I was enabled (:");
+		// Setup Permissions
+		setupPermissions();
+		
+		log("===== ENABLE END");
 	}
 	
 	public void onDisable() {
 		for (Gate gate : gates) {
 			gate.empty();
 		}
+	}
+	
+	// -------------------------------------------- //
+	// Permissions integration
+	// -------------------------------------------- //
+	
+	private void setupPermissions() {
+		if (permissionHandler != null) {
+			return;
+		}
+		
+		Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
+		
+		if (permissionsPlugin == null) {
+			log("Permission system not detected, defaulting to OP");
+			return;
+		}
+		
+		permissionHandler = ((Permissions) permissionsPlugin).getHandler();
+		log("Found and will use plugin "+((Permissions)permissionsPlugin).getDescription().getFullName());
 	}
 	
 	// -------------------------------------------- //
@@ -140,7 +167,7 @@ public class P extends JavaPlugin {
 		if (gate != null) {
 			gate.informPlayer(player);
 		} else {
-			player.sendMessage(P.colorDefault+"There is no frame...");
+			player.sendMessage(Conf.colorDefault+"There is no frame...");
 		}
 		
 		return gate;

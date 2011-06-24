@@ -10,8 +10,10 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.mcteam.creativegates.Conf;
 import org.mcteam.creativegates.Gate;
 import org.mcteam.creativegates.P;
+import org.mcteam.creativegates.Permission;
 import org.mcteam.creativegates.WorldCoord;
 
 
@@ -67,11 +69,11 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		// We are only interested in left clicks with a watch
+		// We are only interested in left clicks with a wand
 		if
 		(
 			event.getAction() != Action.LEFT_CLICK_BLOCK ||
-			event.getPlayer().getItemInHand().getType() != Material.WATCH
+			event.getPlayer().getItemInHand().getType() != Conf.wand
 		)
 		{
 			return;
@@ -89,8 +91,11 @@ public class PluginPlayerListener extends PlayerListener {
 		}
 		
 		// Did we hit a diamond block?
-		if (clickedBlock.getType() == Material.DIAMOND_BLOCK) {
-			p.open(new WorldCoord(clickedBlock), player);
+		if (clickedBlock.getType() == Conf.block) {
+			// create a gate if the player has the permission
+			if (Permission.CREATE.test(player)) {
+				p.open(new WorldCoord(clickedBlock), player);
+			}
 		}
 	}
 	

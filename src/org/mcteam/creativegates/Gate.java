@@ -36,8 +36,8 @@ public class Gate {
 		this.sourceCoord = sourceCoord;
 		Block sourceBlock = sourceCoord.getBlock();
 		
-		if (sourceBlock.getType() != Material.DIAMOND_BLOCK) {
-			throw new Exception("The source block must be made of diamond."); 
+		if (sourceBlock.getType() != Conf.block) {
+			throw new Exception("The source block must be made of "+TextUtil.getMaterialName(Conf.block)+"."); 
 		}
 		
 		if (P.p.getGateFromFrameBlock(sourceBlock) != null) {
@@ -204,20 +204,20 @@ public class Gate {
 	//----------------------------------------------//
 	
 	public String getInfoMsgMaterial() {
-		String ret = P.colorDefault + "Materials: ";
+		String ret = Conf.colorDefault + "Materials: ";
 		
 		ArrayList<String> materialNames = new ArrayList<String>();
 		for (Integer frameMaterialId : this.frameMaterialIds) {
-			materialNames.add(P.colorHighlight + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
+			materialNames.add(Conf.colorHighlight + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
 		}
 		
-		ret += TextUtil.implode(materialNames, P.colorDefault + ", ");
+		ret += TextUtil.implode(materialNames, Conf.colorDefault + ", ");
 		
 		return ret;
 	}
 	
 	public String getInfoMsgNetwork() {
-		return P.colorDefault + "Gates: " + P.colorHighlight + this.getNetworkGatePath().size();
+		return Conf.colorDefault + "Gates: " + Conf.colorHighlight + this.getNetworkGatePath().size();
 	}
 	
 	public void informPlayer(Player player) {
