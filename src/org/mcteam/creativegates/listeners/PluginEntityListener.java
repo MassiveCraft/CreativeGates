@@ -3,6 +3,7 @@ package org.mcteam.creativegates.listeners;
 import org.bukkit.block.Block;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
+import org.mcteam.creativegates.Gates;
 import org.mcteam.creativegates.P;
 
 public class PluginEntityListener extends EntityListener {
@@ -20,7 +21,7 @@ public class PluginEntityListener extends EntityListener {
 		}
 		
 		for (Block block : event.blockList()) {
-			if (p.getGateFromBlock(block) != null) {
+			if (Gates.findFrom(block) != null) {
 				event.setCancelled(true);
 				return;
 			}

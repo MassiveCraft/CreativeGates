@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.mcteam.creativegates.Conf;
 import org.mcteam.creativegates.Gate;
+import org.mcteam.creativegates.Gates;
 import org.mcteam.creativegates.P;
 import org.mcteam.creativegates.Permission;
 import org.mcteam.creativegates.WorldCoord;
@@ -39,7 +40,7 @@ public class PluginPlayerListener extends PlayerListener {
 		}
 		
 		// Find the gate if there is one
-		Gate gateFrom = p.getGateFromContentBlock(blockToTest);
+		Gate gateFrom = Gates.findFromContent(blockToTest);
 		if (gateFrom == null) {
 			return;
 		}
@@ -84,7 +85,7 @@ public class PluginPlayerListener extends PlayerListener {
 		
 		// Did we hit an existing gate?
 		// In such case send information.
-		Gate gate = p.getGateFromBlock(clickedBlock);
+		Gate gate = Gates.findFrom(clickedBlock);
 		if (gate != null) {
 			gate.informPlayer(player);
 			return;
@@ -94,7 +95,7 @@ public class PluginPlayerListener extends PlayerListener {
 		if (clickedBlock.getType() == Conf.block) {
 			// create a gate if the player has the permission
 			if (Permission.CREATE.test(player)) {
-				p.open(new WorldCoord(clickedBlock), player);
+				Gates.open(new WorldCoord(clickedBlock), player);
 			}
 		}
 	}
@@ -105,7 +106,7 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		if ( p.getGateFromContentBlock(event.getBlockClicked()) != null	) {
+		if ( Gates.findFromContent(event.getBlockClicked()) != null	) {
 			event.setCancelled(true);
 		}
 	}
@@ -116,7 +117,7 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		if ( p.getGateFromContentBlock(event.getBlockClicked().getFace(event.getBlockFace())) != null ) {
+		if ( Gates.findFromContent(event.getBlockClicked().getFace(event.getBlockFace())) != null ) {
 			event.setCancelled(true);
 		}
 	}

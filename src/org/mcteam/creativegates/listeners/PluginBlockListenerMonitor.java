@@ -3,6 +3,7 @@ package org.mcteam.creativegates.listeners;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 import org.mcteam.creativegates.Gate;
+import org.mcteam.creativegates.Gates;
 import org.mcteam.creativegates.P;
 
 
@@ -19,9 +20,9 @@ public class PluginBlockListenerMonitor extends BlockListener {
 			return;
 		}
 		
-		Gate gate = p.getGateFromFrameBlock(event.getBlock());
+		Gate gate = Gates.findFromFrame(event.getBlock());
 		if (gate != null) {
-			p.close(gate);
+			Gates.close(gate);
 		}
 	}
 }

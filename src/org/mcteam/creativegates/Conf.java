@@ -1,9 +1,7 @@
 package org.mcteam.creativegates;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,38 +33,35 @@ public class Conf {
 			save();
 			return true;
 		}
+		
 		P.log("Loading "+fileName+" ...");
-		try {
-			ArrayList<String> lines = DiscUtil.readLines(file);
-			for (String line : lines) {
-				String[] parts = line.trim().split("[\\s\\:]+");
-				String key = parts[0];
-				String val = parts[1];
-				if (key.equalsIgnoreCase("wand")) {
-					wand = Material.getMaterial(Integer.parseInt(val));
-					P.log("Wand: "+TextUtil.getMaterialName(wand));
-				} else if (key.equalsIgnoreCase("block")) {
-					block = Material.getMaterial(Integer.parseInt(val));
-					P.log("Block: "+TextUtil.getMaterialName(block));
-				}
-			}
-			return true;
-		} catch (IOException e) {
-			P.log(Level.WARNING, "Could not load "+fileName+". Please check your file permissions. The default config will be used.");
+		
+		ArrayList<String> lines = DiscUtil.readLinesCatch(file);
+		if (lines == null) {
 			return false;
 		}
+		
+		for (String line : lines) {
+			String[] parts = line.trim().split("[\\s\\:]+");
+			String key = parts[0];
+			String val = parts[1];
+			if (key.equalsIgnoreCase("wand")) {
+				wand = Material.getMaterial(Integer.parseInt(val));
+				P.log("Wand: "+TextUtil.getMaterialName(wand));
+			} else if (key.equalsIgnoreCase("block")) {
+				block = Material.getMaterial(Integer.parseInt(val));
+				P.log("Block: "+TextUtil.getMaterialName(block));
+			}
+		}
+		return true;
 	}
 	
 	public static boolean save() {
+		P.log("Creating default "+fileName);
+		
 		String content = "wand: "+wand.getId()+"\n"+"block: "+block.getId();
-		try {
-			DiscUtil.write(file, content);
-			P.log("Creating default "+fileName);
-			return true;
-		} catch (IOException e) {
-			P.log(Level.WARNING, "Could not create default "+fileName+". Please check your file permissions.");
-			return false;
-		}
+		
+		return DiscUtil.writeCatch(file, content);
 	}
 	
 	

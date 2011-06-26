@@ -1,28 +1,37 @@
 package org.mcteam.creativegates.util;
 
 import java.io.File;
+import java.util.logging.Level;
 
 import org.bukkit.World.Environment;
 import org.mcteam.creativegates.P;
+import org.mcteam.creativegates.WorldEnv;
 
 public class WorldUtil {
 	public static boolean load(String name) {
-		if (P.p.getServer().getWorld(name) != null) {
+		if (isWorldLoaded(name)) {
 			return true;
 		}
 		
-		if ( ! doesExist(name)) {
+		if ( ! doesWorldExist(name)) {
 			return false;
 		}
 		
-		P.p.getServer().createWorld(name, Environment.NORMAL);
+		Environment env = WorldEnv.get(name);
+		if (env == null) {
+			P.log(Level.WARNING, "Failed to load world. Environment was unknown.");
+			return false;
+		}
+		
+		P.p.getServer().createWorld(name, env);
 		return true;
 	}
 	
-	public static boolean doesExist(String name) {
-		File baseFolder = new File(".");
-		File worldFolder = new File(baseFolder, name);
-		File datFile = new File(worldFolder, "level.dat");
-		return datFile.exists();
+	public static boolean isWorldLoaded(String name) {
+		return P.p.getServer().getWorld(name) != null;
+	}
+	
+	public static boolean doesWorldExist(String name) {
+		return new File(name, "level.dat").exists();
 	}
 }

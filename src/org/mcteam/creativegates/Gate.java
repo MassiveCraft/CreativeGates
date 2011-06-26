@@ -40,7 +40,7 @@ public class Gate {
 			throw new Exception("The source block must be made of "+TextUtil.getMaterialName(Conf.block)+"."); 
 		}
 		
-		if (P.p.getGateFromFrameBlock(sourceBlock) != null) {
+		if (Gates.findFromFrame(sourceBlock) != null) {
 			throw new Exception("The gate is already opened."); 
 		}
 		
@@ -94,13 +94,16 @@ public class Gate {
 		}
 		
 		// We add the gate to the list
-		P.p.gates.add(this);
+		Gates.gates.add(this);
 		
 		// Finally we set the content blocks material to water
 		this.fill();
 		
+		// Store the world environment
+		WorldEnv.set(sourceBlock.getWorld());
+		
 		// Save
-		P.p.save();
+		Gates.save();
 	}
 	
 	//----------------------------------------------//
@@ -130,7 +133,7 @@ public class Gate {
 		ArrayList<Gate> networkGatePath = new ArrayList<Gate>();
 		
 		// As P.p.gates is a TreeSet it is always sorted the same way (after gate source location).
-		for (Gate gate : P.p.gates) {
+		for (Gate gate : Gates.gates) {
 			if (this.frameMaterialIds.equals(gate.frameMaterialIds)) {
 				networkGatePath.add(gate);
 			}

@@ -6,6 +6,7 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.mcteam.creativegates.Gate;
+import org.mcteam.creativegates.Gates;
 import org.mcteam.creativegates.P;
 import org.mcteam.creativegates.Permission;
 
@@ -30,7 +31,7 @@ public class PluginBlockListener extends BlockListener {
 			return;
 		}
 		
-		if (p.getGateFromContentBlock(blockFrom) != null) {
+		if (Gates.findFromContent(blockFrom) != null) {
 			event.setCancelled(true);
 		}
 	}
@@ -42,7 +43,7 @@ public class PluginBlockListener extends BlockListener {
 			return;
 		}
 		
-		Gate gate = p.getGateFromContentBlock(event.getBlock()); 
+		Gate gate = Gates.findFromContent(event.getBlock()); 
 		if (gate != null) {
 			event.setCancelled(true);
 		}
@@ -55,7 +56,7 @@ public class PluginBlockListener extends BlockListener {
 			return;
 		}
 		
-		Gate gate = p.getGateFromFrameBlock(event.getBlock());
+		Gate gate = Gates.findFromFrame(event.getBlock());
 		if (gate == null) {
 			return;
 		}
