@@ -2,6 +2,7 @@ package org.mcteam.creativegates;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.mcteam.creativegates.util.WorldUtil;
 
 
 public class WorldCoord {
@@ -62,6 +63,9 @@ public class WorldCoord {
 	}
 	
 	public Block getBlock() {
+		if ( ! WorldUtil.load(worldName)) {
+			return null;
+		}
 		return P.p.getServer().getWorld(worldName).getBlockAt(x, y, z);
 	}
 	
