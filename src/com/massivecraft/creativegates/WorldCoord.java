@@ -1,8 +1,9 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.mcteam.creativegates.util.WorldUtil;
+
+import com.massivecraft.creativegates.util.WorldUtil;
 
 
 public class WorldCoord {

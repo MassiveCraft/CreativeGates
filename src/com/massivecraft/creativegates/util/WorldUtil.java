@@ -1,11 +1,12 @@
-package org.mcteam.creativegates.util;
+package com.massivecraft.creativegates.util;
 
 import java.io.File;
 import java.util.logging.Level;
 
 import org.bukkit.World.Environment;
-import org.mcteam.creativegates.P;
-import org.mcteam.creativegates.WorldEnv;
+
+import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.WorldEnv;
 
 public class WorldUtil {
 	public static boolean load(String name) {

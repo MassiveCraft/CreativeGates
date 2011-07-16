@@ -1,4 +1,4 @@
-package org.mcteam.creativegates.util;
+package com.massivecraft.creativegates.util;
 import java.util.*;
 
 import org.bukkit.Material;

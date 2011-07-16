@@ -1,12 +1,13 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.mcteam.creativegates.util.DiscUtil;
-import org.mcteam.creativegates.util.TextUtil;
+
+import com.massivecraft.creativegates.util.DiscUtil;
+import com.massivecraft.creativegates.util.TextUtil;
 
 public class Conf {
 	// Change-able: False

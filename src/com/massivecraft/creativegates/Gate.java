@@ -1,4 +1,4 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import java.util.*;
 
@@ -7,8 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.mcteam.creativegates.util.BlockUtil;
-import org.mcteam.creativegates.util.TextUtil;
+
+import com.massivecraft.creativegates.util.BlockUtil;
+import com.massivecraft.creativegates.util.TextUtil;
 
 public class Gate {
 	public Set<WorldCoord> contentCoords = new HashSet<WorldCoord>();

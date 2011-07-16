@@ -1,4 +1,4 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import org.bukkit.entity.Player;
 

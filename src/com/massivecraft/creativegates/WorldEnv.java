@@ -1,12 +1,13 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import java.io.File;
 import java.util.*;
 
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.mcteam.creativegates.util.DiscUtil;
-import org.mcteam.creativegates.util.TextUtil;
+
+import com.massivecraft.creativegates.util.DiscUtil;
+import com.massivecraft.creativegates.util.TextUtil;
 
 // This is a big pice of ugly crap to logg and remember the world environments.
 // I hope bukkit will fix this soon.

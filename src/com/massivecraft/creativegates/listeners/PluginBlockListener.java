@@ -1,14 +1,15 @@
-package org.mcteam.creativegates.listeners;
+package com.massivecraft.creativegates.listeners;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.mcteam.creativegates.Gate;
-import org.mcteam.creativegates.Gates;
-import org.mcteam.creativegates.P;
-import org.mcteam.creativegates.Permission;
+
+import com.massivecraft.creativegates.Gate;
+import com.massivecraft.creativegates.Gates;
+import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.Permission;
 
 
 public class PluginBlockListener extends BlockListener {

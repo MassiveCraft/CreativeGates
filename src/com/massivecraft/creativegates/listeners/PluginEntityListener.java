@@ -1,10 +1,11 @@
-package org.mcteam.creativegates.listeners;
+package com.massivecraft.creativegates.listeners;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
-import org.mcteam.creativegates.Gates;
-import org.mcteam.creativegates.P;
+
+import com.massivecraft.creativegates.Gates;
+import com.massivecraft.creativegates.P;
 
 public class PluginEntityListener extends EntityListener {
 	P p;

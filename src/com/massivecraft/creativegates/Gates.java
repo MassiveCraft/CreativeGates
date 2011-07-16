@@ -1,4 +1,4 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,8 +7,9 @@ import java.util.TreeSet;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.mcteam.creativegates.util.DiscUtil;
-import org.mcteam.creativegates.util.TextUtil;
+
+import com.massivecraft.creativegates.util.DiscUtil;
+import com.massivecraft.creativegates.util.TextUtil;
 
 public class Gates {
 	// The file to which we persist the gates.

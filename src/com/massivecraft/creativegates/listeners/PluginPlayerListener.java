@@ -1,4 +1,4 @@
-package org.mcteam.creativegates.listeners;
+package com.massivecraft.creativegates.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,12 +10,13 @@ import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.mcteam.creativegates.Conf;
-import org.mcteam.creativegates.Gate;
-import org.mcteam.creativegates.Gates;
-import org.mcteam.creativegates.P;
-import org.mcteam.creativegates.Permission;
-import org.mcteam.creativegates.WorldCoord;
+
+import com.massivecraft.creativegates.Conf;
+import com.massivecraft.creativegates.Gate;
+import com.massivecraft.creativegates.Gates;
+import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.Permission;
+import com.massivecraft.creativegates.WorldCoord;
 
 
 

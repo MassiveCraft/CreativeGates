@@ -1,10 +1,10 @@
-package org.mcteam.creativegates.util;
+package com.massivecraft.creativegates.util;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-import org.mcteam.creativegates.P;
+import com.massivecraft.creativegates.P;
 
 /**
  * Harddisc related methods such as read and write.

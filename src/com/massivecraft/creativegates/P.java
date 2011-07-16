@@ -1,4 +1,4 @@
-package org.mcteam.creativegates;
+package com.massivecraft.creativegates;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,8 +7,8 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcteam.creativegates.listeners.*;
 
+import com.massivecraft.creativegates.listeners.*;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
