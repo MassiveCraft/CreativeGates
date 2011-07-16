@@ -41,6 +41,7 @@ public class BlockUtil {
 		standableMaterials.add(Material.WATER);
 		//standableMaterials.add(Material.WOOD_DOOR); //???
 		standableMaterials.add(Material.YELLOW_FLOWER); //???
+		standableMaterials.add(Material.SNOW); //???
 		}
 	
 	public static boolean isMaterialStandable(Material material) {

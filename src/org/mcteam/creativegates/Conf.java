@@ -16,6 +16,7 @@ public class Conf {
 	// Change-able: True
 	public static Material wand = Material.WATCH;
 	public static Material block = Material.DIAMOND_BLOCK;
+	public static int maxarea = 200;
 	
 	// Info
 	public static String fileName = "conf.txt";
@@ -51,7 +52,10 @@ public class Conf {
 			} else if (key.equalsIgnoreCase("block")) {
 				block = Material.getMaterial(Integer.parseInt(val));
 				P.log("Block: "+TextUtil.getMaterialName(block));
-			}
+			} else if (key.equalsIgnoreCase("maxarea")) {
+				maxarea = Integer.parseInt(val);
+				P.log("Max Area: "+maxarea);
+			} 
 		}
 		return true;
 	}
@@ -59,7 +63,7 @@ public class Conf {
 	public static boolean save() {
 		P.log("Creating default "+fileName);
 		
-		String content = "wand: "+wand.getId()+"\n"+"block: "+block.getId();
+		String content = "wand: "+wand.getId()+"\n"+"block: "+block.getId()+"\n"+"maxarea: "+maxarea;
 		
 		return DiscUtil.writeCatch(file, content);
 	}

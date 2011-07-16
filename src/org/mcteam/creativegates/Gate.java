@@ -254,7 +254,7 @@ public class Gate {
 			return null;
 		}
 		
-		if  (foundBlocks.size() > 200) {
+		if  (foundBlocks.size() > Conf.maxarea) {
 			return null;
 		}
 		
