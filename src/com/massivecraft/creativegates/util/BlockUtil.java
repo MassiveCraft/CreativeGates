@@ -49,7 +49,7 @@ public class BlockUtil {
 	}
 	
 	public static boolean canPlayerStandInBlock(Block block) {
-		return isMaterialStandable(block.getType()) && isMaterialStandable(block.getFace(BlockFace.UP).getType());
+		return isMaterialStandable(block.getType()) && isMaterialStandable(block.getRelative(BlockFace.UP).getType());
 	}
 
 }

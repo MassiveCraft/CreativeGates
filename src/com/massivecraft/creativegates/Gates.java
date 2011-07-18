@@ -86,10 +86,10 @@ public class Gates {
 		try {
 			return new Gate(sourceCoord);
 		} catch (Exception e) {
-			e.printStackTrace();
+			return null;
+			//e.printStackTrace();
+			// TODO improve error handling
 		}
-		
-		return null;
 	}
 	
 	public static Gate open(WorldCoord sourceCoord, Player player) {

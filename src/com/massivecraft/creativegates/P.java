@@ -4,13 +4,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.massivecraft.creativegates.listeners.*;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 
 
 public class P extends JavaPlugin {
@@ -22,9 +19,6 @@ public class P extends JavaPlugin {
 	public PluginBlockListener blockListener;
 	public PluginBlockListenerMonitor blockListenerMonitor;
 	public PluginEntityListener entityListener;
-	
-	// Permission handler
-	public static PermissionHandler permissionHandler;
 	
 	public P() {
 		p = this;
@@ -53,14 +47,12 @@ public class P extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_MOVE, this.playerListener, Event.Priority.Monitor, this);
 		
 		pm.registerEvent(Event.Type.BLOCK_FROMTO, this.blockListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.BLOCK_PISTON_EXTEND, this.blockListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.BLOCK_PLACE, this.blockListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this.blockListener, Event.Priority.Normal, this);
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this.blockListenerMonitor, Event.Priority.Monitor, this);
 		
 		pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Normal, this);
-		
-		// Setup Permissions
-		setupPermissions();
 		
 		log("===== ENABLE END");
 	}
@@ -69,26 +61,6 @@ public class P extends JavaPlugin {
 		for (Gate gate : Gates.gates) {
 			gate.empty();
 		}
-	}
-	
-	// -------------------------------------------- //
-	// Permissions integration
-	// -------------------------------------------- //
-	
-	private void setupPermissions() {
-		if (permissionHandler != null) {
-			return;
-		}
-		
-		Plugin permissionsPlugin = this.getServer().getPluginManager().getPlugin("Permissions");
-		
-		if (permissionsPlugin == null) {
-			log("Permission system not detected, defaulting to OP");
-			return;
-		}
-		
-		permissionHandler = ((Permissions) permissionsPlugin).getHandler();
-		log("Found and will use plugin "+((Permissions)permissionsPlugin).getDescription().getFullName());
 	}
 	
 	// -------------------------------------------- //

@@ -3,28 +3,20 @@ package com.massivecraft.creativegates;
 import org.bukkit.entity.Player;
 
 public enum Permission {
-	CREATE("create gates", "creativegates.create", false),
-	DESTROY("destroy gates", "creativegates.destroy", false);
+	CREATE("create gates", "creativegates.create"),
+	DESTROY("destroy gates", "creativegates.destroy"),
+	USE("use gates", "creativegates.use");
 	
 	public final String description;
 	public final String permissionNode;
-	public final boolean defaultOpOnly;
 	
-	Permission(final String description, final String permissionNode, final boolean defaultOpOnly) {
+	Permission(final String description, final String permissionNode) {
         this.description = description;
 		this.permissionNode = permissionNode;
-        this.defaultOpOnly = defaultOpOnly;
     }
 	
 	public boolean has(Player player) {
-		if (P.permissionHandler == null) {
-			if (this.defaultOpOnly) {
-				return player.isOp();
-			}
-			return true;
-		}
-		
-		return P.permissionHandler.has(player, permissionNode);
+		return player.hasPermission(permissionNode);
 	}
 	
 	public boolean test(Player player) {
@@ -38,6 +30,5 @@ public enum Permission {
 	public String getForbiddenMessage() {
 		return Conf.colorDefault+"You don't have permission to "+this.description;
 	}
-	
 	
 }

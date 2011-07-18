@@ -4,6 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.massivecraft.creativegates.Gate;
@@ -19,6 +20,20 @@ public class PluginBlockListener extends BlockListener {
 		this.p = p;
 	}
 	
+	@Override
+	public void onBlockPistonExtend(BlockPistonExtendEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+		
+		for (Block block : event.getBlocks()) {
+			if (Gates.findFrom(block) != null) {
+				event.setCancelled(true);
+				return;
+			}
+		}
+	}
+	
 	// The purpose is to stop the water from falling
 	public void onBlockFromTo(BlockFromToEvent event) {
 		if (event.isCancelled()) {
@@ -26,13 +41,13 @@ public class PluginBlockListener extends BlockListener {
 		}
 		
 		Block blockFrom = event.getBlock();
-		boolean isWater = blockFrom.getTypeId() == 8 || blockFrom.getTypeId() == 9;
+		boolean isWater = blockFrom.getTypeId() == 9;
 		
 		if ( ! isWater) {
 			return;
 		}
 		
-		if (Gates.findFromContent(blockFrom) != null) {
+		if (Gates.findFrom(blockFrom) != null) {
 			event.setCancelled(true);
 		}
 	}

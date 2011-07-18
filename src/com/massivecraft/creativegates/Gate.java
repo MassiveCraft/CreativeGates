@@ -76,7 +76,7 @@ public class Gate {
 		Set<BlockFace> expandFaces = frameDirIsNS ? expandFacesNS : expandFacesWE;
 		for (Block currentBlock : contentBlocks) {
 			for (BlockFace face : expandFaces) {
-				Block potentialBlock = currentBlock.getFace(face);
+				Block potentialBlock = currentBlock.getRelative(face);
 				if ( ! contentBlocks.contains(potentialBlock)) {
 					frameBlocks.add(potentialBlock);
 					if (potentialBlock != sourceBlock) {
@@ -169,21 +169,21 @@ public class Gate {
 	 * It might also return null if the gate exit is blocked.
 	 */
 	public Location getMyOwnExitLocation() {
-		Block overSourceBlock = sourceCoord.getBlock().getFace(BlockFace.UP);
+		Block overSourceBlock = sourceCoord.getBlock().getRelative(BlockFace.UP);
 		Location firstChoice;
 		Location secondChoice;
 		
 		if (frameDirIsNS) {
-			firstChoice = overSourceBlock.getFace(BlockFace.EAST).getLocation();
+			firstChoice = overSourceBlock.getRelative(BlockFace.EAST).getLocation();
 			firstChoice.setYaw(180);
 			
-			secondChoice = overSourceBlock.getFace(BlockFace.WEST).getLocation();
+			secondChoice = overSourceBlock.getRelative(BlockFace.WEST).getLocation();
 			secondChoice.setYaw(0);
 		} else {
-			firstChoice = overSourceBlock.getFace(BlockFace.NORTH).getLocation();
+			firstChoice = overSourceBlock.getRelative(BlockFace.NORTH).getLocation();
 			firstChoice.setYaw(90);
 			
-			secondChoice = overSourceBlock.getFace(BlockFace.SOUTH).getLocation();
+			secondChoice = overSourceBlock.getRelative(BlockFace.SOUTH).getLocation();
 			secondChoice.setYaw(270);
 		}
 		
@@ -269,7 +269,7 @@ public class Gate {
 			
 			// ... And flood away !
 			for (BlockFace face : expandFaces) {
-				Block potentialBlock = startBlock.getFace(face);
+				Block potentialBlock = startBlock.getRelative(face);
 				foundBlocks = getFloodBlocks(potentialBlock, foundBlocks, expandFaces);
 			}
 		}

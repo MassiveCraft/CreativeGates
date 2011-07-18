@@ -33,7 +33,7 @@ public class PluginPlayerListener extends PlayerListener {
 		}
 		
 		// We look one up due to half blocks.
-		Block blockToTest = event.getTo().getBlock().getFace(BlockFace.UP);
+		Block blockToTest = event.getTo().getBlock().getRelative(BlockFace.UP);
 		
 		// Fast material check 
 		if (blockToTest.getType() != Material.STATIONARY_WATER) {
@@ -43,6 +43,11 @@ public class PluginPlayerListener extends PlayerListener {
 		// Find the gate if there is one
 		Gate gateFrom = Gates.findFromContent(blockToTest);
 		if (gateFrom == null) {
+			return;
+		}
+		
+		// Can the player use gates?
+		if ( ! Permission.USE.test(event.getPlayer())) {
 			return;
 		}
 		
@@ -118,7 +123,7 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		if ( Gates.findFromContent(event.getBlockClicked().getFace(event.getBlockFace())) != null ) {
+		if ( Gates.findFromContent(event.getBlockClicked().getRelative(event.getBlockFace())) != null ) {
 			event.setCancelled(true);
 		}
 	}
