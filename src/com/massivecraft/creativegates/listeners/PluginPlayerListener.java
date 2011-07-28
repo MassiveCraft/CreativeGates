@@ -17,6 +17,7 @@ import com.massivecraft.creativegates.Gates;
 import com.massivecraft.creativegates.P;
 import com.massivecraft.creativegates.Permission;
 import com.massivecraft.creativegates.WorldCoord;
+import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
 
 
 
@@ -57,18 +58,8 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		// Teleport
-		Player player = event.getPlayer();
-		
-		// For now we do not handle vehicles
-		if (player.isInsideVehicle()) {
-			player.leaveVehicle();
-		}
-		
-		player.setNoDamageTicks(5);
-		event.setFrom(targetLocation);
-        event.setTo(targetLocation);
-        player.teleport(targetLocation);
+		CreativeGatesTeleportEvent gateevent = new CreativeGatesTeleportEvent(event, targetLocation, blockToTest.getType());
+		this.p.getServer().getPluginManager().callEvent(gateevent);
 	}
 	
 	public void onPlayerInteract(PlayerInteractEvent event) {
