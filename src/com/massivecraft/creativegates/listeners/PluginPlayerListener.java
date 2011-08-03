@@ -1,5 +1,7 @@
 package com.massivecraft.creativegates.listeners;
 
+import java.util.HashSet;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.*;
@@ -17,6 +19,7 @@ import com.massivecraft.creativegates.Gates;
 import com.massivecraft.creativegates.P;
 import com.massivecraft.creativegates.Permission;
 import com.massivecraft.creativegates.WorldCoord;
+import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
 
 
 
@@ -57,18 +60,13 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		// Teleport
-		Player player = event.getPlayer();
-		
-		// For now we do not handle vehicles
-		if (player.isInsideVehicle()) {
-			player.leaveVehicle();
+		HashSet<Material> frameMaterials = new HashSet<Material>();
+		for(int id : gateFrom.frameMaterialIds) {
+		    frameMaterials.add(Material.getMaterial(id));
 		}
 		
-		player.setNoDamageTicks(5);
-		event.setFrom(targetLocation);
-        event.setTo(targetLocation);
-        player.teleport(targetLocation);
+		CreativeGatesTeleportEvent gateevent = new CreativeGatesTeleportEvent(event, targetLocation, frameMaterials);
+		this.p.getServer().getPluginManager().callEvent(gateevent);
 	}
 	
 	public void onPlayerInteract(PlayerInteractEvent event) {
