@@ -1,18 +1,19 @@
 package com.massivecraft.creativegates;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import com.massivecraft.core.*;
 import com.massivecraft.creativegates.listeners.*;
 
 
-public class P extends JavaPlugin {
+public class CreativeGates extends MassivePlugin {
 	// Our single plugin instance
-	public static P p;
+	public static CreativeGates p;
+	
+	// Items
+	public Gates gates;
 	
 	// Listeners
 	public PluginPlayerListener playerListener;
@@ -21,7 +22,7 @@ public class P extends JavaPlugin {
 	public PluginEntityListener entityListener;
 	public PluginGateListener gateListener;
 	
-	public P() {
+	public CreativeGates() {
 		p = this;
 		
 		this.playerListener = new PluginPlayerListener(this);
@@ -32,14 +33,16 @@ public class P extends JavaPlugin {
 	}
 
 	public void onEnable() {
-		log("===== ENABLE START");
-		// Ensure the data folder exists!
-		this.getDataFolder().mkdirs();
+		if ( ! preEnable()) return;
 		
-		// Load gates from disc
 		Conf.load();
 		WorldEnv.load();
-		Gates.load();
+		
+		gates = new Gates(this);
+		gates.load();
+		for (Gate gate : gates.getAll()) {
+			gate.openOrDie();
+		}
 		
 		// Register events
 		PluginManager pm = this.getServer().getPluginManager();
@@ -58,24 +61,12 @@ public class P extends JavaPlugin {
 		
 		pm.registerEvent(Event.Type.CUSTOM_EVENT, this.gateListener, Event.Priority.Monitor, this);
 		
-		log("===== ENABLE END");
+		postEnable();
 	}
 	
 	public void onDisable() {
-		for (Gate gate : Gates.gates) {
+		for (Gate gate : gates.getAll()) {
 			gate.empty();
 		}
 	}
-	
-	// -------------------------------------------- //
-	// Logging
-	// -------------------------------------------- //
-	public static void log(Object o) {
-		log(Level.INFO, o);
-	}
-	
-	public static void log(Level level, Object o) {
-		Logger.getLogger("Minecraft").log(level, "["+p.getDescription().getFullName()+"] "+o);
-	}
-
 }

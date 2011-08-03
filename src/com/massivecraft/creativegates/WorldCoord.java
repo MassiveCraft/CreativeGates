@@ -1,5 +1,6 @@
 package com.massivecraft.creativegates;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -67,7 +68,7 @@ public class WorldCoord {
 		if ( ! WorldUtil.load(worldName)) {
 			return null;
 		}
-		return P.p.getServer().getWorld(worldName).getBlockAt(x, y, z);
+		return Bukkit.getServer().getWorld(worldName).getBlockAt(x, y, z);
 	}
 	
 	//----------------------------------------------//

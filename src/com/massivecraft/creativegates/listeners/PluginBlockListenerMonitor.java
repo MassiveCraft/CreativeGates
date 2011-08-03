@@ -4,14 +4,13 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 
 import com.massivecraft.creativegates.Gate;
-import com.massivecraft.creativegates.Gates;
-import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.CreativeGates;
 
 
 public class PluginBlockListenerMonitor extends BlockListener {
-	P p;
+	CreativeGates p;
 	
-	public PluginBlockListenerMonitor(P p) {
+	public PluginBlockListenerMonitor(CreativeGates p) {
 		this.p = p;
 	}
 	
@@ -21,9 +20,9 @@ public class PluginBlockListenerMonitor extends BlockListener {
 			return;
 		}
 		
-		Gate gate = Gates.findFromFrame(event.getBlock());
+		Gate gate = p.gates.findFromFrame(event.getBlock());
 		if (gate != null) {
-			Gates.close(gate);
+			gate.close();
 		}
 	}
 }

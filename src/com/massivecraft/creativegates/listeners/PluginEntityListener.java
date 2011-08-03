@@ -4,13 +4,12 @@ import org.bukkit.block.Block;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
 
-import com.massivecraft.creativegates.Gates;
-import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.CreativeGates;
 
 public class PluginEntityListener extends EntityListener {
-	P p;
+	CreativeGates p;
 	
-	public PluginEntityListener(P p) {
+	public PluginEntityListener(CreativeGates p) {
 		this.p = p;
 	}
 	
@@ -22,7 +21,7 @@ public class PluginEntityListener extends EntityListener {
 		}
 		
 		for (Block block : event.blockList()) {
-			if (Gates.findFrom(block) != null) {
+			if (p.gates.findFrom(block) != null) {
 				event.setCancelled(true);
 				return;
 			}

@@ -1,19 +1,19 @@
+main: com.massivecraft.creativegates.CreativeGates
 name: CreativeGates
-version: 1.1.3
-main: com.massivecraft.creativegates.P
+version: 1.2
+depend: [MassiveCore]
 permissions:
-    creativegates.*:
-        description: Gives access to all doorman commands
-        children:
-            creativegates.create: true
-            creativegates.destroy: true
-            creativegates.use: true
-    creativegates.create:
-        description: Allows you to create gates
-        default: true
-    creativegates.destroy:
-        description: Allows you to destory gates
-        default: true
-    creativegates.use:
-        description: Allows you to use gates
-        default: true
+ creativegates.*:
+  children:
+   creativegates.create: true
+   creativegates.destroy: true
+   creativegates.use: true
+ creativegates.create:
+  description: create gates
+  default: true
+ creativegates.destroy:
+  description: destroy gates
+  default: true
+ creativegates.use:
+  description: use gates
+  default: true

@@ -15,18 +15,19 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.massivecraft.creativegates.Conf;
 import com.massivecraft.creativegates.Gate;
-import com.massivecraft.creativegates.Gates;
-import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Permission;
 import com.massivecraft.creativegates.WorldCoord;
+import com.massivecraft.creativegates.WorldEnv;
 import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
 
 
 
 public class PluginPlayerListener extends PlayerListener {
-	P p;
 	
-	public PluginPlayerListener(P p) {
+	CreativeGates p;
+	
+	public PluginPlayerListener(CreativeGates p) {
 		this.p = p;
 	}
 	
@@ -44,8 +45,14 @@ public class PluginPlayerListener extends PlayerListener {
 		}
 		
 		// Find the gate if there is one
-		Gate gateFrom = Gates.findFromContent(blockToTest);
+		Gate gateFrom = p.gates.findFromContent(blockToTest);
 		if (gateFrom == null) {
+			return;
+		}
+		
+		// Is the gate intact?
+		if ( ! gateFrom.isIntact()) {
+			gateFrom.close();
 			return;
 		}
 		
@@ -89,7 +96,7 @@ public class PluginPlayerListener extends PlayerListener {
 		
 		// Did we hit an existing gate?
 		// In such case send information.
-		Gate gate = Gates.findFrom(clickedBlock);
+		Gate gate = p.gates.findFrom(clickedBlock);
 		if (gate != null) {
 			gate.informPlayer(player);
 			return;
@@ -99,7 +106,8 @@ public class PluginPlayerListener extends PlayerListener {
 		if (clickedBlock.getType() == Conf.block) {
 			// create a gate if the player has the permission
 			if (Permission.CREATE.test(player)) {
-				Gates.open(new WorldCoord(clickedBlock), player);
+				WorldEnv.set(clickedBlock.getWorld());
+				p.gates.open(new WorldCoord(clickedBlock), player);
 			}
 		}
 	}
@@ -110,7 +118,7 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		if ( Gates.findFromContent(event.getBlockClicked()) != null	) {
+		if ( p.gates.findFromContent(event.getBlockClicked()) != null	) {
 			event.setCancelled(true);
 		}
 	}
@@ -121,7 +129,7 @@ public class PluginPlayerListener extends PlayerListener {
 			return;
 		}
 		
-		if ( Gates.findFromContent(event.getBlockClicked().getRelative(event.getBlockFace())) != null ) {
+		if ( p.gates.findFromContent(event.getBlockClicked().getRelative(event.getBlockFace())) != null ) {
 			event.setCancelled(true);
 		}
 	}

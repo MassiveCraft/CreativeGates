@@ -2,12 +2,12 @@ package com.massivecraft.creativegates.listeners;
 
 import org.bukkit.entity.Player;
 
-import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.event.CreativeGatesListener;
 import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
 
 public class PluginGateListener extends CreativeGatesListener {
-    public PluginGateListener(P plugin) {
+    public PluginGateListener(CreativeGates plugin) {
     }
     @Override
     public void onPlayerGateTeleport(CreativeGatesTeleportEvent event) {

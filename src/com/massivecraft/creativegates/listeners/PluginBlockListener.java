@@ -8,15 +8,14 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.massivecraft.creativegates.Gate;
-import com.massivecraft.creativegates.Gates;
-import com.massivecraft.creativegates.P;
+import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Permission;
 
 
 public class PluginBlockListener extends BlockListener {
-	P p;
+	CreativeGates p;
 	
-	public PluginBlockListener(P p) {
+	public PluginBlockListener(CreativeGates p) {
 		this.p = p;
 	}
 	
@@ -27,7 +26,7 @@ public class PluginBlockListener extends BlockListener {
 		}
 		
 		for (Block block : event.getBlocks()) {
-			if (Gates.findFrom(block) != null) {
+			if (p.gates.findFrom(block) != null) {
 				event.setCancelled(true);
 				return;
 			}
@@ -47,7 +46,7 @@ public class PluginBlockListener extends BlockListener {
 			return;
 		}
 		
-		if (Gates.findFrom(blockFrom) != null) {
+		if (p.gates.findFrom(blockFrom) != null) {
 			event.setCancelled(true);
 		}
 	}
@@ -59,7 +58,7 @@ public class PluginBlockListener extends BlockListener {
 			return;
 		}
 		
-		Gate gate = Gates.findFromContent(event.getBlock()); 
+		Gate gate = p.gates.findFromContent(event.getBlock()); 
 		if (gate != null) {
 			event.setCancelled(true);
 		}
@@ -72,7 +71,7 @@ public class PluginBlockListener extends BlockListener {
 			return;
 		}
 		
-		Gate gate = Gates.findFromFrame(event.getBlock());
+		Gate gate = p.gates.findFromFrame(event.getBlock());
 		if (gate == null) {
 			return;
 		}

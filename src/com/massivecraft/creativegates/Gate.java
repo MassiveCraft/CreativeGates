@@ -1,6 +1,9 @@
 package com.massivecraft.creativegates;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,15 +11,19 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import com.massivecraft.core.GsonItem;
+import com.massivecraft.core.util.Text;
 import com.massivecraft.creativegates.util.BlockUtil;
-import com.massivecraft.creativegates.util.TextUtil;
 
-public class Gate {
-	public Set<WorldCoord> contentCoords = new HashSet<WorldCoord>();
-	public Set<WorldCoord> frameCoords = new HashSet<WorldCoord>();
+public class Gate extends GsonItem implements Comparable<Gate> {
+	
+	public transient CreativeGates p;
+	
+	public transient Set<WorldCoord> contentCoords;
+	public transient Set<WorldCoord> frameCoords;
+	public transient Set<Integer> frameMaterialIds;
 	public WorldCoord sourceCoord;
-	public Set<Integer> frameMaterialIds = new TreeSet<Integer>();
-	public boolean frameDirIsNS; // True means NS direction. false means WE direction.
+	public transient boolean frameDirIsNS; // True means NS direction. false means WE direction.
 	
 	private static final Set<BlockFace> expandFacesWE = new HashSet<BlockFace>();
 	private static final Set<BlockFace> expandFacesNS = new HashSet<BlockFace>();
@@ -32,18 +39,93 @@ public class Gate {
 		expandFacesNS.add(BlockFace.SOUTH);
 	}
 	
-	// To create a gate instance is the same as trying to open a gate ingame.
-	public Gate(WorldCoord sourceCoord) throws Exception {
-		this.sourceCoord = sourceCoord;
+	public Gate() {
+		this.dataClear();
+	}
+	
+	/**
+	 * Is this gate open right now?
+	 */
+	public boolean isOpen() {
+		return p.gates.findFrom(sourceCoord) != null;
+	}
+	
+	public void open() throws GateOpenException {
 		Block sourceBlock = sourceCoord.getBlock();
 		
 		if (sourceBlock.getType() != Conf.block) {
-			throw new Exception("The source block must be made of "+TextUtil.getMaterialName(Conf.block)+"."); 
+			throw new GateOpenException("<b>The source block must be made of "+Text.getMaterialName(Conf.block)+"."); 
 		}
 		
-		if (Gates.findFromFrame(sourceBlock) != null) {
-			throw new Exception("The gate is already opened."); 
+		if (this.isOpen()) {
+			throw new GateOpenException("<b>The gate is already opened."); 
 		}
+		
+		if ( ! this.dataPopulate()) {
+			throw new GateOpenException("<b>There is no valid frame for the gate.");
+		}
+		
+		// Finally we set the content blocks material to water
+		this.fill();
+		
+		// Store the world environment
+		WorldEnv.set(sourceBlock.getWorld());
+	}
+	
+	public boolean openOrDie(Player player) {
+		try {
+			this.open();
+			return true;
+		} catch (GateOpenException e) {
+			p.gates.delete(this);
+			p.gates.save(); // TODO create auto save routine as well as "items" link
+			if (player == null) {
+				p.log(e.getMessage());
+			} else {
+				player.sendMessage(e.getMessage());
+			}
+			return false;
+		}
+	}
+	
+	public boolean openOrDie() {
+		return this.openOrDie(null);
+	}
+	
+	public void close() {
+		this.empty();
+		p.gates.delete(this);
+	}
+	
+	
+	
+	/**
+	 * This method is used to check the gate on use as a safety measure.
+	 * If a player walks through a non intact gate, the frame was probably destroyed by a super pick axe.
+	 */
+	public boolean isIntact() {
+		for (WorldCoord coord : frameCoords) {
+			if ( ! frameMaterialIds.contains(coord.getBlock().getTypeId())) return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * This method clears the "data" (coords and material ids).
+	 */
+	public void dataClear() {
+		contentCoords = new HashSet<WorldCoord>();
+		frameCoords = new HashSet<WorldCoord>();
+		frameMaterialIds = new TreeSet<Integer>();
+	}
+	
+	/**
+	 * This method populates the "data" (coords and material ids).
+	 * It will return false if there was no possible frame.
+	 */
+	public boolean dataPopulate() {
+		this.dataClear();
+		Block sourceBlock = sourceCoord.getBlock();
 		
 		// Search for content WE and NS
 		Block floodStartBlock = sourceBlock.getRelative(BlockFace.UP);
@@ -54,7 +136,8 @@ public class Gate {
 		Set<Block> contentBlocks;
 		
 		if (contentBlocksWE == null && contentBlocksNS == null) {
-			throw new Exception("There is no frame, or it is broken, or it is to large.");
+			//throw new Exception("There is no frame, or it is broken, or it is to large.");
+			return false;
 		}
 		
 		if (contentBlocksNS == null) {
@@ -94,18 +177,31 @@ public class Gate {
 			this.contentCoords.add(new WorldCoord(contentBlock));
 		}
 		
-		// We add the gate to the list
-		Gates.gates.add(this);
-		
-		// Finally we set the content blocks material to water
-		this.fill();
-		
-		// Store the world environment
-		WorldEnv.set(sourceBlock.getWorld());
-		
-		// Save
-		Gates.save();
+		return true; 
 	}
+	
+	/*
+	public boolean open() {
+		Gate gateAlreadyThere = p.gates.findFrom(sourceCoord);
+		if (gateAlreadyThere != null) {
+			if (gateAlreadyThere == this) {
+				// Already opened
+				return true;
+			} else {
+				// occupied
+				return false;
+			}
+		}
+	}
+	
+	public boolean validate() {
+		Block sourceBlock = sourceCoord.getBlock();
+		
+		if (sourceBlock.getType() != Conf.block) {
+			//throw new Exception("The source block must be made of "+Text.getMaterialName(Conf.block)+".");
+			return false;
+		}
+	}*/
 	
 	//----------------------------------------------//
 	// Find Target Gate And Location
@@ -133,8 +229,11 @@ public class Gate {
 	public ArrayList<Gate> getNetworkGatePath() {
 		ArrayList<Gate> networkGatePath = new ArrayList<Gate>();
 		
-		// As P.p.gates is a TreeSet it is always sorted the same way (after gate source location).
-		for (Gate gate : Gates.gates) {
+		// We put the gates in a tree set to sort them after gate location.
+		TreeSet<Gate> gates = new TreeSet<Gate>();
+		gates.addAll(p.gates.getAll());
+		
+		for (Gate gate : gates) {
 			if (this.frameMaterialIds.equals(gate.frameMaterialIds)) {
 				networkGatePath.add(gate);
 			}
@@ -208,20 +307,20 @@ public class Gate {
 	//----------------------------------------------//
 	
 	public String getInfoMsgMaterial() {
-		String ret = Conf.colorDefault + "Materials: ";
+		String ret = "<i>Materials: ";
 		
 		ArrayList<String> materialNames = new ArrayList<String>();
 		for (Integer frameMaterialId : this.frameMaterialIds) {
-			materialNames.add(Conf.colorHighlight + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
+			materialNames.add("<h>" + Text.getMaterialName(Material.getMaterial(frameMaterialId)));
 		}
 		
-		ret += TextUtil.implode(materialNames, Conf.colorDefault + ", ");
+		ret += Text.implode(materialNames, "<i>, ");
 		
 		return ret;
 	}
 	
 	public String getInfoMsgNetwork() {
-		return Conf.colorDefault + "Gates: " + Conf.colorHighlight + this.getNetworkGatePath().size();
+		return "<i>Gates: <h>" + this.getNetworkGatePath().size();
 	}
 	
 	public void informPlayer(Player player) {
@@ -245,7 +344,7 @@ public class Gate {
 			coord.getBlock().setType(Material.AIR);
 		}
 	}
-
+	
 	//----------------------------------------------//
 	// Flood
 	//----------------------------------------------//
@@ -275,5 +374,14 @@ public class Gate {
 		}
 		
 		return foundBlocks;
+	}
+
+	//----------------------------------------------//
+	// Comparable
+	//----------------------------------------------//
+	
+	@Override
+	public int compareTo(Gate o) {
+		return this.sourceCoord.toString().compareTo(o.sourceCoord.toString());
 	}
 }

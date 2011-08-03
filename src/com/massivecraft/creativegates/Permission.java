@@ -1,34 +1,27 @@
 package com.massivecraft.creativegates;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
+
+import com.massivecraft.core.util.Perm;
+
 
 public enum Permission {
-	CREATE("create gates", "creativegates.create"),
-	DESTROY("destroy gates", "creativegates.destroy"),
-	USE("use gates", "creativegates.use");
+	USE("creativegates.use"),
+	CREATE("creativegates.create"),
+	DESTROY("creativegates.destroy"),
+	;
 	
-	public final String description;
-	public final String permissionNode;
+	public final String node;
 	
-	Permission(final String description, final String permissionNode) {
-        this.description = description;
-		this.permissionNode = permissionNode;
+	Permission(final String node) {
+		this.node = node;
     }
 	
-	public boolean has(Player player) {
-		return player.hasPermission(permissionNode);
+	public boolean has(CommandSender sender) {
+		return Perm.has(sender, this.node);
 	}
 	
-	public boolean test(Player player) {
-		if (has(player)) {
-			return true;
-		}
-		player.sendMessage(this.getForbiddenMessage());
-		return false;
+	public boolean test(CommandSender sender) {
+		return CreativeGates.p.perm.test(sender, this.node);
 	}
-	
-	public String getForbiddenMessage() {
-		return Conf.colorDefault+"You don't have permission to "+this.description;
-	}
-	
 }

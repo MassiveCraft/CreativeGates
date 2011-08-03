@@ -10,8 +10,7 @@ public class CreativeGatesListener extends CustomEventListener {
         if(event instanceof CreativeGatesTeleportEvent) {
             onPlayerGateTeleport((CreativeGatesTeleportEvent) event);
         }
-        super.onCustomEvent(event);
     }
     
-    public void onPlayerGateTeleport(CreativeGatesTeleportEvent event) { }
+    public void onPlayerGateTeleport(CreativeGatesTeleportEvent event) {}
 }
