@@ -19,6 +19,7 @@ public class P extends JavaPlugin {
 	public PluginBlockListener blockListener;
 	public PluginBlockListenerMonitor blockListenerMonitor;
 	public PluginEntityListener entityListener;
+	public PluginGateListener gateListener;
 	
 	public P() {
 		p = this;
@@ -27,6 +28,7 @@ public class P extends JavaPlugin {
 		this.blockListener = new PluginBlockListener(this);
 		this.blockListenerMonitor = new PluginBlockListenerMonitor(this);
 		this.entityListener = new PluginEntityListener(this);
+		this.gateListener = new PluginGateListener(this);
 	}
 
 	public void onEnable() {
@@ -53,6 +55,8 @@ public class P extends JavaPlugin {
 		pm.registerEvent(Event.Type.BLOCK_BREAK, this.blockListenerMonitor, Event.Priority.Monitor, this);
 		
 		pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Normal, this);
+		
+		pm.registerEvent(Event.Type.CUSTOM_EVENT, this.gateListener, Event.Priority.Monitor, this);
 		
 		log("===== ENABLE END");
 	}
