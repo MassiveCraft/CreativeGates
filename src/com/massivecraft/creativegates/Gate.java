@@ -1,9 +1,6 @@
 package com.massivecraft.creativegates;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,13 +8,13 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import com.massivecraft.core.GsonItem;
-import com.massivecraft.core.util.Text;
 import com.massivecraft.creativegates.util.BlockUtil;
+import com.massivecraft.creativegates.zcore.persist.*;
+import com.massivecraft.creativegates.zcore.util.*;
 
-public class Gate extends GsonItem implements Comparable<Gate> {
-	
-	public transient CreativeGates p;
+public class Gate extends Entity implements Comparable<Gate>
+{
+	public static transient CreativeGates p = CreativeGates.p;
 	
 	public transient Set<WorldCoord> contentCoords;
 	public transient Set<WorldCoord> frameCoords;
@@ -25,9 +22,10 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	public WorldCoord sourceCoord;
 	public transient boolean frameDirIsNS; // True means NS direction. false means WE direction.
 	
-	private static final Set<BlockFace> expandFacesWE = new HashSet<BlockFace>();
-	private static final Set<BlockFace> expandFacesNS = new HashSet<BlockFace>();
-	static {
+	private static transient final Set<BlockFace> expandFacesWE = new HashSet<BlockFace>();
+	private static transient final Set<BlockFace> expandFacesNS = new HashSet<BlockFace>();
+	static
+	{
 		expandFacesWE.add(BlockFace.UP);
 		expandFacesWE.add(BlockFace.DOWN);
 		expandFacesWE.add(BlockFace.WEST);
@@ -39,73 +37,65 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 		expandFacesNS.add(BlockFace.SOUTH);
 	}
 	
-	public Gate() {
+	public Gate()
+	{
 		this.dataClear();
 	}
 	
 	/**
 	 * Is this gate open right now?
 	 */
-	public boolean isOpen() {
-		return p.gates.findFrom(sourceCoord) != null;
+	public boolean isOpen()
+	{
+		return Gates.i.findFrom(sourceCoord) != null;
 	}
 	
-	public void open() throws GateOpenException {
+	public void open() throws GateOpenException
+	{
 		Block sourceBlock = sourceCoord.getBlock();
 		
-		if (sourceBlock.getType() != Conf.block) {
-			throw new GateOpenException("<b>The source block must be made of "+Text.getMaterialName(Conf.block)+"."); 
+		if (this.isOpen()) return;
+		
+		if (sourceBlock.getTypeId() != Conf.block) 
+		{
+			throw new GateOpenException(p.txt.get("openfail.wrong_source_material", TextUtil.getMaterialName(Conf.block))); 
 		}
 		
-		if (this.isOpen()) {
-			throw new GateOpenException("<b>The gate is already opened."); 
-		}
-		
-		if ( ! this.dataPopulate()) {
-			throw new GateOpenException("<b>There is no valid frame for the gate.");
+		if ( ! this.dataPopulate())
+		{
+			throw new GateOpenException(p.txt.get("openfail.no_frame"));
 		}
 		
 		// Finally we set the content blocks material to water
 		this.fill();
-		
-		// Store the world environment
-		WorldEnv.set(sourceBlock.getWorld());
 	}
 	
-	public boolean openOrDie(Player player) {
-		try {
-			this.open();
-			return true;
-		} catch (GateOpenException e) {
-			p.gates.delete(this);
-			p.gates.save(); // TODO create auto save routine as well as "items" link
-			if (player == null) {
-				p.log(e.getMessage());
-			} else {
-				player.sendMessage(e.getMessage());
-			}
-			return false;
-		}
-	}
-	
-	public boolean openOrDie() {
-		return this.openOrDie(null);
-	}
-	
-	public void close() {
+	public void close()
+	{
 		this.empty();
-		p.gates.delete(this);
+		this.detach();
 	}
-	
-	
 	
 	/**
 	 * This method is used to check the gate on use as a safety measure.
 	 * If a player walks through a non intact gate, the frame was probably destroyed by a super pick axe.
 	 */
-	public boolean isIntact() {
-		for (WorldCoord coord : frameCoords) {
-			if ( ! frameMaterialIds.contains(coord.getBlock().getTypeId())) return false;
+	public boolean isIntact()
+	{
+		if (this.sourceCoord.getBlock().getTypeId() != Conf.block)
+		{
+			return false;
+		}
+		
+		for (WorldCoord coord : frameCoords)
+		{
+			if (this.sourceCoord.equals(coord))
+			{
+				continue;
+			}
+			
+			Block block = coord.getBlock();
+			if ( ! this.frameMaterialIds.contains(block.getTypeId())) return false;
 		}
 		return true;
 	}
@@ -113,7 +103,8 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	/**
 	 * This method clears the "data" (coords and material ids).
 	 */
-	public void dataClear() {
+	public void dataClear()
+	{
 		contentCoords = new HashSet<WorldCoord>();
 		frameCoords = new HashSet<WorldCoord>();
 		frameMaterialIds = new TreeSet<Integer>();
@@ -123,7 +114,8 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	 * This method populates the "data" (coords and material ids).
 	 * It will return false if there was no possible frame.
 	 */
-	public boolean dataPopulate() {
+	public boolean dataPopulate()
+	{
 		this.dataClear();
 		Block sourceBlock = sourceCoord.getBlock();
 		
@@ -135,21 +127,29 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 		// Figure out dir and content... or throw no frame fail. 
 		Set<Block> contentBlocks;
 		
-		if (contentBlocksWE == null && contentBlocksNS == null) {
+		if (contentBlocksWE == null && contentBlocksNS == null)
+		{
 			//throw new Exception("There is no frame, or it is broken, or it is to large.");
 			return false;
 		}
 		
-		if (contentBlocksNS == null) {
+		if (contentBlocksNS == null)
+		{
 			contentBlocks = contentBlocksWE;
 			frameDirIsNS = false;
-		} else if (contentBlocksWE == null) {
+		}
+		else if (contentBlocksWE == null)
+		{
 			contentBlocks = contentBlocksNS;
 			frameDirIsNS = true;
-		} else if (contentBlocksWE.size() > contentBlocksNS.size()) {
+		}
+		else if (contentBlocksWE.size() > contentBlocksNS.size())
+		{
 			contentBlocks = contentBlocksNS;
 			frameDirIsNS = true;
-		} else {
+		}
+		else
+		{
 			contentBlocks = contentBlocksWE;
 			frameDirIsNS = false;
 		}
@@ -157,12 +157,16 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 		// Find the frame blocks and materials
 		Set<Block> frameBlocks = new HashSet<Block>();
 		Set<BlockFace> expandFaces = frameDirIsNS ? expandFacesNS : expandFacesWE;
-		for (Block currentBlock : contentBlocks) {
-			for (BlockFace face : expandFaces) {
+		for (Block currentBlock : contentBlocks)
+		{
+			for (BlockFace face : expandFaces)
+			{
 				Block potentialBlock = currentBlock.getRelative(face);
-				if ( ! contentBlocks.contains(potentialBlock)) {
+				if ( ! contentBlocks.contains(potentialBlock))
+				{
 					frameBlocks.add(potentialBlock);
-					if (potentialBlock != sourceBlock) {
+					if (potentialBlock != sourceBlock)
+					{
 						frameMaterialIds.add(potentialBlock.getTypeId());
 					}
 				}
@@ -170,38 +174,17 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 		}
 		
 		// Now we add the frame and content blocks as world coords to the lookup maps.
-		for (Block frameBlock : frameBlocks) {
+		for (Block frameBlock : frameBlocks)
+		{
 			this.frameCoords.add(new WorldCoord(frameBlock));
 		}
-		for (Block contentBlock : contentBlocks) {
+		for (Block contentBlock : contentBlocks)
+		{
 			this.contentCoords.add(new WorldCoord(contentBlock));
 		}
 		
 		return true; 
 	}
-	
-	/*
-	public boolean open() {
-		Gate gateAlreadyThere = p.gates.findFrom(sourceCoord);
-		if (gateAlreadyThere != null) {
-			if (gateAlreadyThere == this) {
-				// Already opened
-				return true;
-			} else {
-				// occupied
-				return false;
-			}
-		}
-	}
-	
-	public boolean validate() {
-		Block sourceBlock = sourceCoord.getBlock();
-		
-		if (sourceBlock.getType() != Conf.block) {
-			//throw new Exception("The source block must be made of "+Text.getMaterialName(Conf.block)+".");
-			return false;
-		}
-	}*/
 	
 	//----------------------------------------------//
 	// Find Target Gate And Location
@@ -211,11 +194,14 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	 * This method finds the place where this gates goes to.
 	 * We pick the next gate in the network chain that has a non blocked exit.
 	 */
-	public Location getMyTargetExitLocation() {
+	public Location getMyTargetExitLocation()
+	{
 		Location ret;
-		for (Gate gate : this.getSelfRelativeGatePath()) {
+		for (Gate gate : this.getSelfRelativeGatePath())
+		{
 			ret = gate.getMyOwnExitLocation();
-			if (ret != null) {
+			if (ret != null)
+			{
 				return ret;
 			}
 		}
@@ -226,15 +212,18 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	 * Find all the gates on the network of this gate (including this gate itself).
 	 * The gates on the same network are those with the same frame materials.
 	 */
-	public ArrayList<Gate> getNetworkGatePath() {
+	public ArrayList<Gate> getNetworkGatePath()
+	{
 		ArrayList<Gate> networkGatePath = new ArrayList<Gate>();
 		
 		// We put the gates in a tree set to sort them after gate location.
 		TreeSet<Gate> gates = new TreeSet<Gate>();
-		gates.addAll(p.gates.getAll());
+		gates.addAll(Gates.i.get());
 		
-		for (Gate gate : gates) {
-			if (this.frameMaterialIds.equals(gate.frameMaterialIds)) {
+		for (Gate gate : gates)
+		{
+			if (this.frameMaterialIds.equals(gate.frameMaterialIds))
+			{
 				networkGatePath.add(gate);
 			}
 		}
@@ -247,7 +236,8 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	 * This gate itself is not included (as opposed to getNetworkGatePath where it is).
 	 * This gate itself would be in the beginning / end of this path.
 	 */
-	public ArrayList<Gate> getSelfRelativeGatePath() {
+	public ArrayList<Gate> getSelfRelativeGatePath()
+	{
 		ArrayList<Gate> selfRelativeGatePath = new ArrayList<Gate>();
 		
 		ArrayList<Gate> networkGatePath = this.getNetworkGatePath();
@@ -267,18 +257,22 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	 * This method returns a Location telling us just that.
 	 * It might also return null if the gate exit is blocked.
 	 */
-	public Location getMyOwnExitLocation() {
+	public Location getMyOwnExitLocation()
+	{
 		Block overSourceBlock = sourceCoord.getBlock().getRelative(BlockFace.UP);
 		Location firstChoice;
 		Location secondChoice;
 		
-		if (frameDirIsNS) {
+		if (frameDirIsNS)
+		{
 			firstChoice = overSourceBlock.getRelative(BlockFace.EAST).getLocation();
 			firstChoice.setYaw(180);
 			
 			secondChoice = overSourceBlock.getRelative(BlockFace.WEST).getLocation();
 			secondChoice.setYaw(0);
-		} else {
+		}
+		else
+		{
 			firstChoice = overSourceBlock.getRelative(BlockFace.NORTH).getLocation();
 			firstChoice.setYaw(90);
 			
@@ -293,9 +287,12 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 		firstChoice.setPitch(0);
 		secondChoice.setPitch(0);
 		
-		if (BlockUtil.canPlayerStandInBlock(firstChoice.getBlock())) {
+		if (BlockUtil.canPlayerStandInBlock(firstChoice.getBlock()))
+		{
 			return firstChoice;
-		} else if (BlockUtil.canPlayerStandInBlock(secondChoice.getBlock())) {
+		}
+		else if (BlockUtil.canPlayerStandInBlock(secondChoice.getBlock()))
+		{
 			return secondChoice;
 		}
 		
@@ -306,24 +303,26 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	// Gate information
 	//----------------------------------------------//
 	
-	public String getInfoMsgMaterial() {
-		String ret = "<i>Materials: ";
-		
+	public String getInfoMsgMaterial()
+	{
 		ArrayList<String> materialNames = new ArrayList<String>();
-		for (Integer frameMaterialId : this.frameMaterialIds) {
-			materialNames.add("<h>" + Text.getMaterialName(Material.getMaterial(frameMaterialId)));
+		for (Integer frameMaterialId : this.frameMaterialIds)
+		{
+			materialNames.add(p.txt.tags("<h>") + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
 		}
 		
-		ret += Text.implode(materialNames, "<i>, ");
+		String materials = TextUtil.implode(materialNames, p.txt.tags("<i>, "));
 		
-		return ret;
+		return p.txt.get("info.materials", materials);
 	}
 	
-	public String getInfoMsgNetwork() {
-		return "<i>Gates: <h>" + this.getNetworkGatePath().size();
+	public String getInfoMsgNetwork()
+	{
+		return p.txt.get("info.gatecount", this.getNetworkGatePath().size());
 	}
 	
-	public void informPlayer(Player player) {
+	public void informPlayer(Player player)
+	{
 		player.sendMessage("");
 		player.sendMessage(this.getInfoMsgMaterial());
 		player.sendMessage(this.getInfoMsgNetwork());
@@ -333,14 +332,18 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	// Content management
 	//----------------------------------------------//
 	
-	public void fill() {
-		for (WorldCoord coord : this.contentCoords) {
+	public void fill()
+	{
+		for (WorldCoord coord : this.contentCoords)
+		{
 			coord.getBlock().setType(Material.STATIONARY_WATER);
 		}
 	}
 	
-	public void empty() {
-		for (WorldCoord coord : this.contentCoords) {
+	public void empty()
+	{
+		for (WorldCoord coord : this.contentCoords)
+		{
 			coord.getBlock().setType(Material.AIR);
 		}
 	}
@@ -349,25 +352,31 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	// Flood
 	//----------------------------------------------//
 	
-	public static Set<Block> getFloodBlocks(Block startBlock, Set<Block> foundBlocks, Set<BlockFace> expandFaces) {
-		if (foundBlocks == null) {
+	public static Set<Block> getFloodBlocks(Block startBlock, Set<Block> foundBlocks, Set<BlockFace> expandFaces)
+	{
+		if (foundBlocks == null)
+		{
 			return null;
 		}
 		
-		if  (foundBlocks.size() > Conf.maxarea) {
+		if  (foundBlocks.size() > Conf.maxarea)
+		{
 			return null;
 		}
 		
-		if (foundBlocks.contains(startBlock)) {
+		if (foundBlocks.contains(startBlock))
+		{
 			return foundBlocks;
 		}
 		
-		if (startBlock.getType() == Material.AIR || startBlock.getType() == Material.WATER || startBlock.getType() == Material.STATIONARY_WATER) {
+		if (startBlock.getType() == Material.AIR || startBlock.getType() == Material.WATER || startBlock.getType() == Material.STATIONARY_WATER)
+		{
 			// ... We found a block :D ...
 			foundBlocks.add(startBlock);
 			
 			// ... And flood away !
-			for (BlockFace face : expandFaces) {
+			for (BlockFace face : expandFaces)
+			{
 				Block potentialBlock = startBlock.getRelative(face);
 				foundBlocks = getFloodBlocks(potentialBlock, foundBlocks, expandFaces);
 			}
@@ -381,7 +390,8 @@ public class Gate extends GsonItem implements Comparable<Gate> {
 	//----------------------------------------------//
 	
 	@Override
-	public int compareTo(Gate o) {
+	public int compareTo(Gate o)
+	{
 		return this.sourceCoord.toString().compareTo(o.sourceCoord.toString());
 	}
 }

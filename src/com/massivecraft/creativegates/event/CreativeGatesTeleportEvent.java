@@ -9,14 +9,16 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 @SuppressWarnings("serial")
-public class CreativeGatesTeleportEvent extends Event implements Cancellable {
+public class CreativeGatesTeleportEvent extends Event implements Cancellable
+{
     
     private Location location;
     private Set<Material> materials;
     private boolean cancelled;
     private PlayerMoveEvent event;
 
-    public CreativeGatesTeleportEvent(PlayerMoveEvent event, Location location, Set<Material> materials) {
+    public CreativeGatesTeleportEvent(PlayerMoveEvent event, Location location, Set<Material> materials)
+    {
         super("CreativeGatesTeleportEvent");
         this.event = event;
         this.location = location;
@@ -24,27 +26,33 @@ public class CreativeGatesTeleportEvent extends Event implements Cancellable {
         this.cancelled = false;
     }
     
-    public boolean isCancelled(){
+    public boolean isCancelled()
+    {
         return this.cancelled;
     }
     
-    public void setCancelled(boolean cancelled){
+    public void setCancelled(boolean cancelled)
+    {
         this.cancelled = cancelled;
     }
     
-    public Location getLocation() {
+    public Location getLocation()
+    {
         return this.location;
     }
     
-    public void setLocation(Location location) {
+    public void setLocation(Location location)
+    {
         this.location = location;
     }
     
-    public Set<Material> getMaterials() {
+    public Set<Material> getMaterials()
+    {
         return this.materials;
     }
     
-    public PlayerMoveEvent getPlayerMoveEvent() {
+    public PlayerMoveEvent getPlayerMoveEvent()
+    {
         return this.event;
     }
 }

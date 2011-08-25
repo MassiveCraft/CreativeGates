@@ -1,19 +1,15 @@
 package com.massivecraft.creativegates;
 
-
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
-import com.massivecraft.core.*;
 import com.massivecraft.creativegates.listeners.*;
+import com.massivecraft.creativegates.zcore.*;
 
-
-public class CreativeGates extends MassivePlugin {
+public class CreativeGates extends MPlugin
+{
 	// Our single plugin instance
 	public static CreativeGates p;
-	
-	// Items
-	public Gates gates;
 	
 	// Listeners
 	public PluginPlayerListener playerListener;
@@ -22,27 +18,26 @@ public class CreativeGates extends MassivePlugin {
 	public PluginEntityListener entityListener;
 	public PluginGateListener gateListener;
 	
-	public CreativeGates() {
+	public CreativeGates()
+	{
 		p = this;
 		
-		this.playerListener = new PluginPlayerListener(this);
-		this.blockListener = new PluginBlockListener(this);
-		this.blockListenerMonitor = new PluginBlockListenerMonitor(this);
-		this.entityListener = new PluginEntityListener(this);
-		this.gateListener = new PluginGateListener(this);
+		this.playerListener = new PluginPlayerListener();
+		this.blockListener = new PluginBlockListener();
+		this.blockListenerMonitor = new PluginBlockListenerMonitor();
+		this.entityListener = new PluginEntityListener();
+		this.gateListener = new PluginGateListener();
 	}
 
-	public void onEnable() {
+	public void onEnable()
+	{
 		if ( ! preEnable()) return;
 		
+		// TODO fix config auto update routine... ?
 		Conf.load();
-		WorldEnv.load();
 		
-		gates = new Gates(this);
-		gates.load();
-		for (Gate gate : gates.getAll()) {
-			gate.openOrDie();
-		}
+		Gates.i.loadFromDisc();
+		Gates.i.openAllOrDetach();
 		
 		// Register events
 		PluginManager pm = this.getServer().getPluginManager();
@@ -64,9 +59,32 @@ public class CreativeGates extends MassivePlugin {
 		postEnable();
 	}
 	
-	public void onDisable() {
-		for (Gate gate : gates.getAll()) {
-			gate.empty();
-		}
+	public void onDisable()
+	{
+		Gates.i.emptyAll();
 	}
+	
+	// -------------------------------------------- //
+	// LANG AND TAGS
+	// -------------------------------------------- //
+	
+	@Override
+	public void addLang()
+	{
+		super.addLang();
+		this.lang.put("openfail.wrong_source_material", "<b>The source block must be made of %s.");
+		this.lang.put("openfail.no_frame", "<b>There is no valid frame for the gate.");
+		this.lang.put("usefail.no_target_location", "<i>This gate does not lead anywhere.");
+		this.lang.put("info.materials", "<i>Materials: %s");
+		this.lang.put("info.gatecount", "<i>Gates: <h>%s");
+	}
+	
+	@Override
+	public void addTags()
+	{
+		super.addTags();
+		this.tags.put("i", "§b");
+		this.tags.put("h", "§a");
+	}
+	
 }

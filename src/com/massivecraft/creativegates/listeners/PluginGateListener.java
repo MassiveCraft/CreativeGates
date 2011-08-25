@@ -7,16 +7,19 @@ import com.massivecraft.creativegates.event.CreativeGatesListener;
 import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
 
 public class PluginGateListener extends CreativeGatesListener {
-    public PluginGateListener(CreativeGates plugin) {
-    }
+	
+	CreativeGates p = CreativeGates.p;
+    
     @Override
-    public void onPlayerGateTeleport(CreativeGatesTeleportEvent event) {
+    public void onPlayerGateTeleport(CreativeGatesTeleportEvent event)
+    {
         if(event.isCancelled()) return;
         // Teleport
         Player player = event.getPlayerMoveEvent().getPlayer();
         
         // For now we do not handle vehicles
-        if (player.isInsideVehicle()) {
+        if (player.isInsideVehicle())
+        {
             player.leaveVehicle();
         }
         

@@ -1,7 +1,7 @@
 main: com.massivecraft.creativegates.CreativeGates
 name: CreativeGates
 version: 1.2
-depend: [MassiveCore]
+softdepend: [DimensionDoor, MultiVerse, WorldManager]
 permissions:
  creativegates.*:
   children:
