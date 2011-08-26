@@ -19,6 +19,7 @@ public class Gate extends Entity implements Comparable<Gate>
 	public transient Set<WorldCoord> contentCoords;
 	public transient Set<WorldCoord> frameCoords;
 	public transient Set<Integer> frameMaterialIds;
+	public transient Set<Byte> frameDataValues;
 	public WorldCoord sourceCoord;
 	public transient boolean frameDirIsNS; // True means NS direction. false means WE direction.
 	
@@ -168,6 +169,7 @@ public class Gate extends Entity implements Comparable<Gate>
 					if (potentialBlock != sourceBlock)
 					{
 						frameMaterialIds.add(potentialBlock.getTypeId());
+						frameDataValues.add(potentialBlock.getData());
 					}
 				}
 			}
@@ -222,7 +224,7 @@ public class Gate extends Entity implements Comparable<Gate>
 		
 		for (Gate gate : gates)
 		{
-			if (this.frameMaterialIds.equals(gate.frameMaterialIds))
+			if (this.frameMaterialIds.equals(gate.frameMaterialIds) && this.frameDataValues.equals(gate.frameDataIds))
 			{
 				networkGatePath.add(gate);
 			}
