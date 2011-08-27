@@ -310,9 +310,11 @@
       public String getInfoMsgMaterial()
       {
          ArrayList<String> materialNames = new ArrayList<String>();
-         for (Integer frameMaterialId : this.frameMaterialIds)
+         for (int x = 0; x < frameMaterialIds.size(); x++)
          {
-            materialNames.add(p.txt.tags("<h>") + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
+            int frameMaterialId = this.frameMaterialIds.get(x);
+            byte dataId = this.frameDataValues.get(x);
+            materialNames.add(p.txt.tags("<h>") + TextUtil.parseByData(Material.getMaterial(frameMaterialId), dataId) + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
          }
       
          String materials = TextUtil.implode(materialNames, p.txt.tags("<i>, "));
