@@ -19,7 +19,7 @@
       public transient Set<WorldCoord> contentCoords;
       public transient Set<WorldCoord> frameCoords;
       public transient Set<Integer> frameMaterialIds;
-      public transient Set<Byte> frameDataValues;
+      public transient ArrayList<Byte> frameDataValues;
       public WorldCoord sourceCoord;
       public transient boolean frameDirIsNS; // True means NS direction. false means WE direction.
    
@@ -97,7 +97,7 @@
             }
          
             Block block = coord.getBlock();
-            if ( ! this.frameMaterialIds.contains(block.getTypeId())) 
+            if ( ! this.frameMaterialIds.contains(block.getTypeId()))
                return false;
          }
          return true;
@@ -111,6 +111,7 @@
          contentCoords = new HashSet<WorldCoord>();
          frameCoords = new HashSet<WorldCoord>();
          frameMaterialIds = new TreeSet<Integer>();
+			frameDataValues = new ArrayList<Byte>();
       }
    
    /**
@@ -310,9 +311,10 @@
       public String getInfoMsgMaterial()
       {
          ArrayList<String> materialNames = new ArrayList<String>();
+				Iterator iter = frameMaterialIds.iterator();
          for (int x = 0; x < frameMaterialIds.size(); x++)
          {
-            int frameMaterialId = this.frameMaterialIds.get(x);
+            int frameMaterialId = (Integer)(iter.next());
             byte dataId = this.frameDataValues.get(x);
             materialNames.add(p.txt.tags("<h>") + TextUtil.parseByData(Material.getMaterial(frameMaterialId), dataId) + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
          }

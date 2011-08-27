@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bukkit.Material;
-import org.buukkit.DyeColor;
+import org.bukkit.DyeColor;
 import org.bukkit.TreeSpecies;
 
 public class TextUtil
@@ -129,10 +129,12 @@ public class TextUtil
 	{
 		String name = "";
 		if(material == Material.WOOL)
-			name = upperCaseFirst(DyeColor.getByData(data).name().toLowerCase());
+			name = DyeColor.getByData(data).name();
 		if(material == Material.LOG)
-			name = TreeSpecies.getByData(data).name() == "GENERIC" ? "" : upperCaseFirst(TreeSpecies.getByData(data).name().toLowerCase());
+			name = TreeSpecies.getByData(data).name() == "GENERIC" ? "" : TreeSpecies.getByData(data).name();
 		//Add more if you figure out any more block types
+		if(! name.equals(""))
+			name = upperCaseFirst(name.replace('_', ' ').toLowerCase()) + " ";
 		return name;
 	}
 }
