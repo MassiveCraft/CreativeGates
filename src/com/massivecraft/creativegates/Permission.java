@@ -16,13 +16,14 @@ public enum Permission
 		this.node = node;
     }
 	
-	public boolean has(CommandSender sender)
+	public boolean has(CommandSender sender, boolean informSenderIfNot)
 	{
-		return CreativeGates.p.perm.has(sender, this.node);
+		return CreativeGates.p.perm.has(sender, this.node, informSenderIfNot);
 	}
 	
-	public boolean test(CommandSender sender)
+	public boolean has(CommandSender sender)
 	{
-		return CreativeGates.p.perm.test(sender, this.node);
+		return CreativeGates.p.perm.has(sender, this.node, false);
 	}
+	
 }

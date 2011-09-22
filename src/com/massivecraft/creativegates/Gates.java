@@ -3,6 +3,8 @@ package com.massivecraft.creativegates;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -21,7 +23,7 @@ public class Gates extends EntityCollection<Gate>
 		super
 		(
 			Gate.class,
-			new TreeSet<Gate>(new Comparator<Gate>()
+			new ConcurrentSkipListSet<Gate>(new Comparator<Gate>()
 			{
 				@Override
 				public int compare(Gate me, Gate you)
@@ -29,7 +31,7 @@ public class Gates extends EntityCollection<Gate>
 					return me.sourceCoord.toString().compareTo(you.sourceCoord.toString());
 				}
 			}),
-			new LinkedHashMap<String, Gate>(),
+			new ConcurrentHashMap<String, Gate>(),
 			new File(CreativeGates.p.getDataFolder(), "gate.json"),
 			CreativeGates.p.gson
 		);

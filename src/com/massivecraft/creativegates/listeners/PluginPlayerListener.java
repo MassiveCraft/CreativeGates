@@ -49,7 +49,7 @@ public class PluginPlayerListener extends PlayerListener
 		}
 		
 		// Can the player use gates?
-		if ( ! Permission.USE.test(event.getPlayer())) return;
+		if ( ! Permission.USE.has(event.getPlayer(), true)) return;
 		
 		// Find the target location
 		Location targetLocation = gateFrom.getMyTargetExitLocation();
@@ -99,7 +99,7 @@ public class PluginPlayerListener extends PlayerListener
 		if (clickedBlock.getTypeId() == Conf.block)
 		{
 			// create a gate if the player has the permission
-			if (Permission.CREATE.test(player))
+			if (Permission.CREATE.has(player, true))
 			{
 				Gates.i.open(new WorldCoord(clickedBlock), player);
 			}

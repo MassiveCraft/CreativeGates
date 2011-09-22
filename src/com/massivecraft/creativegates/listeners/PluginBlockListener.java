@@ -80,7 +80,7 @@ public class PluginBlockListener extends BlockListener
 		}
 		
 		// A player is attempting to destroy a gate. Can he?
-		if ( ! Permission.DESTROY.test(event.getPlayer()))
+		if ( ! Permission.DESTROY.has(event.getPlayer(), true))
 		{
 			event.setCancelled(true);
 		}

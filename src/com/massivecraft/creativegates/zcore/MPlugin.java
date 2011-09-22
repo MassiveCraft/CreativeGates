@@ -7,8 +7,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.Gson;
@@ -24,19 +25,23 @@ import com.massivecraft.creativegates.zcore.util.TextUtil;
 
 public abstract class MPlugin extends JavaPlugin
 {
-	// Commands 
-	// TODO
-	public List<MCommand> commands = new ArrayList<MCommand>();
-	
 	// Some utils
 	public Persist persist;
 	public TextUtil txt;
 	public LibLoader lib;
 	public PermUtil perm;
 	
+	// Persist related
 	public Gson gson;	
-	
 	private Integer saveTask = null;
+	
+	// Listeners
+	private MPluginSecretPlayerListener mPluginSecretPlayerListener; 
+	private MPluginSecretServerListener mPluginSecretServerListener;
+	
+	// Our stored base commands
+	private List<MCommand<?>> baseCommands = new ArrayList<MCommand<?>>();
+	public List<MCommand<?>> getBaseCommands() { return this.baseCommands; }
 
 	// -------------------------------------------- //
 	// ENABLE
@@ -59,7 +64,13 @@ public abstract class MPlugin extends JavaPlugin
 		this.gson = this.getGsonBuilder().create();
 		
 		initTXT();
-		//loadPermvars();
+		
+		// Create and register listeners
+		this.mPluginSecretPlayerListener = new MPluginSecretPlayerListener(this);
+		this.mPluginSecretServerListener = new MPluginSecretServerListener(this);
+		PluginManager pm = this.getServer().getPluginManager();
+		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, this.mPluginSecretPlayerListener, Event.Priority.Lowest, this);
+		pm.registerEvent(Event.Type.SERVER_COMMAND, this.mPluginSecretServerListener, Event.Priority.Lowest, this);
 		
 		// Register recurring tasks
 		long saveTicks = 20 * 60 * 30; // Approximately every 30 min
@@ -108,18 +119,6 @@ public abstract class MPlugin extends JavaPlugin
 		.excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.VOLATILE);
 	}
 	
-	// TODO fix the permission vars system... it is so darn incomplete...
-	/*public void loadPermvars()
-	{
-		Type type = new TypeToken<Map<String,Map<String,JsonElement>>>(){}.getType();
-		
-		Map<String,Map<String,JsonElement>> permvars = this.persist.load(type, "permvars");
-		if (permvars != null)
-		{
-			PermUtil.getPermvars().putAll(permvars);
-		}
-	}*/
-	
 	// -------------------------------------------- //
 	// LANG AND TAGS
 	// -------------------------------------------- //
@@ -134,7 +133,8 @@ public abstract class MPlugin extends JavaPlugin
 		this.lang.put("perm.forbidden", "<b>You don't have permission to %s.");
 		this.lang.put("perm.dothat", "do that");
 		this.lang.put("command.sender_must_me_player", "<b>This command can only be used by ingame players.");
-		this.lang.put("command.to_few_args", "<b>To few arguments. Use it like this:");
+		this.lang.put("command.to_few_args", "<b>To few arguments. <i>Use like this:");
+		this.lang.put("command.to_many_args", "<b>Strange argument \"<p>%s<b>\". <i>Use like this:");
 	}
 	
 	public void addTags()
@@ -185,39 +185,24 @@ public abstract class MPlugin extends JavaPlugin
 		this.txt = new TextUtil(this.tags, this.lang);
 	}
 	
-	// -------------------------------------------- //
-	// COMMANDS
-	// -------------------------------------------- //
-	private String baseCommand;
-	@SuppressWarnings("unchecked")
-	public String getBaseCommand()
-	{
-		if (this.baseCommand != null)
-		{
-			return this.baseCommand;
-		}
-		
-		Map<String, Object> Commands = (Map<String, Object>)this.getDescription().getCommands();
-		this.baseCommand = Commands.keySet().iterator().next();
-		return this.baseCommand;
-	}
 	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
+	// -------------------------------------------- //
+	// COMMAND HANDLING
+	// -------------------------------------------- //
+
+	public boolean handleCommand(String label, List<String> args, CommandSender player)
 	{
-		List<String> parameters = new ArrayList<String>(Arrays.asList(args));
-		
-		for (MCommand command : this.commands)
+		for (MCommand<?> command : this.getBaseCommands())
 		{
-			if (command.aliases.contains(commandLabel))
+			if (command.aliases.contains(label))
 			{
-				command.execute(sender, parameters);
+				command.execute(player, args);
 				return true;
 			}
 		}
-
 		return false;
 	}
+	
 	
 	// -------------------------------------------- //
 	// LOGGING

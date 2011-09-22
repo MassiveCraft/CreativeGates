@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.gson.Gson;
-import com.massivecraft.creativegates.zcore.persist.EM;
-import com.massivecraft.creativegates.zcore.persist.Entity;
 import com.massivecraft.creativegates.zcore.util.DiscUtil;
 
 public abstract class EntityCollection<E extends Entity>
@@ -88,6 +86,11 @@ public abstract class EntityCollection<E extends Entity>
 		E e = id2entity.get(id);
 		if (e != null) return e;
 		return this.create(id);
+	}
+	
+	public boolean exists(String id)
+	{
+		return id2entity.get(id) != null;
 	}
 	
 	// -------------------------------------------- //

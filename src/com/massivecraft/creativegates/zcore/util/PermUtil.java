@@ -1,6 +1,7 @@
 package com.massivecraft.creativegates.zcore.util;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -18,11 +19,9 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class PermUtil {
 	
-	private PermissionManager pex = null;
-	private PermissionHandler perm2or3 = null;
+	public PermissionManager pex = null;
+	public PermissionHandler perm2or3 = null;
 	public Map<String, String> permissionDescriptions = new HashMap<String, String>();
-	
-	//public static Map<String,Map<String,JsonElement>> permvars = new HashMap<String,Map<String,JsonElement>>();
 	
 	protected MPlugin p;
 	
@@ -30,20 +29,6 @@ public class PermUtil {
 	{
 		this.p = p;
 		this.setup();
-	}
-	
-	/**
-	 * This method does the same thing as "has" but will also send "me"
-	 * a warning message using the description of the permission if available.
-	 */
-	public boolean test (CommandSender me, String perm)
-	{
-		if (has(me, perm))
-		{
-			return true;
-		}
-		me.sendMessage(this.getForbiddenMessage(perm));
-		return false;
 	}
 	
 	public String getForbiddenMessage(String perm)
@@ -56,6 +41,11 @@ public class PermUtil {
 	 */
 	public void setup()
 	{
+		for(Permission permission : p.getDescription().getPermissions())
+		{
+			this.permissionDescriptions.put(permission.getName(), permission.getDescription());
+		}
+		
 		if ( Bukkit.getServer().getPluginManager().isPluginEnabled("PermissionsEx"))
 		{
 			pex = PermissionsEx.getPermissionManager();
@@ -72,11 +62,6 @@ public class PermUtil {
 		}
 		
 	    p.log("No permission plugin detected. Defaulting to native bukkit permissions.");
-	    
-	    for(Permission permission : p.getDescription().getPermissions())
-		{
-			this.permissionDescriptions.put(permission.getName(), permission.getDescription());
-		}
 	}
 
 	public String getPermissionDescription (String perm)
@@ -113,28 +98,31 @@ public class PermUtil {
 		return me.hasPermission(perm);
 	}
 	
-	/*
-	public JsonElement getVar(CommandSender me, String varname)
+	public boolean has (CommandSender me, String perm, boolean informSenderIfNot)
 	{
-		Map<String,JsonElement> perm2val = permvars.get(varname);
+		if (has(me, perm))
+		{
+			return true;
+		}
+		else if (informSenderIfNot)
+		{
+			me.sendMessage(this.getForbiddenMessage(perm));
+		}
+		return false;
+	}
+	
+	public <T> T pickFirstVal(CommandSender me, Map<String, T> perm2val)
+	{
 		if (perm2val == null) return null;
-		JsonElement ret = null;
-		for ( Entry<String, JsonElement> entry : perm2val.entrySet())
+		T ret = null;
+		
+		for ( Entry<String, T> entry : perm2val.entrySet())
 		{
 			ret = entry.getValue();
 			if (has(me, entry.getKey())) break;
 		}
+		
 		return ret;
 	}
-
-	public Map<String, Map<String, JsonElement>> getPermvars()
-	{
-		return permvars;
-	}
-
-	public void setPermvars(Map<String, Map<String, JsonElement>> permvars)
-	{
-		PermUtil.permvars = permvars;
-	}*/
 	
 }
