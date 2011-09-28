@@ -61,9 +61,8 @@ public class CreativeGates extends MPlugin
 	
 	public void onDisable()
 	{
-		super.onDisable(); //Ensure all gates are saved when stopping the server.
-
 		Gates.i.emptyAll();
+		super.onDisable();
 	}
 	
 	// -------------------------------------------- //
