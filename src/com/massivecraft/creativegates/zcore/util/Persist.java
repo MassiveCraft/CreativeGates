@@ -136,11 +136,13 @@ public class Persist {
 	
 	
 	// LOAD BY TYPE
+	@SuppressWarnings("unchecked")
 	public <T> T load(Type typeOfT, String name)
 	{
-		return load(typeOfT, getFile(name));
+		return (T) load(typeOfT, getFile(name));
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> T load(Type typeOfT, File file)
 	{
 		String content = DiscUtil.readCatch(file);
@@ -148,7 +150,7 @@ public class Persist {
 			return null;
 		}
 		
-		return p.gson.fromJson(content, typeOfT);
+		return (T) p.gson.fromJson(content, typeOfT);
 	}
 	
 }

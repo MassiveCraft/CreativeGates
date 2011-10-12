@@ -9,6 +9,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import com.massivecraft.creativegates.util.BlockUtil;
+import com.massivecraft.creativegates.util.SmokeUtil;
 import com.massivecraft.creativegates.zcore.persist.*;
 import com.massivecraft.creativegates.zcore.util.*;
 
@@ -56,14 +57,15 @@ public class Gate extends Entity implements Comparable<Gate>
 		
 		if (this.isOpen()) return;
 		
-		if (sourceBlock.getTypeId() != Conf.block) 
+		// TODO: THE NULL CHECK IS OK?
+		if (sourceBlock == null || sourceBlock.getTypeId() != Conf.block) 
 		{
-			throw new GateOpenException(p.txt.get("openfail.wrong_source_material", TextUtil.getMaterialName(Conf.block))); 
+			throw new GateOpenException(p.txt.parse(Lang.openFailWrongSourceMaterial, TextUtil.getMaterialName(Conf.block))); 
 		}
 		
 		if ( ! this.dataPopulate())
 		{
-			throw new GateOpenException(p.txt.get("openfail.no_frame"));
+			throw new GateOpenException(p.txt.parse(Lang.openFailNoFrame));
 		}
 		
 		// Finally we set the content blocks material to water
@@ -194,16 +196,11 @@ public class Gate extends Entity implements Comparable<Gate>
 	 * This method finds the place where this gates goes to.
 	 * We pick the next gate in the network chain that has a non blocked exit.
 	 */
-	public Location getMyTargetExitLocation()
+	public Gate getMyTargetGate()
 	{
-		Location ret;
 		for (Gate gate : this.getSelfRelativeGatePath())
 		{
-			ret = gate.getMyOwnExitLocation();
-			if (ret != null)
-			{
-				return ret;
-			}
+			if (gate != null) return gate;
 		}
 		return null;
 	}
@@ -308,17 +305,17 @@ public class Gate extends Entity implements Comparable<Gate>
 		ArrayList<String> materialNames = new ArrayList<String>();
 		for (Integer frameMaterialId : this.frameMaterialIds)
 		{
-			materialNames.add(p.txt.tags("<h>") + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
+			materialNames.add(p.txt.parse("<h>") + TextUtil.getMaterialName(Material.getMaterial(frameMaterialId)));
 		}
 		
-		String materials = TextUtil.implode(materialNames, p.txt.tags("<i>, "));
+		String materials = TextUtil.implode(materialNames, p.txt.parse("<i>, "));
 		
-		return p.txt.get("info.materials", materials);
+		return p.txt.parse(Lang.infoMaterials, materials);
 	}
 	
 	public String getInfoMsgNetwork()
 	{
-		return p.txt.get("info.gatecount", this.getNetworkGatePath().size());
+		return p.txt.parse(Lang.infoGateCount, this.getNetworkGatePath().size());
 	}
 	
 	public void informPlayer(Player player)
@@ -385,6 +382,19 @@ public class Gate extends Entity implements Comparable<Gate>
 		return foundBlocks;
 	}
 
+	//----------------------------------------------//
+	// Special FX
+	//----------------------------------------------//
+	public void emmitSmoke()
+	{
+		ArrayList<Location> smokeLocations = new ArrayList<Location>();
+		for (WorldCoord coord : this.contentCoords)
+    	{
+    		smokeLocations.add(coord.getLocation());
+    	}
+		SmokeUtil.emmitFromLocations(smokeLocations);
+	}
+	
 	//----------------------------------------------//
 	// Comparable
 	//----------------------------------------------//

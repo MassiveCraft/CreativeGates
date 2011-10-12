@@ -4,16 +4,16 @@ import org.bukkit.command.CommandSender;
 
 public enum Permission
 {
-	USE("creativegates.use"),
-	CREATE("creativegates.create"),
-	DESTROY("creativegates.destroy"),
+	USE("use"),
+	CREATE("create"),
+	DESTROY("destroy"),
 	;
 	
 	public final String node;
 	
 	Permission(final String node)
 	{
-		this.node = node;
+		this.node = "creativegates."+node;
     }
 	
 	public boolean has(CommandSender sender, boolean informSenderIfNot)

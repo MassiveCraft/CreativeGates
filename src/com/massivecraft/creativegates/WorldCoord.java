@@ -50,6 +50,13 @@ public class WorldCoord {
 		return world.getBlockAt(x, y, z);
 	}
 	
+	public Location getLocation()
+	{
+		Block block = this.getBlock();
+		if (block == null) return null;
+		return block.getLocation();
+	}
+	
 	//----------------------------------------------//
 	// Comparison
 	//----------------------------------------------//

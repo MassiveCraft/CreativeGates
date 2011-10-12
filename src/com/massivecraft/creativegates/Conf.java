@@ -7,6 +7,7 @@ public class Conf
 	public static int wand = Material.WATCH.getId();
 	public static int block = Material.DIAMOND_BLOCK.getId();
 	public static int maxarea = 200;
+	public static boolean effects = true;
 	
 	public static transient Conf i = new Conf();
 	

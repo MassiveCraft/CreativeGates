@@ -7,7 +7,7 @@ import com.massivecraft.creativegates.zcore.persist.EntityCollection;
 
 public class EM
 {
-	private static Map<Class<? extends Entity>, EntityCollection<? extends Entity>> class2Entities = new LinkedHashMap<Class<? extends Entity>, EntityCollection<? extends Entity>>();
+	public static Map<Class<? extends Entity>, EntityCollection<? extends Entity>> class2Entities = new LinkedHashMap<Class<? extends Entity>, EntityCollection<? extends Entity>>();
 	
 	@SuppressWarnings("unchecked")
 	public static <T extends Entity> EntityCollection<T> getEntitiesCollectionForEntityClass(Class<T> entityClass)
@@ -71,5 +71,4 @@ public class EM
 			ec.loadFromDisc();
 		}
 	}
-	
 }

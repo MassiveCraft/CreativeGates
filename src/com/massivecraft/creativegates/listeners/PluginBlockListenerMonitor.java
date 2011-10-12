@@ -15,9 +15,7 @@ public class PluginBlockListenerMonitor extends BlockListener
 	// Destroy the gate if the frame breaks
 	public void onBlockBreak(BlockBreakEvent event)
 	{
-		if (event.isCancelled()) {
-			return;
-		}
+		if (event.isCancelled()) return;
 		
 		Gate gate = Gates.i.findFromFrame(event.getBlock());
 		if (gate != null)

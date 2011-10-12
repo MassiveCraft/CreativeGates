@@ -17,13 +17,13 @@ import com.massivecraft.creativegates.Conf;
 import com.massivecraft.creativegates.Gate;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Gates;
+import com.massivecraft.creativegates.Lang;
 import com.massivecraft.creativegates.Permission;
 import com.massivecraft.creativegates.WorldCoord;
 import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
 
 public class PluginPlayerListener extends PlayerListener
 {
-	
 	CreativeGates p = CreativeGates.p;
 	
 	public void onPlayerMove(PlayerMoveEvent event)
@@ -52,10 +52,11 @@ public class PluginPlayerListener extends PlayerListener
 		if ( ! Permission.USE.has(event.getPlayer(), true)) return;
 		
 		// Find the target location
-		Location targetLocation = gateFrom.getMyTargetExitLocation();
+		Gate gateTo = gateFrom.getMyTargetGate();
+		Location targetLocation = gateTo == null ? null : gateTo.getMyOwnExitLocation();
 		if (targetLocation == null)
 		{
-			event.getPlayer().sendMessage(p.txt.get("usefail.no_target_location"));
+			event.getPlayer().sendMessage(p.txt.parse(Lang.useFailNoTargetLocation));
 			return;
 		}
 		
@@ -65,7 +66,7 @@ public class PluginPlayerListener extends PlayerListener
 		    frameMaterials.add(Material.getMaterial(id));
 		}
 		
-		CreativeGatesTeleportEvent gateevent = new CreativeGatesTeleportEvent(event, targetLocation, frameMaterials);
+		CreativeGatesTeleportEvent gateevent = new CreativeGatesTeleportEvent(event, targetLocation, frameMaterials, gateFrom, gateTo);
 		p.getServer().getPluginManager().callEvent(gateevent);
 	}
 	
@@ -73,15 +74,9 @@ public class PluginPlayerListener extends PlayerListener
 	{
 		if (event.isCancelled()) return;
 		
-		// We are only interested in left clicks with a wand
-		if
-		(
-			event.getAction() != Action.LEFT_CLICK_BLOCK ||
-			event.getPlayer().getItemInHand().getTypeId() != Conf.wand
-		)
-		{
-			return;
-		}
+		// We are only interested in clicks on a block with a wand
+		if (event.getAction() != Action.LEFT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+		if (event.getPlayer().getItemInHand().getTypeId() != Conf.wand) return;
 		
 		Block clickedBlock = event.getClickedBlock();
 		Player player = event.getPlayer();
