@@ -31,7 +31,7 @@ public class WorldCoord {
 	
 	public WorldCoord(Block block)
 	{
-		this(block.getLocation());
+		this(block.getWorld().getName(), block.getX(), block.getY(), block.getZ());
 	}
 	
 	//----------------------------------------------//

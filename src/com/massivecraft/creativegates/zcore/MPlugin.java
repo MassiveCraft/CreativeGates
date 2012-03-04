@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginManager;
+//import org.bukkit.event.Event;
+//import org.bukkit.event.Listener;
+//import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.Gson;
@@ -41,8 +41,8 @@ public abstract class MPlugin extends JavaPlugin
 	public void setAutoSave(boolean val) {this.autoSave = val;}
 	
 	// Listeners
-	private MPluginSecretPlayerListener mPluginSecretPlayerListener; 
-	private MPluginSecretServerListener mPluginSecretServerListener;
+	//private MPluginSecretPlayerListener mPluginSecretPlayerListener; 
+	//private MPluginSecretServerListener mPluginSecretServerListener;
 	
 	// Our stored base commands
 	private List<MCommand<?>> baseCommands = new ArrayList<MCommand<?>>();
@@ -72,13 +72,13 @@ public abstract class MPlugin extends JavaPlugin
 		initTXT();
 		
 		// Create and register listeners
-		this.mPluginSecretPlayerListener = new MPluginSecretPlayerListener(this);
-		this.mPluginSecretServerListener = new MPluginSecretServerListener(this);
-		PluginManager pm = this.getServer().getPluginManager();
+		//this.mPluginSecretPlayerListener = new MPluginSecretPlayerListener(this);
+		//this.mPluginSecretServerListener = new MPluginSecretServerListener(this);
+		/*PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvent(Event.Type.PLAYER_PRELOGIN, this.mPluginSecretPlayerListener, Event.Priority.Lowest, this);
 		pm.registerEvent(Event.Type.PLAYER_CHAT, this.mPluginSecretPlayerListener, Event.Priority.Low, this);
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, this.mPluginSecretPlayerListener, Event.Priority.Lowest, this);
-		pm.registerEvent(Event.Type.SERVER_COMMAND, this.mPluginSecretServerListener, Event.Priority.Lowest, this);
+		pm.registerEvent(Event.Type.SERVER_COMMAND, this.mPluginSecretServerListener, Event.Priority.Lowest, this);*/
 		
 		
 		// Register recurring tasks
@@ -117,10 +117,10 @@ public abstract class MPlugin extends JavaPlugin
 	// Register Event convenience method
 	// -------------------------------------------- //
 	
-	public void registerEvent(Event.Type type, Listener listener, Event.Priority priority)
+	/*public void registerEvent(Event.Type type, Listener listener, Event.Priority priority)
 	{
 		Bukkit.getServer().getPluginManager().registerEvent(type, listener, priority, this);	
-	}
+	}*/
 	
 	// -------------------------------------------- //
 	// Some inits...
