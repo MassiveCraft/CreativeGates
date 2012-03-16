@@ -1,1 +1,1 @@
-<b>[http://massivecraft.com/dev/creative-gates](http://massivecraft.com/dev/creative-gates)</b>
+Lock down mcore2 for R5? or R6?

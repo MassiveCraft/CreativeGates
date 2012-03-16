@@ -20,7 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.massivecraft.creativegates.zcore.persist.EM;
 import com.massivecraft.creativegates.zcore.persist.SaveTask;
 import com.massivecraft.creativegates.zcore.util.LibLoader;
-import com.massivecraft.creativegates.zcore.util.PermUtil;
+import com.massivecraft.creativegates.zcore.util.Perm;
 import com.massivecraft.creativegates.zcore.util.Persist;
 import com.massivecraft.creativegates.zcore.util.TextUtil;
 
@@ -31,7 +31,7 @@ public abstract class MPlugin extends JavaPlugin
 	public Persist persist;
 	public TextUtil txt;
 	public LibLoader lib;
-	public PermUtil perm;
+	public Perm perm;
 	
 	// Persist related
 	public Gson gson;	
@@ -61,7 +61,7 @@ public abstract class MPlugin extends JavaPlugin
 		this.getDataFolder().mkdirs();
 		
 		// Create Utility Instances
-		this.perm = new PermUtil(this);
+		this.perm = new Perm(this);
 		this.persist = new Persist(this);
 		this.lib = new LibLoader(this);
 		
