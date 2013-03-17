@@ -66,7 +66,7 @@ public class TheListener implements Listener
 		if (event.isCancelled()) return;
 		
 		Block blockFrom = event.getBlock();
-		boolean isWater = blockFrom.getTypeId() == 9;
+		boolean isWater = blockFrom.getTypeId() == 90;
 		
 		if ( ! isWater)
 		{
