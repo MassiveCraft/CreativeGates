@@ -263,18 +263,18 @@ public class Gate extends Entity implements Comparable<Gate>
 		if (frameDirIsNS)
 		{
 			firstChoice = overSourceBlock.getRelative(BlockFace.EAST).getLocation();
-			firstChoice.setYaw(180);
+			firstChoice.setYaw(270);
 			
 			secondChoice = overSourceBlock.getRelative(BlockFace.WEST).getLocation();
-			secondChoice.setYaw(0);
+			secondChoice.setYaw(90);
 		}
 		else
 		{
 			firstChoice = overSourceBlock.getRelative(BlockFace.NORTH).getLocation();
-			firstChoice.setYaw(90);
+			firstChoice.setYaw(180);
 			
 			secondChoice = overSourceBlock.getRelative(BlockFace.SOUTH).getLocation();
-			secondChoice.setYaw(270);
+			secondChoice.setYaw(0);
 		}
 		
 		// We want to stand in the middle of the block. Not in the corner.

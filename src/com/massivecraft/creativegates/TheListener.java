@@ -194,7 +194,7 @@ public class TheListener implements Listener
 		Block blockToTest = event.getTo().getBlock().getRelative(BlockFace.UP);
 		
 		// Fast material check 
-		if (blockToTest.getType() != Material.STATIONARY_WATER) return;
+		if (blockToTest.getType() != Material.STATIONARY_WATER && blockToTest.getType() != Material.WATER) return;
 		
 		// Find the gate if there is one
 		Gate gateFrom = Gates.i.findFromContent(blockToTest);

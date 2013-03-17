@@ -63,6 +63,7 @@ public class DiscUtil
 			@SuppressWarnings("resource")
 			FileOutputStream fos = new FileOutputStream(file);
 		    fos.getChannel().transferFrom(rbc, 0, 1 << 24);
+		    fos.close();
 		    return true;
 		}
 		catch (Exception e)
