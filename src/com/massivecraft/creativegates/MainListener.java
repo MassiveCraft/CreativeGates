@@ -1,6 +1,7 @@
 package com.massivecraft.creativegates;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -346,7 +347,13 @@ public class MainListener implements Listener
 			Set<Block> blocks = gateFloodInfo.getValue();
 			
 			// ... ensure the required blocks are present ...
-			// TODO
+			Map<Material, Integer> materialCounts = MaterialCountUtil.count(blocks);
+			if (!MaterialCountUtil.has(materialCounts, uconf.getBlocksrequired()))
+			{
+				message = Txt.parse("<b>The frame must contain %s<b>.", MaterialCountUtil.desc(uconf.getBlocksrequired()));
+				player.sendMessage(message);
+				return;
+			}
 			
 			// ... calculate the exit location ...
 			PS exit = PS.valueOf(player.getLocation());
@@ -430,8 +437,7 @@ public class MainListener implements Listener
 				if (secret) message += Txt.parse(" <i>(secret)");
 				player.sendMessage(message);
 				
-				// TODO: Show more info here? Make it more RP somehow.
-				
+				message = Txt.parse("<k>gates: <v>%d", currentGate.getGateChain().size());
 			}
 			else if (material == uconf.getMaterialSecret())
 			{
