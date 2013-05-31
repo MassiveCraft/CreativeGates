@@ -1,6 +1,7 @@
 package com.massivecraft.creativegates;
 
 import com.massivecraft.creativegates.entity.UConfColls;
+import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.listener.MainListener;
 import com.massivecraft.mcore.Aspect;
 import com.massivecraft.mcore.AspectColl;
@@ -48,6 +49,7 @@ public class CreativeGates extends MPlugin
 
 		// Initialize Database
 		UConfColls.get().init();
+		UGateColls.get().init();
 		
 		// Setup Listeners
 		MainListener.get().activate();
