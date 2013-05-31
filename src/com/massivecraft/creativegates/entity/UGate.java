@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.mcore.ps.PS;
 import com.massivecraft.mcore.store.Entity;
 
@@ -37,6 +38,18 @@ public class UGate extends Entity<UGate>
 		this.setCoords(that.getCoords());
 		
 		return this;
+	}
+	
+	@Override
+	public void postAttach(String id)
+	{
+		CreativeGates.get().getIndex().add(this);
+	}
+	
+	@Override
+	public void postDetach(String id)
+	{
+		CreativeGates.get().getIndex().remove(this);
 	}
 	
 	// -------------------------------------------- //
@@ -77,6 +90,15 @@ public class UGate extends Entity<UGate>
 	
 	private Set<PS> coords = new HashSet<PS>();
 	public Set<PS> getCoords() { return Collections.unmodifiableSet(this.coords);}
-	public void setCoords(Collection<PS> coords) { this.coords = new HashSet<PS>(coords); this.changed(); }
+	public void setCoords(Collection<PS> coords)
+	{
+		if (this.attached()) CreativeGates.get().getIndex().remove(this);
+		
+		this.coords = new HashSet<PS>(coords);
+		
+		if (this.attached()) CreativeGates.get().getIndex().add(this);
+			
+		this.changed();
+	}
 	
 }

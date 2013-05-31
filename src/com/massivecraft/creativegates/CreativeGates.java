@@ -1,8 +1,6 @@
 package com.massivecraft.creativegates;
 
 import com.massivecraft.creativegates.entity.UConfColls;
-import com.massivecraft.creativegates.entity.UGate;
-import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.index.IndexCombined;
 import com.massivecraft.creativegates.listener.MainListener;
@@ -55,17 +53,9 @@ public class CreativeGates extends MPlugin
 		);
 
 		// Initialize Database
+		this.getIndex().clear();
 		UConfColls.get().init();
 		UGateColls.get().init();
-		
-		// Full Re-Index
-		for (UGateColl coll : UGateColls.get().getColls())
-		{
-			for (UGate ugate : coll.getAll())
-			{
-				this.getIndex().add(ugate);
-			}
-		}
 		
 		// Setup Listeners
 		MainListener.get().activate();
