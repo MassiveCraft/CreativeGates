@@ -1,7 +1,10 @@
 package com.massivecraft.creativegates;
 
 import com.massivecraft.creativegates.entity.UConfColls;
+import com.massivecraft.creativegates.entity.UGate;
+import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
+import com.massivecraft.creativegates.index.IndexCombined;
 import com.massivecraft.creativegates.listener.MainListener;
 import com.massivecraft.mcore.Aspect;
 import com.massivecraft.mcore.AspectColl;
@@ -27,6 +30,10 @@ public class CreativeGates extends MPlugin
 	public Aspect getAspect() { return this.aspect; }
 	public Multiverse getMultiverse() { return this.getAspect().getMultiverse(); }
 	
+	// Index
+	private IndexCombined index = new IndexCombined();
+	public IndexCombined getIndex() { return this.index; };
+	
 	// -------------------------------------------- //
 	// OVERRIDE
 	// -------------------------------------------- //
@@ -51,10 +58,26 @@ public class CreativeGates extends MPlugin
 		UConfColls.get().init();
 		UGateColls.get().init();
 		
+		// Full Re-Index
+		for (UGateColl coll : UGateColls.get().getColls())
+		{
+			for (UGate ugate : coll.getAll())
+			{
+				this.getIndex().add(ugate);
+			}
+		}
+		
 		// Setup Listeners
 		MainListener.get().activate();
 		
 		postEnable();
+	}
+	
+	@Override
+	public void onDisable()
+	{
+		this.getIndex().clear();
+		super.onDisable();
 	}
 	
 }
