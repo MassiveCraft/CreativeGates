@@ -30,6 +30,7 @@ public class UConf extends Entity<UConf>
 		this.setBlocksrequired(that.getBlocksrequired());
 		this.setMaterialCreate(that.getMaterialCreate());
 		this.setMaterialInspect(that.getMaterialInspect());
+		this.setMaterialSecret(that.getMaterialSecret());
 		this.setMaterialMode(that.getMaterialMode());
 		
 		return this;
@@ -53,15 +54,15 @@ public class UConf extends Entity<UConf>
 	public Material getMaterialCreate() { return this.materialCreate; }
 	public void setMaterialCreate(Material materialCreate) { this.materialCreate = materialCreate; this.changed(); }
 	
-	private Material materialInspect = Material.WATCH;
+	private Material materialInspect = Material.BLAZE_POWDER;
 	public Material getMaterialInspect() { return this.materialInspect; }
 	public void setMaterialInspect(Material materialInspect) { this.materialInspect = materialInspect; this.changed(); }
 	
-	private Material materialSecret = Material.COAL;
+	private Material materialSecret = Material.MAGMA_CREAM;
 	public Material getMaterialSecret() { return this.materialSecret; }
 	public void setMaterialSecret(Material materialSecret) { this.materialSecret = materialSecret; this.changed(); }
 	
-	private Material materialMode = Material.COMPASS;
+	private Material materialMode = Material.BLAZE_ROD;
 	public Material getMaterialMode() { return this.materialMode; }
 	public void setMaterialMode(Material materialMode) { this.materialMode = materialMode; this.changed(); }
 	

@@ -8,6 +8,7 @@ import java.util.Set;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.mcore.ps.PS;
 import com.massivecraft.mcore.store.Entity;
+import com.massivecraft.mcore.util.SenderUtil;
 
 public class UGate extends Entity<UGate>
 {
@@ -70,7 +71,7 @@ public class UGate extends Entity<UGate>
 	
 	private String networkId = null;
 	public String getNetworkId() { return this.networkId; }
-	public void setNetworkId(String networkId) { this.networkId = networkId.toLowerCase(); this.changed(); }
+	public void setNetworkId(String networkId) { this.networkId = networkId; this.changed(); }
 	
 	private boolean networkSecret = false;
 	public boolean isNetworkSecret() { return this.networkSecret; }
@@ -99,6 +100,17 @@ public class UGate extends Entity<UGate>
 		if (this.attached()) CreativeGates.get().getIndex().add(this);
 			
 		this.changed();
+	}
+	
+	// -------------------------------------------- //
+	// FIELDS: EXTRA
+	// -------------------------------------------- //
+	
+	public boolean isCreator(Object o)
+	{
+		String senderId = SenderUtil.getSenderId(o);
+		if (senderId == null) return false;
+		return senderId.equalsIgnoreCase(this.creatorId);
 	}
 	
 }
