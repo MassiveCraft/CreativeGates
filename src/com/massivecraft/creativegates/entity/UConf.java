@@ -57,6 +57,10 @@ public class UConf extends Entity<UConf>
 	public Material getMaterialInspect() { return this.materialInspect; }
 	public void setMaterialInspect(Material materialInspect) { this.materialInspect = materialInspect; this.changed(); }
 	
+	private Material materialSecret = Material.COAL;
+	public Material getMaterialSecret() { return this.materialSecret; }
+	public void setMaterialSecret(Material materialSecret) { this.materialSecret = materialSecret; this.changed(); }
+	
 	private Material materialMode = Material.COMPASS;
 	public Material getMaterialMode() { return this.materialMode; }
 	public void setMaterialMode(Material materialMode) { this.materialMode = materialMode; this.changed(); }
