@@ -1,14 +1,27 @@
 package com.massivecraft.creativegates.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import com.massivecraft.creativegates.CreativeGates;
+import com.massivecraft.mcore.mixin.Mixin;
+import com.massivecraft.mcore.mixin.TeleporterException;
 import com.massivecraft.mcore.ps.PS;
 import com.massivecraft.mcore.store.Entity;
 import com.massivecraft.mcore.util.SenderUtil;
+import com.massivecraft.mcore.util.SmokeUtil;
+import com.massivecraft.mcore.util.Txt;
 
 public class UGate extends Entity<UGate>
 {
@@ -44,13 +57,21 @@ public class UGate extends Entity<UGate>
 	@Override
 	public void postAttach(String id)
 	{
+		if (this.getExit() == null) return;
 		CreativeGates.get().getIndex().add(this);
 	}
 	
 	@Override
 	public void postDetach(String id)
 	{
+		if (this.getExit() == null) return;
 		CreativeGates.get().getIndex().remove(this);
+	}
+	
+	@Override
+	public UGateColl getColl()
+	{
+		return (UGateColl) super.getColl();
 	}
 	
 	// -------------------------------------------- //
@@ -61,7 +82,7 @@ public class UGate extends Entity<UGate>
 	public String getCreatorId() { return this.creatorId; }
 	public void setCreatorId(String creatorId) { this.creatorId = creatorId; this.changed(); }
 	
-	private long createdMillis = 0;
+	private long createdMillis = System.currentTimeMillis();
 	public long getCreatedMillis() { return this.createdMillis; }
 	public void setCreatedMillis(long createdMillis) { this.createdMillis = createdMillis; this.changed(); }
 	
@@ -89,13 +110,13 @@ public class UGate extends Entity<UGate>
 	public PS getExit() { return this.exit; }
 	public void setExit(PS exit) { this.exit = exit; this.changed(); }
 	
-	private Set<PS> coords = new HashSet<PS>();
+	private Set<PS> coords = new TreeSet<PS>();
 	public Set<PS> getCoords() { return Collections.unmodifiableSet(this.coords);}
 	public void setCoords(Collection<PS> coords)
 	{
 		if (this.attached()) CreativeGates.get().getIndex().remove(this);
 		
-		this.coords = new HashSet<PS>(coords);
+		this.coords = new TreeSet<PS>(coords);
 		
 		if (this.attached()) CreativeGates.get().getIndex().add(this);
 			
@@ -103,7 +124,7 @@ public class UGate extends Entity<UGate>
 	}
 	
 	// -------------------------------------------- //
-	// FIELDS: EXTRA
+	// ASSORTED
 	// -------------------------------------------- //
 	
 	public boolean isCreator(Object o)
@@ -111,6 +132,231 @@ public class UGate extends Entity<UGate>
 		String senderId = SenderUtil.getSenderId(o);
 		if (senderId == null) return false;
 		return senderId.equalsIgnoreCase(this.creatorId);
+	}
+	
+	public void destroy()
+	{
+		this.empty();
+		this.detach();
+		this.fxKitDestroy(null);
+	}
+	
+	public void toggleMode()
+	{
+		boolean enter = this.isEnterEnabled();
+		boolean exit = this.isExitEnabled();
+		
+		if (enter == false && exit == false)
+		{
+			this.setEnterEnabled(true);
+			this.setExitEnabled(false);
+		}
+		else if (enter == true && exit == false)
+		{
+			this.setEnterEnabled(false);
+			this.setExitEnabled(true);
+		}
+		else if (enter == false && exit == true)
+		{
+			this.setEnterEnabled(true);
+			this.setExitEnabled(true);
+		}
+		else if (enter == true && exit == true)
+		{
+			this.setEnterEnabled(false);
+			this.setExitEnabled(false);
+		}
+	}
+	
+	// -------------------------------------------- //
+	// TRANSPORT
+	// -------------------------------------------- //
+	
+	public void transport(Player player)
+	{
+		List<UGate> gateChain = this.getGateChain();
+		
+		String message = null;
+		
+		for (UGate ugate : gateChain)
+		{
+			if (!ugate.isExitEnabled()) continue;
+			PS destinationPs = ugate.getExit();
+			try
+			{
+				Mixin.teleport(player, destinationPs, "the gate destination", 0);
+				this.setUsedMillis(System.currentTimeMillis());
+				this.fxKitUse(player);
+				return;
+			}
+			catch (TeleporterException e)
+			{
+				player.sendMessage(e.getMessage());
+			}
+		}
+		
+		message = Txt.parse("<i>This gate does not seem to lead anywhere.");
+		player.sendMessage(message);
+	}
+	
+	public List<UGate> getGateChain()
+	{
+		List<UGate> ret = new ArrayList<UGate>();
+		
+		List<UGate> rawchain = this.getColl().getGateChain(this.getNetworkId());
+		int myIndex = rawchain.indexOf(this);
+		
+		// Add what is after me
+		ret.addAll(rawchain.subList(myIndex+1, rawchain.size()));
+		
+		// Add what is before me
+		ret.addAll(rawchain.subList(0, myIndex));
+		
+		return ret;
+	}
+	
+	// -------------------------------------------- //
+	// CONTENT
+	// -------------------------------------------- //
+	
+	// These blocks are sorted since the coords are sorted
+	public List<Block> getBlocks()
+	{
+		List<Block> ret = new ArrayList<Block>();
+		
+		World world = null;
+		try
+		{
+			world = this.getExit().asBukkitWorld(true);
+		}
+		catch (IllegalStateException e)
+		{
+			return null;
+		}
+		
+		for (PS coord : this.getCoords())
+		{
+			Block block = world.getBlockAt(coord.getBlockX(), coord.getBlockY(), coord.getBlockZ());
+			ret.add(block);
+		}
+		
+		return ret;
+	}
+	
+	public Block getCenterBlock()
+	{
+		List<Block> blocks = this.getBlocks();
+		if (blocks == null) return null;
+		
+		return blocks.get(blocks.size() / 2);
+	}
+	
+	public boolean isIntact()
+	{
+		List<Block> blocks = this.getBlocks();
+		if (blocks == null) return true;
+		
+		for (Block block : blocks)
+		{
+			if (CreativeGates.isVoid(block))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public void setContent(Material material)
+	{
+		List<Block> blocks = this.getBlocks();
+		if (blocks == null) return;
+		
+		for (Block block : blocks)
+		{
+			Material blockMaterial = block.getType();
+			if (blockMaterial == Material.PORTAL || CreativeGates.isVoid(blockMaterial))
+			{
+				block.setType(material);
+			}
+		}
+	}
+	
+	public void fill()
+	{
+		CreativeGates.get().setFilling(true);
+		this.setContent(Material.PORTAL);
+		CreativeGates.get().setFilling(false);
+	}
+	
+	public void empty()
+	{
+		this.setContent(Material.AIR);
+	}
+	
+	// -------------------------------------------- //
+	// FX KIT
+	// -------------------------------------------- //
+
+	public void fxKitCreate(Player player)
+	{
+		this.fxSmoke();
+		this.fxShootSound();
+	}
+	
+	public void fxKitUse(Player player)
+	{
+		this.fxEnder();
+		this.fxShootSound();
+	}
+	
+	public void fxKitDestroy(Player player)
+	{
+		this.fxExplode();
+	}
+	
+	// -------------------------------------------- //
+	// FX SINGLE
+	// -------------------------------------------- //
+	
+	public void fxSmoke()
+	{
+		List<Block> blocks = this.getBlocks();
+		if (blocks == null) return;
+		for (Block block : blocks)
+		{
+			SmokeUtil.spawnCloudSimple(block.getLocation());
+		}
+	}
+	
+	public void fxEnder()
+	{
+		List<Block> blocks = this.getBlocks();
+		if (blocks == null) return;
+		for (Block block : blocks)
+		{
+			Location location = block.getLocation();
+			location.getWorld().playEffect(location, Effect.ENDER_SIGNAL, 0);
+		}
+	}
+	
+	public void fxExplode()
+	{
+		Block block = this.getCenterBlock();
+		if (block == null) return;
+		
+		Location location = block.getLocation();
+		
+		SmokeUtil.fakeExplosion(location);
+	}
+	
+	public void fxShootSound()
+	{
+		Block block = this.getCenterBlock();
+		if (block == null) return;
+		
+		Location location = block.getLocation();
+		
+		location.getWorld().playEffect(location, Effect.GHAST_SHOOT, 0);
 	}
 	
 }

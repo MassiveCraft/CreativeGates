@@ -1,9 +1,14 @@
 package com.massivecraft.creativegates;
 
+import java.util.EnumSet;
+import java.util.Set;
+
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.index.IndexCombined;
-import com.massivecraft.creativegates.listener.MainListener;
 import com.massivecraft.mcore.Aspect;
 import com.massivecraft.mcore.AspectColl;
 import com.massivecraft.mcore.MPlugin;
@@ -11,6 +16,12 @@ import com.massivecraft.mcore.Multiverse;
 
 public class CreativeGates extends MPlugin
 {
+	// -------------------------------------------- //
+	// CONSTANTS
+	// -------------------------------------------- //
+	
+	public final static Set<Material> VOID_MATERIALS = EnumSet.of(Material.AIR, Material.WATER, Material.STATIONARY_WATER, Material.LAVA, Material.STATIONARY_LAVA); 
+	
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
 	// -------------------------------------------- //
@@ -31,6 +42,11 @@ public class CreativeGates extends MPlugin
 	// Index
 	private IndexCombined index = new IndexCombined();
 	public IndexCombined getIndex() { return this.index; };
+	
+	// Filling
+	private boolean filling = false;
+	public boolean isFilling() { return this.filling; }
+	public void setFilling(boolean filling) { this.filling = filling; }
 	
 	// -------------------------------------------- //
 	// OVERRIDE
@@ -68,6 +84,20 @@ public class CreativeGates extends MPlugin
 	{
 		this.getIndex().clear();
 		super.onDisable();
+	}
+	
+	// -------------------------------------------- //
+	// UTIL
+	// -------------------------------------------- //
+	
+	public static boolean isVoid(Material material)
+	{
+		return VOID_MATERIALS.contains(material);
+	}
+	
+	public static boolean isVoid(Block block)
+	{
+		return isVoid(block.getType());
 	}
 	
 }
