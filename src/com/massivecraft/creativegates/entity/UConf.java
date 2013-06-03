@@ -26,6 +26,7 @@ public class UConf extends Entity<UConf>
 	@Override
 	public UConf load(UConf that)
 	{
+		this.setEnabled(that.isEnabled());
 		this.setMaxarea(that.getMaxarea());
 		this.setBlocksrequired(that.getBlocksrequired());
 		this.setMaterialCreate(that.getMaterialCreate());
@@ -39,6 +40,10 @@ public class UConf extends Entity<UConf>
 	// -------------------------------------------- //
 	// FIELDS
 	// -------------------------------------------- //
+	
+	private boolean enabled = true;
+	public boolean isEnabled() { return this.enabled; }
+	public void setEnabled(boolean enabled) { this.enabled = enabled; this.changed(); }
 	
 	private int maxarea = 200;
 	public int getMaxarea() { return this.maxarea; }

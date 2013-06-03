@@ -84,6 +84,9 @@ public class MainListener implements Listener
 	
 	public static boolean isGateNearby(Block block)
 	{
+		UConf uconf = UConf.get(block);
+		if (!uconf.isEnabled()) return false;
+		
 		final int radius = 2; 
 		for (int dx = -radius; dx <= radius; dx++)
 		{
@@ -165,10 +168,6 @@ public class MainListener implements Listener
 		UGate ugate = UGate.get(event.getTo());
 		if (ugate == null) return;
 		
-		// ... and we have permisison to use gates ...
-		Player player = event.getPlayer();
-		if (!Perm.USE.has(player, true)) return;
-		
 		// ... and if the gate is intact ...
 		if (!ugate.isIntact())
 		{
@@ -178,6 +177,14 @@ public class MainListener implements Listener
 			ugate.destroy();
 			return;
 		}
+		
+		// ... and gates are enabled here ...
+		UConf uconf = UConf.get(event.getTo());
+		if (!uconf.isEnabled()) return;
+		
+		// ... and we have permission to use gates ...
+		Player player = event.getPlayer();
+		if (!Perm.USE.has(player, true)) return;
 		
 		// ... and the gate has enter enabled ...
 		if (!ugate.isEnterEnabled())
@@ -281,13 +288,16 @@ public class MainListener implements Listener
 		final Block clickedBlock = event.getClickedBlock();
 		if (clickedBlock == null) return;
 		
+		// ... and gates are enabled here ...
+		UConf uconf = UConf.get(clickedBlock);
+		if (!uconf.isEnabled()) return;
+		
 		// ... and the item in hand ...
 		final ItemStack item = event.getItem();
 		if (item == null) return;
 		final Material material = item.getType();
 		
 		// ... is in any way an interesting material ...
-		final UConf uconf = UConf.get(player);
 		if
 		(
 			material != uconf.getMaterialInspect()

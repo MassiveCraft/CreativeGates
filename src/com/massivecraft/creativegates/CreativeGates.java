@@ -65,7 +65,7 @@ public class CreativeGates extends MPlugin
 		this.aspect.register();
 		this.aspect.setDesc(
 			"<i>What gates do exist.",
-			"<i>What are the config options are set to."
+			"<i>What the config options are set to."
 		);
 
 		// Initialize Database
