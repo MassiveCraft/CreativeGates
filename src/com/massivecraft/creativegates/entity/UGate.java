@@ -299,13 +299,13 @@ public class UGate extends Entity<UGate>
 
 	public void fxKitCreate(Player player)
 	{
-		this.fxSmoke();
+		//this.fxSmoke();
 		this.fxShootSound();
 	}
 	
 	public void fxKitUse(Player player)
 	{
-		this.fxEnder();
+		//this.fxEnder();
 		this.fxShootSound();
 	}
 	
