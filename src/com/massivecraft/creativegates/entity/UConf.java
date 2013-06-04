@@ -61,7 +61,7 @@ public class UConf extends Entity<UConf>
 	public boolean isRemovingCreateToolName() { return this.removingCreateToolName; }
 	public void setRemovingCreateToolName(boolean removingCreateToolName) { this.removingCreateToolName = removingCreateToolName; this.changed(); }
 	
-	private boolean removingCreateToolItem = true;
+	private boolean removingCreateToolItem = false;
 	public boolean isRemovingCreateToolItem() { return this.removingCreateToolItem; }
 	public void setRemovingCreateToolItem(boolean removingCreateToolItem) { this.removingCreateToolItem = removingCreateToolItem; this.changed(); }
 	
