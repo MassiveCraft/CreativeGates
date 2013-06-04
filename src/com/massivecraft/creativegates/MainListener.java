@@ -425,9 +425,21 @@ public class MainListener implements Listener
 				newItemUnnamed.setAmount(1);
 				player.getInventory().addItem(newItemUnnamed);
 				
+				// Update soon
+				Bukkit.getScheduler().runTask(CreativeGates.get(), new Runnable()
+				{
+					@SuppressWarnings("deprecation")
+					@Override
+					public void run()
+					{
+						player.updateInventory();
+					}
+				});
+				
 				// (message)
 				message = Txt.parse("<i>The %s seems to have lost it's power.", Txt.getMaterialName(material));
 				player.sendMessage(message);
+				
 			}
 		}
 		else
