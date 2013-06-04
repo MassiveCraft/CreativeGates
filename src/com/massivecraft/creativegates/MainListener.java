@@ -293,9 +293,9 @@ public class MainListener implements Listener
 		if (!uconf.isEnabled()) return;
 		
 		// ... and the item in hand ...
-		final ItemStack item = event.getItem();
-		if (item == null) return;
-		final Material material = item.getType();
+		final ItemStack currentItem = event.getItem();
+		if (currentItem == null) return;
+		final Material material = currentItem.getType();
 		
 		// ... is in any way an interesting material ...
 		if
@@ -334,14 +334,14 @@ public class MainListener implements Listener
 			}
 			
 			// ... check if the item is named ...
-			ItemMeta meta = item.getItemMeta();
-			if (!meta.hasDisplayName())
+			ItemMeta currentItemMeta = currentItem.getItemMeta();
+			if (!currentItemMeta.hasDisplayName())
 			{
 				message = Txt.parse("<b>You must name the %s before creating a gate with it.", Txt.getMaterialName(material));
 				player.sendMessage(message);
 				return;
 			}
-			String newNetworkId = ChatColor.stripColor(meta.getDisplayName());
+			String newNetworkId = ChatColor.stripColor(currentItemMeta.getDisplayName());
 			
 			// ... perform the flood fill ...
 			Block startBlock = clickedBlock.getRelative(event.getBlockFace());
@@ -387,22 +387,48 @@ public class MainListener implements Listener
 			// ... set the air blocks to portal material ...
 			newGate.fill();
 			
-			// ... un-enchant item ...
-			ItemStack newItem = new ItemStack(item);
-			ItemMeta newItemMeta = newItem.getItemMeta();
-			newItemMeta.setDisplayName(null);
-			newItem.setItemMeta(newItemMeta);
-			player.setItemInHand(newItem);
-			
 			// ... run fx ...
 			newGate.fxKitCreate(player);
 			
-			// ... inform the player.
+			// ... fx-inform the player ...
 			message = Txt.parse("<g>A \"<h>%s<g>\" gate takes form in front of you.", newNetworkId);
 			player.sendMessage(message);
 			
-			message = Txt.parse("<i>The %s seems to have lost it's power.", Txt.getMaterialName(material));
-			player.sendMessage(message);
+			// ... item cost ...
+			if (uconf.isRemovingCreateToolItem())
+			{
+				// ... remove one item amount...
+				
+				// (decrease count in hand)
+				ItemStack newItem = new ItemStack(currentItem);
+				newItem.setAmount(newItem.getAmount() - 1);
+				player.setItemInHand(newItem);
+				
+				// (message)
+				message = Txt.parse("<i>The %s disappears.", Txt.getMaterialName(material));
+				player.sendMessage(message);
+			}
+			else if (uconf.isRemovingCreateToolName())
+			{
+				// ... just remove the item name ...
+				
+				// (decrease count in hand)
+				ItemStack newItemNamed = new ItemStack(currentItem);
+				newItemNamed.setAmount(newItemNamed.getAmount() - 1);
+				player.setItemInHand(newItemNamed);
+				
+				// (add one unnamed)
+				ItemStack newItemUnnamed = new ItemStack(currentItem);
+				ItemMeta newItemUnnamedMeta = newItemUnnamed.getItemMeta();
+				newItemUnnamedMeta.setDisplayName(null);
+				newItemUnnamed.setItemMeta(newItemUnnamedMeta);
+				newItemUnnamed.setAmount(1);
+				player.getInventory().addItem(newItemUnnamed);
+				
+				// (message)
+				message = Txt.parse("<i>The %s seems to have lost it's power.", Txt.getMaterialName(material));
+				player.sendMessage(message);
+			}
 		}
 		else
 		{
@@ -464,6 +490,7 @@ public class MainListener implements Listener
 			else if (material == uconf.getMaterialSecret())
 			{
 				// ... we are trying to change secret state ...
+				
 				boolean creator = currentGate.isCreator(player);
 				if (creator)
 				{
