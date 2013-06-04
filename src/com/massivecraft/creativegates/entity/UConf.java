@@ -29,6 +29,8 @@ public class UConf extends Entity<UConf>
 		this.setEnabled(that.isEnabled());
 		this.setMaxarea(that.getMaxarea());
 		this.setBlocksrequired(that.getBlocksrequired());
+		this.setRemovingCreateToolName(that.isRemovingCreateToolName());
+		this.setRemovingCreateToolItem(that.isRemovingCreateToolItem());
 		this.setMaterialCreate(that.getMaterialCreate());
 		this.setMaterialInspect(that.getMaterialInspect());
 		this.setMaterialSecret(that.getMaterialSecret());
@@ -54,6 +56,14 @@ public class UConf extends Entity<UConf>
 	);
 	public Map<Material, Integer> getBlocksrequired() { return new HashMap<Material, Integer>(this.blocksrequired); }
 	public void setBlocksrequired(Map<Material, Integer> blocksrequired) { this.blocksrequired = new HashMap<Material, Integer>(blocksrequired); this.changed(); }
+	
+	private boolean removingCreateToolName = true;
+	public boolean isRemovingCreateToolName() { return this.removingCreateToolName; }
+	public void setRemovingCreateToolName(boolean removingCreateToolName) { this.removingCreateToolName = removingCreateToolName; this.changed(); }
+	
+	private boolean removingCreateToolItem = true;
+	public boolean isRemovingCreateToolItem() { return this.removingCreateToolItem; }
+	public void setRemovingCreateToolItem(boolean removingCreateToolItem) { this.removingCreateToolItem = removingCreateToolItem; this.changed(); }
 	
 	private Material materialCreate = Material.WATCH;
 	public Material getMaterialCreate() { return this.materialCreate; }

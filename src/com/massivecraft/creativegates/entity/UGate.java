@@ -45,7 +45,7 @@ public class UGate extends Entity<UGate>
 		this.setCreatedMillis(that.getCreatedMillis());
 		this.setUsedMillis(that.getUsedMillis());
 		this.setNetworkId(that.getNetworkId());
-		this.setNetworkSecret(that.isNetworkSecret());
+		this.setRestricted(that.isRestricted());
 		this.setEnterEnabled(that.isEnterEnabled());
 		this.setExitEnabled(that.isExitEnabled());
 		this.setExit(that.getExit());
@@ -94,9 +94,9 @@ public class UGate extends Entity<UGate>
 	public String getNetworkId() { return this.networkId; }
 	public void setNetworkId(String networkId) { this.networkId = networkId; this.changed(); }
 	
-	private boolean networkSecret = false;
-	public boolean isNetworkSecret() { return this.networkSecret; }
-	public void setNetworkSecret(boolean networkSecret) { this.networkSecret = networkSecret; this.changed(); }
+	private boolean restricted = false;
+	public boolean isRestricted() { return this.restricted; }
+	public void setRestricted(boolean restricted) { this.restricted = restricted; this.changed(); }
 	
 	private boolean enterEnabled = true;
 	public boolean isEnterEnabled() { return this.enterEnabled; }

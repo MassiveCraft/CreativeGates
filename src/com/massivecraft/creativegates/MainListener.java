@@ -433,21 +433,33 @@ public class MainListener implements Listener
 			message = Txt.parse("<i>You use the %s on the %s...", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
 			player.sendMessage(message);
 			
+			// ... check restriction ...
+			if (currentGate.isRestricted())
+			{
+				if (currentGate.isCreator(player))
+				{
+					message = Txt.parse("<i>... the gate is restricted but you are the creator ...");
+					player.sendMessage(message);
+				}
+				else
+				{
+					message = Txt.parse("<b>... the gate is restricted and you are not the creator.");
+					player.sendMessage(message);
+					return;
+				}
+			}
+			
 			if (material == uconf.getMaterialInspect())
 			{
 				// ... we are trying to inspect ...
 				message = Txt.parse("<i>Some gate inscriptions are revealed:");
 				player.sendMessage(message);
 				
-				boolean creator = currentGate.isCreator(player);
-				boolean secret = currentGate.isNetworkSecret();
-				boolean hidden = (secret && !creator);
-				
-				message = Txt.parse("<k>network: <v>") + (hidden ? Txt.parse("<magic>asdfasdfasdf") : currentGate.getNetworkId());
-				if (secret) message += Txt.parse(" <i>(secret)");
+				message = Txt.parse("<k>network: <v>%s", currentGate.getNetworkId());
 				player.sendMessage(message);
 				
 				message = Txt.parse("<k>gates: <v>%d", currentGate.getGateChain().size());
+				player.sendMessage(message);
 			}
 			else if (material == uconf.getMaterialSecret())
 			{
@@ -455,8 +467,8 @@ public class MainListener implements Listener
 				boolean creator = currentGate.isCreator(player);
 				if (creator)
 				{
-					boolean secret = !currentGate.isNetworkSecret();
-					currentGate.setNetworkSecret(secret);
+					boolean secret = !currentGate.isRestricted();
+					currentGate.setRestricted(secret);
 					
 					message = (secret ? Txt.parse("<h>Only you <i>can read the gate inscriptions now.") : Txt.parse("<h>Anyone <i>can read the gate inscriptions now."));
 					player.sendMessage(message);
