@@ -17,3 +17,6 @@
 
 # Mac filesystem dust
 .DS_Store
+
+# Maven
+/target
