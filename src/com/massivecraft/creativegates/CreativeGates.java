@@ -20,7 +20,7 @@ public class CreativeGates extends MPlugin
 	// CONSTANTS
 	// -------------------------------------------- //
 	
-	public final static Set<Material> VOID_MATERIALS = EnumSet.of(Material.AIR, Material.WATER, Material.STATIONARY_WATER, Material.LAVA, Material.STATIONARY_LAVA); 
+	public final static Set<Material> VOID_MATERIALS = EnumSet.of(Material.AIR); 
 	
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT

@@ -145,7 +145,7 @@ public class MainListener implements Listener
     {
 		UConf uconf = UConfColls.get().getForWorld(event.getBlock().getWorld().getName()).get(MCore.INSTANCE);
 		if (!uconf.isUsingWater()) return;
-		if (UGate.get(event.getBlock()) == null || UGate.get(event.getToBlock()) == null) return;
+		if (UGate.get(event.getBlock()) == null && UGate.get(event.getToBlock()) == null) return;
 		event.setCancelled(true);
     }
 	
