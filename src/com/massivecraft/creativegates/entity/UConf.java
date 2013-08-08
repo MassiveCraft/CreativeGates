@@ -27,6 +27,7 @@ public class UConf extends Entity<UConf>
 	public UConf load(UConf that)
 	{
 		this.setEnabled(that.isEnabled());
+		this.setUsingWater(that.isUsingWater());
 		this.setMaxarea(that.getMaxarea());
 		this.setBlocksrequired(that.getBlocksrequired());
 		this.setRemovingCreateToolName(that.isRemovingCreateToolName());
@@ -46,6 +47,10 @@ public class UConf extends Entity<UConf>
 	private boolean enabled = true;
 	public boolean isEnabled() { return this.enabled; }
 	public void setEnabled(boolean enabled) { this.enabled = enabled; this.changed(); }
+	
+	private boolean usingWater = false;
+	public boolean isUsingWater() { return this.usingWater; }
+	public void setUsingWater(boolean usingWater) { this.usingWater = usingWater; this.changed(); }
 	
 	private int maxarea = 200;
 	public int getMaxarea() { return this.maxarea; }

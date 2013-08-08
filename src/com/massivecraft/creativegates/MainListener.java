@@ -19,12 +19,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
@@ -32,8 +36,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.massivecraft.creativegates.entity.UConf;
+import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColls;
+import com.massivecraft.mcore.MCore;
 import com.massivecraft.mcore.ps.PS;
 import com.massivecraft.mcore.util.MUtil;
 import com.massivecraft.mcore.util.Txt;
@@ -105,6 +111,8 @@ public class MainListener implements Listener
 	// STABILIZE PORTAL CONENT
 	// -------------------------------------------- //
 	
+	// PORTAL
+	
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void stabilizePortalContent(BlockPhysicsEvent event)
     {
@@ -129,6 +137,42 @@ public class MainListener implements Listener
 		
 		return false;
 	}
+	
+	// WATER
+	
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void stabilizePortalContent(BlockFromToEvent event)
+    {
+		UConf uconf = UConfColls.get().getForWorld(event.getBlock().getWorld().getName()).get(MCore.INSTANCE);
+		if (!uconf.isUsingWater()) return;
+		if (UGate.get(event.getBlock()) == null || UGate.get(event.getToBlock()) == null) return;
+		event.setCancelled(true);
+    }
+	
+	public static void stabilizePortalContentBlock(Block block, Cancellable cancellable)
+	{
+		if (UGate.get(block) == null) return;
+		cancellable.setCancelled(true);
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void stabilizePortalContent(BlockPlaceEvent event)
+	{
+		stabilizePortalContentBlock(event.getBlock(), event);
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void stabilizePortalContent(PlayerBucketFillEvent event)
+	{
+		stabilizePortalContentBlock(event.getBlockClicked(), event);
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void stabilizePortalContent(PlayerBucketEmptyEvent event)
+	{
+		stabilizePortalContentBlock(event.getBlockClicked(), event);
+	}
+
 	
 	// -------------------------------------------- //
 	// DISABLE VANILLA PORTAL BEHAVIOR

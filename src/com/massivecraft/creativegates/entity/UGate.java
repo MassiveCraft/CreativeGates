@@ -274,7 +274,7 @@ public class UGate extends Entity<UGate>
 		for (Block block : blocks)
 		{
 			Material blockMaterial = block.getType();
-			if (blockMaterial == Material.PORTAL || CreativeGates.isVoid(blockMaterial))
+			if (blockMaterial == Material.PORTAL || blockMaterial == Material.STATIONARY_WATER || CreativeGates.isVoid(blockMaterial))
 			{
 				block.setType(material);
 			}
@@ -283,8 +283,9 @@ public class UGate extends Entity<UGate>
 	
 	public void fill()
 	{
+		UConf uconf = UConf.get(this.getExit());
 		CreativeGates.get().setFilling(true);
-		this.setContent(Material.PORTAL);
+		this.setContent(uconf.isUsingWater() ? Material.STATIONARY_WATER : Material.PORTAL);
 		CreativeGates.get().setFilling(false);
 	}
 	
