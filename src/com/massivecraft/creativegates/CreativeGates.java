@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import com.massivecraft.creativegates.entity.MConfColl;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.index.IndexCombined;
@@ -70,6 +71,7 @@ public class CreativeGates extends MPlugin
 
 		// Initialize Database
 		this.getIndex().clear();
+		MConfColl.get().init();
 		UConfColls.get().init();
 		UGateColls.get().init();
 		
