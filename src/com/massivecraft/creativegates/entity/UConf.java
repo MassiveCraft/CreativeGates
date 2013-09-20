@@ -28,6 +28,7 @@ public class UConf extends Entity<UConf>
 	{
 		this.setEnabled(that.isEnabled());
 		this.setUsingWater(that.isUsingWater());
+		this.setPigmanPortalSpawnAllowed(that.isPigmanPortalSpawnAllowed());
 		this.setMaxarea(that.getMaxarea());
 		this.setBlocksrequired(that.getBlocksrequired());
 		this.setRemovingCreateToolName(that.isRemovingCreateToolName());
@@ -51,6 +52,10 @@ public class UConf extends Entity<UConf>
 	private boolean usingWater = false;
 	public boolean isUsingWater() { return this.usingWater; }
 	public void setUsingWater(boolean usingWater) { this.usingWater = usingWater; this.changed(); }
+	
+	private boolean pigmanPortalSpawnAllowed = true;
+	public boolean isPigmanPortalSpawnAllowed() { return this.pigmanPortalSpawnAllowed; }
+	public void setPigmanPortalSpawnAllowed(boolean pigmanPortalSpawnAllowed) { this.pigmanPortalSpawnAllowed = pigmanPortalSpawnAllowed; this.changed(); }
 	
 	private int maxarea = 200;
 	public int getMaxarea() { return this.maxarea; }

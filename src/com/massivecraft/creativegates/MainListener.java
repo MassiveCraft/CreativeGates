@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
@@ -172,7 +174,6 @@ public class MainListener implements Listener
 	{
 		stabilizePortalContentBlock(event.getBlockClicked(), event);
 	}
-
 	
 	// -------------------------------------------- //
 	// DISABLE VANILLA PORTAL BEHAVIOR
@@ -196,6 +197,26 @@ public class MainListener implements Listener
 	public void disableVanillaGates(EntityPortalEvent event)
 	{
 		disableVanillaGates(event.getFrom(), event);
+	}
+	
+	// -------------------------------------------- //
+	// NO ZOMBIE PIGMAN PORTAL SPAWN 
+	// -------------------------------------------- //
+	
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void noZombiePigmanPortalSpawn(CreatureSpawnEvent event)
+	{
+		// If a zombie pigman is spawning ...
+		if (event.getEntityType() != EntityType.PIG_ZOMBIE) return;
+		
+		// ... near a portal ...
+		if (!isPortalNearby(event.getLocation().getBlock())) return;
+		
+		// ... and we are blocking zombie pigman portal spawn ...
+		if (UConf.get(event.getLocation()).isPigmanPortalSpawnAllowed()) return;
+		
+		// ... then block the spawn event.
+		event.setCancelled(true);
 	}
 	
 	// -------------------------------------------- //
