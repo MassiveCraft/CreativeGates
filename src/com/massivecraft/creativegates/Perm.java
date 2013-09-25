@@ -12,6 +12,10 @@ public enum Perm
 	
 	CREATE("create"),
 	USE("use"),
+	CG("cg"),
+	CG_WORLD("cg.world"),
+	CG_WORLD_LIST("cg.world.list"),
+	CG_WORLD_DELETE("cg.world.delete"),
 	
 	// END OF LIST
 	;

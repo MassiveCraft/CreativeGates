@@ -11,6 +11,10 @@ permissions:
 # -------------------------------------------- #
   creativegates.create: {description: create a gate, default: false}
   creativegates.use: {description: use a gate, default: false}
+  creativegates.cg: {description: use creativegates base command, default: false}
+  creativegates.cg.world: {description: world gate management, default: false}
+  creativegates.cg.world.list: {description: gate count per world, default: false}
+  creativegates.cg.world.delete: {description: delete all gates in world, default: false}
 # -------------------------------------------- #
 # STAR NOTATION
 # -------------------------------------------- #
@@ -19,6 +23,10 @@ permissions:
     children:
       creativegates.create: true
       creativegates.use: true
+      creativegates.cg: true
+      creativegates.cg.world: true
+      creativegates.cg.world.list: true
+      creativegates.cg.world.delete: true
 # -------------------------------------------- #
 # KITS
 # -------------------------------------------- #
@@ -26,3 +34,18 @@ permissions:
     default: op
     children:
       creativegates.*: true
+  creativegates.kit.rank3:
+    default: false
+    children:
+      creativegates.kit.rank2: true
+      creativegates.cg.world.delete: true
+  creativegates.kit.rank2:
+    default: false
+    children:
+      creativegates.kit.rank1: true
+  creativegates.kit.rank1:
+    default: false
+    children:
+      creativegates.cg: true
+      creativegates.cg.world: true
+      creativegates.cg.world.list: true
