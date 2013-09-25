@@ -102,7 +102,7 @@ public class MainListener implements Listener
 			{
 				for (int dz = -radius; dz <= radius; dz++)
 				{
-					if (CreativeGates.get().getIndex().get(PS.valueOf(block)) != null) return true;
+					if (CreativeGates.get().getIndex().get(PS.valueOf(block.getRelative(dx, dy, dz))) != null) return true;
 				}
 			}
 		}
