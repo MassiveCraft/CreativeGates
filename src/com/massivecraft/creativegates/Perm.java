@@ -44,4 +44,5 @@ public enum Perm
 	{
 		return has(sender, false);
 	}
+	
 }
