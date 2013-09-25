@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import com.massivecraft.creativegates.cmd.CmdCg;
 import com.massivecraft.creativegates.entity.MConfColl;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
@@ -49,6 +50,10 @@ public class CreativeGates extends MPlugin
 	public boolean isFilling() { return this.filling; }
 	public void setFilling(boolean filling) { this.filling = filling; }
 	
+	// Commands
+	private CmdCg cmdCg;
+	public CmdCg getCmdCg() { return this.cmdCg; }
+	
 	// -------------------------------------------- //
 	// OVERRIDE
 	// -------------------------------------------- //
@@ -74,6 +79,10 @@ public class CreativeGates extends MPlugin
 		MConfColl.get().init();
 		UConfColls.get().init();
 		UGateColls.get().init();
+		
+		// Commands
+		this.cmdCg = new CmdCg();
+		this.cmdCg.register(this);
 		
 		// Setup Listeners
 		MainListener.get().activate();

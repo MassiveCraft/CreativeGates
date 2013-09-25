@@ -16,6 +16,7 @@ public enum Perm
 	CG_WORLD("cg.world"),
 	CG_WORLD_LIST("cg.world.list"),
 	CG_WORLD_DELETE("cg.world.delete"),
+	CG_VERSION("cg.version"),
 	
 	// END OF LIST
 	;

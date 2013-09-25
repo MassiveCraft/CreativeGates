@@ -1,6 +1,6 @@
 main: com.massivecraft.creativegates.CreativeGates
 name: CreativeGates
-version: 2.1.0
+version: 2.2.0_dev
 website: http://massivecraft.com/creativegates
 authors: [Cayorion]
 description: §eCreativeGates is a portal plugin. §aCayorion §efrom the minecraft server §aMassiveCraft §eis the lead programmer. Feel free to visit us at §bhttp://massivecraft.com
@@ -15,6 +15,7 @@ permissions:
   creativegates.cg.world: {description: world gate management, default: false}
   creativegates.cg.world.list: {description: gate count per world, default: false}
   creativegates.cg.world.delete: {description: delete all gates in world, default: false}
+  creativegates.cg.version: {description: see plugin version, default: false}
 # -------------------------------------------- #
 # STAR NOTATION
 # -------------------------------------------- #
@@ -27,6 +28,7 @@ permissions:
       creativegates.cg.world: true
       creativegates.cg.world.list: true
       creativegates.cg.world.delete: true
+      creativegates.cg.version: true
 # -------------------------------------------- #
 # KITS
 # -------------------------------------------- #
@@ -46,6 +48,16 @@ permissions:
   creativegates.kit.rank1:
     default: false
     children:
+      creativegates.kit.rank0: true
       creativegates.cg: true
       creativegates.cg.world: true
       creativegates.cg.world.list: true
+  creativegates.kit.rank0:
+    default: false
+    children:
+      creativegates.cg: true
+      creativegates.cg.version: true
+  creativegates.kit.default:
+    default: true
+    children:
+      creativegates.kit.rank0: true
