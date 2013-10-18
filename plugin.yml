@@ -40,7 +40,6 @@ permissions:
     default: false
     children:
       creativegates.kit.rank2: true
-      creativegates.cg.world.delete: true
   creativegates.kit.rank2:
     default: false
     children:
