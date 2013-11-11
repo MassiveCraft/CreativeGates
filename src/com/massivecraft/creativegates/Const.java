@@ -2,14 +2,13 @@ package com.massivecraft.creativegates;
 
 public class Const
 {
-	// MStore Collection Names
-	public static final String COLLECTION_BASENAME = "creativegates";
-	public static final String COLLECTION_BASENAME_ = COLLECTION_BASENAME+"_";
-	public static final String COLLECTION_BASENAME_MCONF = COLLECTION_BASENAME_+"mconf";
-	public static final String COLLECTION_BASENAME_UCONF = COLLECTION_BASENAME_+"uconf";
-	public static final String COLLECTION_BASENAME_UGATE = COLLECTION_BASENAME_+"ugate";
+	// Collections & Aspects
+	public static final String BASENAME = "creativegates";
+	public static final String BASENAME_ = BASENAME+"_";
 	
-	// Aspect Ids
-	public static final String ASPECT_ID = "creativegates";
+	public static final String COLLECTION_MCONF = BASENAME_+"mconf";
+	public static final String COLLECTION_UCONF = BASENAME_+"uconf";
+	public static final String COLLECTION_UGATE = BASENAME_+"ugate";
 	
+	public static final String ASPECT = BASENAME;
 }

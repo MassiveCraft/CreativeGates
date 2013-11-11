@@ -7,30 +7,40 @@ import com.massivecraft.mcore.cmd.req.ReqHasPerm;
 
 public class CmdCgWorld extends MCommand
 {
-	// SubCommands
+	// -------------------------------------------- //
+	// FIELDS
+	// -------------------------------------------- //
+	
 	public CmdCgWorldList cmdCgWorldList = new CmdCgWorldList();
 	public CmdCgWorldDelete cmdCgWorldDelete = new CmdCgWorldDelete();
 	
+	// -------------------------------------------- //
+	// CONSTRUCT
+	// -------------------------------------------- //
+	
 	public CmdCgWorld()
 	{
-		// Aliases
-		this.addAliases("world");
-		
-		// Help SubCommand 
-		this.addSubCommand(HelpCommand.get());
-		
 		// Add SubCommands
+		this.addSubCommand(HelpCommand.get());
 		this.addSubCommand(this.cmdCgWorldList);
 		this.addSubCommand(this.cmdCgWorldDelete);
+		
+		// Aliases
+		this.addAliases("world");
 		
 		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD.node));
 	}
 	
+	// -------------------------------------------- //
+	// OVERRIDE
+	// -------------------------------------------- //
+	
 	@Override
 	public void perform()
 	{
 		this.getCommandChain().add(this);
-		HelpCommand.getInstance().execute(this.sender, this.args, this.commandChain);
+		HelpCommand.get().execute(this.sender, this.args, this.commandChain);
 	}
+	
 }

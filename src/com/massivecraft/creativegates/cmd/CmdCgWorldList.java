@@ -19,14 +19,25 @@ import com.massivecraft.mcore.util.Txt;
 
 public class CmdCgWorldList extends MCommand
 {
+	// -------------------------------------------- //
+	// CONSTRUCT
+	// -------------------------------------------- //
+	
 	public CmdCgWorldList()
 	{
+		// Aliases
 		this.addAliases("l", "list");
 		
+		// Args
 		this.addOptionalArg("page", "1");
 		
+		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD_LIST.node));
 	}
+	
+	// -------------------------------------------- //
+	// OVERRIDE
+	// -------------------------------------------- //
 	
 	@Override
 	public void perform()
@@ -74,4 +85,5 @@ public class CmdCgWorldList extends MCommand
 		// Send Lines
 		this.sendMessage(Txt.getPage(lines, pageHumanBased, "Gates per World", sender));	
 	}
+	
 }

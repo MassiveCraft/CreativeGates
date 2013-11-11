@@ -1,6 +1,5 @@
 package com.massivecraft.creativegates.entity;
 
-import com.massivecraft.creativegates.ConfServer;
 import com.massivecraft.creativegates.Const;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.mcore.MCore;
@@ -17,7 +16,7 @@ public class MConfColl extends Coll<MConf>
 	public static MConfColl get() { return i; }
 	private MConfColl()
 	{
-		super(Const.COLLECTION_BASENAME_MCONF, MConf.class, MStore.getDb(ConfServer.dburi), CreativeGates.get());
+		super(Const.COLLECTION_MCONF, MConf.class, MStore.getDb(), CreativeGates.get());
 	}
 	
 	// -------------------------------------------- //

@@ -3,10 +3,12 @@ package com.massivecraft.creativegates;
 import java.util.EnumSet;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.massivecraft.creativegates.cmd.CmdCg;
+import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.creativegates.entity.MConfColl;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
@@ -63,18 +65,15 @@ public class CreativeGates extends MPlugin
 	{
 		if ( ! preEnable()) return;
 		
-		// Load Server Config
-		ConfServer.get().load();
-		
 		// Initialize Aspects
-		this.aspect = AspectColl.get().get(Const.ASPECT_ID, true);
+		this.aspect = AspectColl.get().get(Const.ASPECT, true);
 		this.aspect.register();
 		this.aspect.setDesc(
 			"<i>What gates do exist.",
 			"<i>What the config options are set to."
 		);
 
-		// Initialize Database
+		// Collections
 		this.getIndex().clear();
 		MConfColl.get().init();
 		UConfColls.get().init();
@@ -82,10 +81,21 @@ public class CreativeGates extends MPlugin
 		
 		// Commands
 		this.cmdCg = new CmdCg();
-		this.cmdCg.register(this);
+		this.cmdCg.register();
 		
 		// Setup Listeners
 		MainListener.get().activate();
+		
+		// Schedule a permission update.
+		// Possibly it will be useful due to the way Bukkit loads permissions.
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				MConf.get().updatePerms();
+			}
+		});
 		
 		postEnable();
 	}

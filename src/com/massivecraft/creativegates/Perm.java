@@ -33,7 +33,7 @@ public enum Perm
 	
 	Perm(final String node)
 	{
-		this.node = "creativegates."+node;
+		this.node = "creativegates." + node;
 	}
 	
 	// -------------------------------------------- //

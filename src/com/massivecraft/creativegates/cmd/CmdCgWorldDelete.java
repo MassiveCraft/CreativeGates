@@ -9,15 +9,26 @@ import com.massivecraft.mcore.cmd.req.ReqHasPerm;
 
 public class CmdCgWorldDelete extends MCommand
 {
+	// -------------------------------------------- //
+	// CONSTRUCT
+	// -------------------------------------------- //
+	
 	public CmdCgWorldDelete()
 	{
+		// Aliases
 		this.addAliases("delete");
 		
+		// Args
 		this.addRequiredArg("world");
 		this.setErrorOnToManyArgs(false);
 		
+		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD_DELETE.node));
 	}
+	
+	// -------------------------------------------- //
+	// OVERRIDE
+	// -------------------------------------------- //
 	
 	@Override
 	public void perform()
@@ -43,4 +54,5 @@ public class CmdCgWorldDelete extends MCommand
 		// Inform
 		msg("<i>Deleted all <h>%d <i>gates in world <h>%s<i>.", countDeleted, world);
 	}
+	
 }

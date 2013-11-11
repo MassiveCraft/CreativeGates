@@ -1,13 +1,11 @@
 package com.massivecraft.creativegates.entity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
-import com.massivecraft.creativegates.ConfServer;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.ExitComparator;
 import com.massivecraft.creativegates.NetworkIdEqualsPredictate;
@@ -23,7 +21,7 @@ public class UGateColl extends Coll<UGate>
 	
 	public UGateColl(String name)
 	{
-		super(name, UGate.class, MStore.getDb(ConfServer.dburi), CreativeGates.get());
+		super(name, UGate.class, MStore.getDb(), CreativeGates.get());
 	}
 	
 	// -------------------------------------------- //
