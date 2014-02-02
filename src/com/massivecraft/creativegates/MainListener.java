@@ -259,6 +259,9 @@ public class MainListener implements Listener
 			return;
 		}
 		
+		// ... and the player is alive ...
+		if (player.isDead()) return;
+		
 		// ... then transport the player.
 		ugate.transport(player);
 	}
