@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.massivecraft.creativegates.CreativeGates;
@@ -19,7 +20,7 @@ import com.massivecraft.mcore.mixin.Mixin;
 import com.massivecraft.mcore.mixin.TeleporterException;
 import com.massivecraft.mcore.ps.PS;
 import com.massivecraft.mcore.store.Entity;
-import com.massivecraft.mcore.util.SenderUtil;
+import com.massivecraft.mcore.util.IdUtil;
 import com.massivecraft.mcore.util.SmokeUtil;
 import com.massivecraft.mcore.util.Txt;
 
@@ -127,9 +128,9 @@ public class UGate extends Entity<UGate>
 	// ASSORTED
 	// -------------------------------------------- //
 	
-	public boolean isCreator(Object o)
+	public boolean isCreator(CommandSender sender)
 	{
-		String senderId = SenderUtil.getSenderId(o);
+		String senderId = IdUtil.getId(sender);
 		if (senderId == null) return false;
 		return senderId.equalsIgnoreCase(this.creatorId);
 	}

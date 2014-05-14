@@ -43,6 +43,7 @@ import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.mcore.MCore;
 import com.massivecraft.mcore.ps.PS;
+import com.massivecraft.mcore.util.IdUtil;
 import com.massivecraft.mcore.util.MUtil;
 import com.massivecraft.mcore.util.Txt;
 
@@ -447,7 +448,7 @@ public class MainListener implements Listener
 			
 			// ... create the gate ...
 			UGate newGate = UGateColls.get().get(startBlock).create();
-			newGate.setCreatorId(player.getName());
+			newGate.setCreatorId(IdUtil.getId(player));
 			newGate.setNetworkId(newNetworkId);
 			newGate.setExit(exit);
 			newGate.setCoords(coords);
