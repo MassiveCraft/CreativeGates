@@ -42,4 +42,7 @@ public class MConf extends Entity<MConf>
 		PermUtil.get(false, true, Perm.USE.node, "use a gate", this.permissionDefaultUse);
 	}
 	
+	public boolean teleportationSoundActive = true;
+	public boolean teleportationMessageActive = true;
+	
 }

@@ -185,7 +185,7 @@ public class UGate extends Entity<UGate>
 			PS destinationPs = ugate.getExit();
 			try
 			{
-				Mixin.teleport(player, destinationPs, "the gate destination", 0);
+				Mixin.teleport(player, destinationPs, MConf.get().teleportationMessageActive ? "the gate destination" : null, 0);
 				this.setUsedMillis(System.currentTimeMillis());
 				this.fxKitUse(player);
 				return;
@@ -308,6 +308,7 @@ public class UGate extends Entity<UGate>
 	public void fxKitUse(Player player)
 	{
 		//this.fxEnder();
+		if (!MConf.get().teleportationSoundActive) return;
 		this.fxShootSound();
 	}
 	
