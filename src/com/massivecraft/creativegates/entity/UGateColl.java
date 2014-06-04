@@ -9,9 +9,9 @@ import org.bukkit.block.Block;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.ExitComparator;
 import com.massivecraft.creativegates.NetworkIdEqualsPredictate;
-import com.massivecraft.mcore.ps.PS;
-import com.massivecraft.mcore.store.Coll;
-import com.massivecraft.mcore.store.MStore;
+import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.massivecore.store.Coll;
+import com.massivecraft.massivecore.store.MStore;
 
 public class UGateColl extends Coll<UGate>
 {

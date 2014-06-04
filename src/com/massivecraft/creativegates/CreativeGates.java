@@ -13,12 +13,12 @@ import com.massivecraft.creativegates.entity.MConfColl;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.index.IndexCombined;
-import com.massivecraft.mcore.Aspect;
-import com.massivecraft.mcore.AspectColl;
-import com.massivecraft.mcore.MPlugin;
-import com.massivecraft.mcore.Multiverse;
+import com.massivecraft.massivecore.Aspect;
+import com.massivecraft.massivecore.AspectColl;
+import com.massivecraft.massivecore.MassivePlugin;
+import com.massivecraft.massivecore.Multiverse;
 
-public class CreativeGates extends MPlugin
+public class CreativeGates extends MassivePlugin
 {
 	// -------------------------------------------- //
 	// CONSTANTS

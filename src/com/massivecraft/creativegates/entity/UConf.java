@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.bukkit.Material;
 
-import com.massivecraft.mcore.store.Entity;
-import com.massivecraft.mcore.util.MUtil;
+import com.massivecraft.massivecore.store.Entity;
+import com.massivecraft.massivecore.util.MUtil;
 
 public class UConf extends Entity<UConf>
 {

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.massivecraft.creativegates.entity.UGate;
-import com.massivecraft.mcore.ps.PS;
+import com.massivecraft.massivecore.ps.PS;
 
 public class IndexCombined extends IndexAbstract
 {

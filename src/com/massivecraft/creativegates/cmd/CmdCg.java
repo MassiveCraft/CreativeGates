@@ -5,12 +5,12 @@ import java.util.List;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.MConf;
-import com.massivecraft.mcore.cmd.HelpCommand;
-import com.massivecraft.mcore.cmd.MCommand;
-import com.massivecraft.mcore.cmd.VersionCommand;
-import com.massivecraft.mcore.cmd.req.ReqHasPerm;
+import com.massivecraft.massivecore.cmd.HelpCommand;
+import com.massivecraft.massivecore.cmd.MassiveCommand;
+import com.massivecraft.massivecore.cmd.VersionCommand;
+import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
 
-public class CmdCg extends MCommand
+public class CmdCg extends MassiveCommand
 {
 	// -------------------------------------------- //
 	// FIELDS

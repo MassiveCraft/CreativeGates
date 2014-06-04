@@ -4,10 +4,10 @@ import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
-import com.massivecraft.mcore.cmd.MCommand;
-import com.massivecraft.mcore.cmd.req.ReqHasPerm;
+import com.massivecraft.massivecore.cmd.MassiveCommand;
+import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
 
-public class CmdCgWorldDelete extends MCommand
+public class CmdCgWorldDelete extends MassiveCommand
 {
 	// -------------------------------------------- //
 	// CONSTRUCT

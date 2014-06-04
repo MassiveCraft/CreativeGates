@@ -16,13 +16,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.massivecraft.creativegates.CreativeGates;
-import com.massivecraft.mcore.mixin.Mixin;
-import com.massivecraft.mcore.mixin.TeleporterException;
-import com.massivecraft.mcore.ps.PS;
-import com.massivecraft.mcore.store.Entity;
-import com.massivecraft.mcore.util.IdUtil;
-import com.massivecraft.mcore.util.SmokeUtil;
-import com.massivecraft.mcore.util.Txt;
+import com.massivecraft.massivecore.mixin.Mixin;
+import com.massivecraft.massivecore.mixin.TeleporterException;
+import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.massivecore.store.Entity;
+import com.massivecraft.massivecore.util.IdUtil;
+import com.massivecraft.massivecore.util.SmokeUtil;
+import com.massivecraft.massivecore.util.Txt;
 
 public class UGate extends Entity<UGate>
 {

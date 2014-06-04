@@ -2,7 +2,7 @@ package com.massivecraft.creativegates.entity;
 
 import com.massivecraft.creativegates.Const;
 import com.massivecraft.creativegates.CreativeGates;
-import com.massivecraft.mcore.Aspect;
+import com.massivecraft.massivecore.Aspect;
 
 public class UGateColls extends XColls<UGateColl, UGate>
 {

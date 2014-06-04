@@ -41,11 +41,11 @@ import com.massivecraft.creativegates.entity.UConf;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColls;
-import com.massivecraft.mcore.MCore;
-import com.massivecraft.mcore.ps.PS;
-import com.massivecraft.mcore.util.IdUtil;
-import com.massivecraft.mcore.util.MUtil;
-import com.massivecraft.mcore.util.Txt;
+import com.massivecraft.massivecore.MassiveCore;
+import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.massivecore.util.IdUtil;
+import com.massivecraft.massivecore.util.MUtil;
+import com.massivecraft.massivecore.util.Txt;
 
 public class MainListener implements Listener
 {
@@ -146,7 +146,7 @@ public class MainListener implements Listener
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void stabilizePortalContent(BlockFromToEvent event)
     {
-		UConf uconf = UConfColls.get().getForWorld(event.getBlock().getWorld().getName()).get(MCore.INSTANCE);
+		UConf uconf = UConfColls.get().getForWorld(event.getBlock().getWorld().getName()).get(MassiveCore.INSTANCE);
 		if (!uconf.isUsingWater()) return;
 		if (UGate.get(event.getBlock()) == null && UGate.get(event.getToBlock()) == null) return;
 		event.setCancelled(true);

@@ -1,7 +1,7 @@
 package com.massivecraft.creativegates.index;
 
 import com.massivecraft.creativegates.entity.UGate;
-import com.massivecraft.mcore.ps.PS;
+import com.massivecraft.massivecore.ps.PS;
 
 public interface Index
 {

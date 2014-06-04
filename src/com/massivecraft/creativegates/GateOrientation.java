@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.bukkit.block.BlockFace;
 
-import com.massivecraft.mcore.ps.PS;
-import com.massivecraft.mcore.util.MUtil;
+import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.massivecore.util.MUtil;
 
 public enum GateOrientation
 {

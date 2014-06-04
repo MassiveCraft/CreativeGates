@@ -1,11 +1,11 @@
 package com.massivecraft.creativegates.cmd;
 
 import com.massivecraft.creativegates.Perm;
-import com.massivecraft.mcore.cmd.HelpCommand;
-import com.massivecraft.mcore.cmd.MCommand;
-import com.massivecraft.mcore.cmd.req.ReqHasPerm;
+import com.massivecraft.massivecore.cmd.HelpCommand;
+import com.massivecraft.massivecore.cmd.MassiveCommand;
+import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
 
-public class CmdCgWorld extends MCommand
+public class CmdCgWorld extends MassiveCommand
 {
 	// -------------------------------------------- //
 	// FIELDS

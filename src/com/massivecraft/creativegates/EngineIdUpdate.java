@@ -7,10 +7,10 @@ import org.bukkit.plugin.Plugin;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
-import com.massivecraft.mcore.EngineAbstract;
-import com.massivecraft.mcore.event.MCoreUuidUpdateEvent;
-import com.massivecraft.mcore.util.IdUpdateUtil;
-import com.massivecraft.mcore.util.MUtil;
+import com.massivecraft.massivecore.EngineAbstract;
+import com.massivecraft.massivecore.event.EventMassiveCoreUuidUpdate;
+import com.massivecraft.massivecore.util.IdUpdateUtil;
+import com.massivecraft.massivecore.util.MUtil;
 
 public class EngineIdUpdate extends EngineAbstract
 {
@@ -36,7 +36,7 @@ public class EngineIdUpdate extends EngineAbstract
 	// -------------------------------------------- //
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void update(MCoreUuidUpdateEvent event)
+	public void update(EventMassiveCoreUuidUpdate event)
 	{
 		for (UGateColl coll : UGateColls.get().getColls())
 		{
