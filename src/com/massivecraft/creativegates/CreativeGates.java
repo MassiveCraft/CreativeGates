@@ -3,12 +3,10 @@ package com.massivecraft.creativegates;
 import java.util.EnumSet;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.massivecraft.creativegates.cmd.CmdCg;
-import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.creativegates.entity.MConfColl;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGateColls;
@@ -86,17 +84,6 @@ public class CreativeGates extends MassivePlugin
 		// Setup Listeners
 		MainListener.get().activate();
 		EngineIdUpdate.get().activate();
-		
-		// Schedule a permission update.
-		// Possibly it will be useful due to the way Bukkit loads permissions.
-		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				MConf.get().updatePerms();
-			}
-		});
 		
 		postEnable();
 	}
