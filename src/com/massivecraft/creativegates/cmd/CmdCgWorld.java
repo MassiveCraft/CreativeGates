@@ -32,15 +32,4 @@ public class CmdCgWorld extends MassiveCommand
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD.node));
 	}
 	
-	// -------------------------------------------- //
-	// OVERRIDE
-	// -------------------------------------------- //
-	
-	@Override
-	public void perform()
-	{
-		this.getCommandChain().add(this);
-		HelpCommand.get().execute(this.sender, this.args, this.commandChain);
-	}
-	
 }
