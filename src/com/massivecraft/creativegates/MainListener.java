@@ -255,7 +255,7 @@ public class MainListener implements Listener
 		// ... and the gate has enter enabled ...
 		if (!ugate.isEnterEnabled())
 		{
-			String message = Txt.parse("<i>This gate has enter disabled.");
+			String message = Txt.parse("<i>Este portão está com entrada desabilitada.");
 			player.sendMessage(message);
 			return;
 		}
@@ -397,7 +397,7 @@ public class MainListener implements Listener
 			// ... check if the place is occupied ...
 			if (currentGate != null)
 			{
-				message = Txt.parse("<b>There is no room for a new gate since there already is one here.");
+				message = Txt.parse("<b>Não há espaço par um portal aqui, pois já há outro.");
 				player.sendMessage(message);
 				return;
 			}
@@ -406,7 +406,7 @@ public class MainListener implements Listener
 			ItemMeta currentItemMeta = currentItem.getItemMeta();
 			if (!currentItemMeta.hasDisplayName())
 			{
-				message = Txt.parse("<b>You must name the %s before creating a gate with it.", Txt.getMaterialName(material));
+				message = Txt.parse("<b>Você precisa renomear %s para poder criar um portal com o mesmo.", Txt.getMaterialName(material));
 				player.sendMessage(message);
 				return;
 			}
@@ -417,7 +417,7 @@ public class MainListener implements Listener
 			Entry<GateOrientation, Set<Block>> gateFloodInfo = FloodUtil.getGateFloodInfo(startBlock);
 			if (gateFloodInfo == null)
 			{
-				message = Txt.parse("<b>There is no frame for the gate, or it's to big.", Txt.getMaterialName(material));
+				message = Txt.parse("<b>Não há moldura para o portal. Ou este é muito grande.", Txt.getMaterialName(material));
 				player.sendMessage(message);
 				return;
 			}
@@ -429,7 +429,7 @@ public class MainListener implements Listener
 			Map<Material, Integer> materialCounts = MaterialCountUtil.count(blocks);
 			if (!MaterialCountUtil.has(materialCounts, uconf.getBlocksrequired()))
 			{
-				message = Txt.parse("<b>The frame must contain %s<b>.", MaterialCountUtil.desc(uconf.getBlocksrequired()));
+				message = Txt.parse("<b>A moldura deve conter %s<b>.", MaterialCountUtil.desc(uconf.getBlocksrequired()));
 				player.sendMessage(message);
 				return;
 			}
@@ -460,7 +460,7 @@ public class MainListener implements Listener
 			newGate.fxKitCreate(player);
 			
 			// ... fx-inform the player ...
-			message = Txt.parse("<g>A \"<h>%s<g>\" gate takes form in front of you.", newNetworkId);
+			message = Txt.parse("<g>Um portal \"<h>%s<g>\" toma forma adiante.", newNetworkId);
 			player.sendMessage(message);
 			
 			// ... item cost ...
@@ -474,7 +474,7 @@ public class MainListener implements Listener
 				player.setItemInHand(newItem);
 				
 				// (message)
-				message = Txt.parse("<i>The %s disappears.", Txt.getMaterialName(material));
+				message = Txt.parse("<i>%s se desmantela e é pulverizado.", Txt.getMaterialName(material));
 				player.sendMessage(message);
 			}
 			else if (uconf.isRemovingCreateToolName())
@@ -506,7 +506,7 @@ public class MainListener implements Listener
 				});
 				
 				// (message)
-				message = Txt.parse("<i>The %s seems to have lost it's power.", Txt.getMaterialName(material));
+				message = Txt.parse("<i>%s aparenta ter perdido poder e não pode mais ser usado.", Txt.getMaterialName(material));
 				player.sendMessage(message);
 				
 			}
@@ -524,7 +524,7 @@ public class MainListener implements Listener
 					// ... but there is portal nearby.
 					
 					// ... exit with a message.
-					player.sendMessage(Txt.parse("<i>You use the %s on the %s but there seem to be no gate.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType())));
+					player.sendMessage(Txt.parse("<i>Você usa %s em %s, mas parece não haver um portal.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType())));
 					return;
 				}
 				else
@@ -537,7 +537,7 @@ public class MainListener implements Listener
 			}
 			
 			// ... send use action description ...
-			message = Txt.parse("<i>You use the %s on the %s...", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
+			message = Txt.parse("<i>você usa %s em %s...", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
 			player.sendMessage(message);
 			
 			// ... check restriction ...
@@ -545,12 +545,12 @@ public class MainListener implements Listener
 			{
 				if (currentGate.isCreator(player))
 				{
-					message = Txt.parse("<i>... the gate is restricted but you are the creator ...");
+					message = Txt.parse("<i>Este portal está restrito, mas você é o criador.");
 					player.sendMessage(message);
 				}
 				else
 				{
-					message = Txt.parse("<b>... the gate is restricted and you are not the creator.");
+					message = Txt.parse("<b>Este portal está restrito e você não é o criador.");
 					player.sendMessage(message);
 					return;
 				}
@@ -559,13 +559,13 @@ public class MainListener implements Listener
 			if (material == uconf.getMaterialInspect())
 			{
 				// ... we are trying to inspect ...
-				message = Txt.parse("<i>Some gate inscriptions are revealed:");
+				message = Txt.parse("<i>São reveladas inscrições no portal:");
 				player.sendMessage(message);
 				
-				message = Txt.parse("<k>network: <v>%s", currentGate.getNetworkId());
+				message = Txt.parse("<k>rede: <v>%s", currentGate.getNetworkId());
 				player.sendMessage(message);
 				
-				message = Txt.parse("<k>gates: <v>%d", currentGate.getGateChain().size());
+				message = Txt.parse("<k>portais: <v>%d", currentGate.getGateChain().size());
 				player.sendMessage(message);
 			}
 			else if (material == uconf.getMaterialSecret())
@@ -578,12 +578,12 @@ public class MainListener implements Listener
 					boolean secret = !currentGate.isRestricted();
 					currentGate.setRestricted(secret);
 					
-					message = (secret ? Txt.parse("<h>Only you <i>can read the gate inscriptions now.") : Txt.parse("<h>Anyone <i>can read the gate inscriptions now."));
+					message = (secret ? Txt.parse("<h>Somente você <i>pode ler as inscrições agora.") : Txt.parse("<h>Qualquer pessoa <i>pode ler as inscrições."));
 					player.sendMessage(message);
 				}
 				else
 				{
-					message = Txt.parse("<i>It seems <h>only the gate creator <i>can change inscription readability.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
+					message = Txt.parse("<i>Aparentemente, <h>somente o criador do portal <i>pode alterar a legibilidade do portal.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
 					player.sendMessage(message);
 				}
 			}
@@ -593,10 +593,10 @@ public class MainListener implements Listener
 				
 				currentGate.toggleMode();
 				
-				String enter = currentGate.isEnterEnabled() ? Txt.parse("<g>enter enabled") : Txt.parse("<b>enter disabled");
-				String exit = currentGate.isExitEnabled() ? Txt.parse("<g>exit enabled") : Txt.parse("<b>exit disabled");
+				String enter = currentGate.isEnterEnabled() ? Txt.parse("<g>entrada habilitada") : Txt.parse("<b>entrada desabilitada");
+				String exit = currentGate.isExitEnabled() ? Txt.parse("<g>saída habilitada") : Txt.parse("<b>saída desabilitada");
 				
-				message = Txt.parse("<i>The gate now has %s <i>and %s<i>.", enter, exit);
+				message = Txt.parse("<i>Agora, o portal tem %s <i>e %s<i>.", enter, exit);
 				player.sendMessage(message);
 			}
 			
