@@ -81,7 +81,7 @@ public class CreativeGates extends MassivePlugin
 		
 		// Commands
 		this.cmdCg = new CmdCg();
-		this.cmdCg.register();
+		this.cmdCg.register(this);
 		
 		// Setup Listeners
 		MainListener.get().activate();
