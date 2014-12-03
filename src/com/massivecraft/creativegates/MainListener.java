@@ -44,6 +44,7 @@ import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.massivecore.MassiveCore;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.util.IdUtil;
+import com.massivecraft.massivecore.util.InventoryUtil;
 import com.massivecraft.massivecore.util.MUtil;
 import com.massivecraft.massivecore.util.Txt;
 
@@ -495,15 +496,7 @@ public class MainListener implements Listener
 				player.getInventory().addItem(newItemUnnamed);
 				
 				// Update soon
-				Bukkit.getScheduler().runTask(CreativeGates.get(), new Runnable()
-				{
-					@SuppressWarnings("deprecation")
-					@Override
-					public void run()
-					{
-						player.updateInventory();
-					}
-				});
+				InventoryUtil.updateSoon(player);
 				
 				// (message)
 				message = Txt.parse("<i>The %s seems to have lost it's power.", Txt.getMaterialName(material));
