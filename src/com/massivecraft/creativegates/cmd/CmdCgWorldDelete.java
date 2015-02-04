@@ -35,7 +35,6 @@ public class CmdCgWorldDelete extends MassiveCommand
 	{
 		// Args
 		String world = this.argConcatFrom(0);
-		if (world == null) return;
 		
 		// Apply
 		int countDeleted = 0;
