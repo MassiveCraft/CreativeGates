@@ -10,8 +10,8 @@ import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
+import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.cmd.MassiveCommand;
-import com.massivecraft.massivecore.cmd.MassiveCommandException;
 import com.massivecraft.massivecore.cmd.arg.ARInteger;
 import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
 import com.massivecraft.massivecore.mixin.Mixin;
@@ -41,7 +41,7 @@ public class CmdCgWorldList extends MassiveCommand
 	// -------------------------------------------- //
 	
 	@Override
-	public void perform() throws MassiveCommandException
+	public void perform() throws MassiveException
 	{
 		// Args
 		Integer pageHumanBased = this.arg(0, ARInteger.get(), 1);
