@@ -1,7 +1,7 @@
 package com.massivecraft.creativegates.index;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.massivecore.ps.PS;
@@ -12,7 +12,8 @@ public class IndexWorld extends IndexAbstract
 	// FIELDS
 	// -------------------------------------------- //
 	
-	private Map<PS, UGate> coord2ugate = new HashMap<PS, UGate>();
+	final protected Map<PS, UGate> coordToGate = new ConcurrentHashMap<PS, UGate>(8, 0.9f, 1);
+	public Map<PS, UGate> getCoordToGate() { return this.coordToGate; }
 	
 	// -------------------------------------------- //
 	// OVERRIDE
@@ -23,7 +24,7 @@ public class IndexWorld extends IndexAbstract
 	{
 		for (PS coord : ugate.getCoords())
 		{
-			this.coord2ugate.put(coord, ugate);
+			this.coordToGate.put(coord, ugate);
 		}
 	}
 
@@ -32,20 +33,25 @@ public class IndexWorld extends IndexAbstract
 	{
 		for (PS coord : ugate.getCoords())
 		{
-			this.coord2ugate.remove(coord);
+			this.coordToGate.remove(coord);
 		}
 	}
 
 	@Override
 	public void clear()
 	{
-		this.coord2ugate.clear();
+		this.coordToGate.clear();
 	}
 
 	@Override
 	public UGate get(PS ps)
 	{
-		return this.coord2ugate.get(ps.getBlockCoords(true));
+		return this.coordToGate.get(ps.getBlockCoords(true));
+	}
+	
+	public UGate getRaw(PS ps)
+	{
+		return this.coordToGate.get(ps);
 	}
 
 }

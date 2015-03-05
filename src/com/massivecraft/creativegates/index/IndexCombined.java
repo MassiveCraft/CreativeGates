@@ -1,7 +1,7 @@
 package com.massivecraft.creativegates.index;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.massivecore.ps.PS;
@@ -12,31 +12,32 @@ public class IndexCombined extends IndexAbstract
 	// FIELDS
 	// -------------------------------------------- //
 	
-	private Map<String, IndexWorld> world2index = new HashMap<String, IndexWorld>();
+	protected final Map<String, IndexWorld> worldToIndex = new ConcurrentHashMap<String, IndexWorld>(8, 0.9f, 1);
+	public Map<String, IndexWorld> getWorldToIndex() { return this.worldToIndex; }
 	
 	// -------------------------------------------- //
 	// INDEX FETCHING
 	// -------------------------------------------- //
 	
-	private IndexWorld getIndex(String world)
+	public IndexWorld getIndex(String world)
 	{
 		if (world == null) throw new IllegalArgumentException("world was null");
-		IndexWorld ret = this.world2index.get(world);
+		IndexWorld ret = this.worldToIndex.get(world);
 		if (ret == null)
 		{
 			ret = new IndexWorld();
-			this.world2index.put(world, ret);
+			this.worldToIndex.put(world, ret);
 		}
 		return ret;
 	}
 	
-	private IndexWorld getIndex(PS ps)
+	public IndexWorld getIndex(PS ps)
 	{
 		if (ps == null) throw new IllegalArgumentException("ps was null");
 		return this.getIndex(ps.getWorld());
 	}
 	
-	private IndexWorld getIndex(UGate ugate)
+	public IndexWorld getIndex(UGate ugate)
 	{
 		if (ugate == null) throw new IllegalArgumentException("ugate was null");
 		return this.getIndex(ugate.getExit());
@@ -63,7 +64,7 @@ public class IndexCombined extends IndexAbstract
 	@Override
 	public void clear()
 	{
-		for (IndexWorld indexWorld : this.world2index.values())
+		for (IndexWorld indexWorld : this.worldToIndex.values())
 		{
 			indexWorld.clear();
 		}

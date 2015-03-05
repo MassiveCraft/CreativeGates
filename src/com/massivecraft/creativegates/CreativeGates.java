@@ -44,7 +44,7 @@ public class CreativeGates extends MassivePlugin
 	public Multiverse getMultiverse() { return this.getAspect().getMultiverse(); }
 	
 	// Index
-	private IndexCombined index = new IndexCombined();
+	private final IndexCombined index = new IndexCombined();
 	public IndexCombined getIndex() { return this.index; };
 	
 	// Filling

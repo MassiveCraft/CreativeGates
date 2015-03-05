@@ -212,7 +212,7 @@ public class MainListener implements Listener
 		if (event.getEntityType() != EntityType.PIG_ZOMBIE) return;
 		
 		// ... near a portal ...
-		if (!isPortalNearby(event.getLocation().getBlock())) return;
+		if ( ! isPortalNearby(event.getLocation().getBlock())) return;
 		
 		// ... and we are blocking zombie pigman portal spawn ...
 		if (UConf.get(event.getLocation()).isPigmanPortalSpawnAllowed()) return;
@@ -236,7 +236,7 @@ public class MainListener implements Listener
 		if (ugate == null) return;
 		
 		// ... and if the gate is intact ...
-		if (!ugate.isIntact())
+		if ( ! ugate.isIntact())
 		{
 			// We try to detect that a gate was destroyed once it happens by listening to a few events.
 			// However there will always be cases we miss and by checking at use we catch those as well.
@@ -247,14 +247,14 @@ public class MainListener implements Listener
 		
 		// ... and gates are enabled here ...
 		UConf uconf = UConf.get(event.getTo());
-		if (!uconf.isEnabled()) return;
+		if ( ! uconf.isEnabled()) return;
 		
 		// ... and we have permission to use gates ...
 		Player player = event.getPlayer();
-		if (!Perm.USE.has(player, true)) return;
+		if ( ! Perm.USE.has(player, true)) return;
 		
 		// ... and the gate has enter enabled ...
-		if (!ugate.isEnterEnabled())
+		if ( ! ugate.isEnterEnabled())
 		{
 			String message = Txt.parse("<i>This gate has enter disabled.");
 			player.sendMessage(message);
@@ -360,7 +360,7 @@ public class MainListener implements Listener
 		
 		// ... and gates are enabled here ...
 		UConf uconf = UConf.get(clickedBlock);
-		if (!uconf.isEnabled()) return;
+		if ( ! uconf.isEnabled()) return;
 		
 		// ... and the item in hand ...
 		final ItemStack currentItem = event.getItem();
