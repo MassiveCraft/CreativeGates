@@ -95,7 +95,7 @@ public class MainListener implements Listener
 	public static boolean isGateNearby(Block block)
 	{
 		UConf uconf = UConf.get(block);
-		if (!uconf.isEnabled()) return false;
+		if ( ! uconf.isEnabled()) return false;
 		
 		final int radius = 2; 
 		for (int dx = -radius; dx <= radius; dx++)
@@ -125,7 +125,7 @@ public class MainListener implements Listener
 		if (block.getType() != Material.PORTAL) return;
 				
 		// ... and we are filling or that block is stable according to our algorithm ...
-		if (!(CreativeGates.get().isFilling() || isPortalBlockStable(block))) return;
+		if ( ! (CreativeGates.get().isFilling() || isPortalBlockStable(block))) return;
 		
 		// ... then block the physics to stop the portal from disappearing.
 		event.setCancelled(true);
@@ -148,7 +148,7 @@ public class MainListener implements Listener
     public void stabilizePortalContent(BlockFromToEvent event)
     {
 		UConf uconf = UConfColls.get().getForWorld(event.getBlock().getWorld().getName()).get(MassiveCore.INSTANCE);
-		if (!uconf.isUsingWater()) return;
+		if ( ! uconf.isUsingWater()) return;
 		if (UGate.get(event.getBlock()) == null && UGate.get(event.getToBlock()) == null) return;
 		event.setCancelled(true);
     }
@@ -393,7 +393,7 @@ public class MainListener implements Listener
 			// ... we are trying to create ...
 			
 			// ... check permission node ...
-			if (!Perm.CREATE.has(player, true)) return;
+			if ( ! Perm.CREATE.has(player, true)) return;
 			
 			// ... check if the place is occupied ...
 			if (currentGate != null)
@@ -405,7 +405,7 @@ public class MainListener implements Listener
 			
 			// ... check if the item is named ...
 			ItemMeta currentItemMeta = currentItem.getItemMeta();
-			if (!currentItemMeta.hasDisplayName())
+			if ( ! currentItemMeta.hasDisplayName())
 			{
 				message = Txt.parse("<b>You must name the %s before creating a gate with it.", Txt.getMaterialName(material));
 				player.sendMessage(message);
@@ -428,7 +428,7 @@ public class MainListener implements Listener
 			
 			// ... ensure the required blocks are present ...
 			Map<Material, Integer> materialCounts = MaterialCountUtil.count(blocks);
-			if (!MaterialCountUtil.has(materialCounts, uconf.getBlocksrequired()))
+			if ( ! MaterialCountUtil.has(materialCounts, uconf.getBlocksrequired()))
 			{
 				message = Txt.parse("<b>The frame must contain %s<b>.", MaterialCountUtil.desc(uconf.getBlocksrequired()));
 				player.sendMessage(message);
@@ -527,6 +527,13 @@ public class MainListener implements Listener
 					// ... exit quietly.
 					return;
 				}
+			}
+			
+			// ... and we are not using water ...
+			if ( ! uconf.isUsingWater())
+			{
+				// ... update the portal orientation
+				currentGate.fill();
 			}
 			
 			// ... send use action description ...

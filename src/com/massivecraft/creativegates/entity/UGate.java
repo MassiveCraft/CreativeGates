@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -267,18 +268,38 @@ public class UGate extends Entity<UGate>
 		return true;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setContent(Material material)
 	{
 		List<Block> blocks = this.getBlocks();
 		if (blocks == null) return;
+		byte data = 0;
+		
+		// Orientation check
+		if (material == Material.PORTAL)
+		{
+			Block origin = blocks.get(0);
+			Block blockSouth = origin.getRelative(BlockFace.SOUTH);
+			Block blockNorth = origin.getRelative(BlockFace.NORTH);
+			
+			if (blocks.contains(blockNorth) || blocks.contains(blockSouth))
+			{
+				data = 2;
+			}
+		}
 		
 		for (Block block : blocks)
 		{
 			Material blockMaterial = block.getType();
-			if (blockMaterial == Material.PORTAL || blockMaterial == Material.STATIONARY_WATER || CreativeGates.isVoid(blockMaterial))
-			{
-				block.setType(material);
-			}
+			
+			if (blockMaterial != Material.PORTAL && blockMaterial != Material.STATIONARY_WATER && ! CreativeGates.isVoid(blockMaterial)) continue;
+			
+			block.setType(material);
+			
+			// Apply orientation
+			if (material != Material.PORTAL) continue;
+			
+			block.setData(data);
 		}
 	}
 	
