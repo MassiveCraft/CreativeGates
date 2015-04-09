@@ -21,6 +21,8 @@ import com.massivecraft.massivecore.mixin.Mixin;
 import com.massivecraft.massivecore.mixin.TeleporterException;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.store.Entity;
+import com.massivecraft.massivecore.teleport.Destination;
+import com.massivecraft.massivecore.teleport.DestinationSimple;
 import com.massivecraft.massivecore.util.IdUtil;
 import com.massivecraft.massivecore.util.SmokeUtil;
 import com.massivecraft.massivecore.util.Txt;
@@ -182,11 +184,15 @@ public class UGate extends Entity<UGate>
 		
 		for (UGate ugate : gateChain)
 		{
-			if (!ugate.isExitEnabled()) continue;
+			if ( ! ugate.isExitEnabled()) continue;
+			
 			PS destinationPs = ugate.getExit();
+			String destinationDesc = (MConf.get().teleportationMessageActive ? "the gate destination" : null);
+			Destination destination = new DestinationSimple(destinationPs, destinationDesc);
+			
 			try
 			{
-				Mixin.teleport(player, destinationPs, MConf.get().teleportationMessageActive ? "the gate destination" : null, 0);
+				Mixin.teleport(player, destination, 0);
 				this.setUsedMillis(System.currentTimeMillis());
 				this.fxKitUse(player);
 				return;
