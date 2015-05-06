@@ -44,7 +44,7 @@ public class CmdCgWorldList extends MassiveCommand
 	public void perform() throws MassiveException
 	{
 		// Args
-		int pageHumanBased = (Integer) this.readArg(1);
+		int pageHumanBased = this.readArg(1);
 		
 		// Create Lines
 		List<String> lines = new ArrayList<String>();

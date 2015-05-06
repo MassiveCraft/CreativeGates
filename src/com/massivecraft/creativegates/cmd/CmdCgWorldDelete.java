@@ -35,7 +35,7 @@ public class CmdCgWorldDelete extends MassiveCommand
 	public void perform() throws MassiveException
 	{
 		// Args
-		String world = (String) this.readArg();
+		String world = this.readArg();
 		
 		// Apply
 		int countDeleted = 0;
