@@ -30,7 +30,7 @@ public class CmdCgWorldList extends MassiveCommand
 		this.addAliases("l", "list");
 		
 		// Args
-		this.addOptionalArg("page", "1");
+		this.addArg(ARInteger.get(), "page", "1");
 		
 		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD_LIST.node));
@@ -44,7 +44,7 @@ public class CmdCgWorldList extends MassiveCommand
 	public void perform() throws MassiveException
 	{
 		// Args
-		Integer pageHumanBased = this.arg(0, ARInteger.get(), 1);
+		int pageHumanBased = (Integer) this.readArg(1);
 		
 		// Create Lines
 		List<String> lines = new ArrayList<String>();
