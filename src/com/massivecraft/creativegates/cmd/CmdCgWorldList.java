@@ -11,8 +11,8 @@ import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.massivecore.MassiveException;
+import com.massivecraft.massivecore.cmd.ArgSetting;
 import com.massivecraft.massivecore.cmd.MassiveCommand;
-import com.massivecraft.massivecore.cmd.arg.ARInteger;
 import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
 import com.massivecraft.massivecore.mixin.Mixin;
 import com.massivecraft.massivecore.util.MUtil;
@@ -30,7 +30,7 @@ public class CmdCgWorldList extends MassiveCommand
 		this.addAliases("l", "list");
 		
 		// Args
-		this.addArg(ARInteger.get(), "page", "1");
+		this.addArg(ArgSetting.getPage());
 		
 		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD_LIST.node));
@@ -44,7 +44,7 @@ public class CmdCgWorldList extends MassiveCommand
 	public void perform() throws MassiveException
 	{
 		// Args
-		int pageHumanBased = this.readArg(1);
+		int page = this.readArg();
 		
 		// Create Lines
 		List<String> lines = new ArrayList<String>();
@@ -83,7 +83,7 @@ public class CmdCgWorldList extends MassiveCommand
 		lines.add(Txt.parse("<v>%d <k>%s", countAll, "SUM"));
 		
 		// Send Lines
-		this.sendMessage(Txt.getPage(lines, pageHumanBased, "Gates per World", sender));	
+		this.sendMessage(Txt.getPage(lines, page, "Gates per World", sender));	
 	}
 	
 }
