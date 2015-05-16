@@ -85,7 +85,6 @@ public class CreativeGates extends MassivePlugin
 		
 		// Setup Listeners
 		MainListener.get().activate();
-		EngineIdUpdate.get().activate();
 	
 		// Schedule a permission update.
 		// Possibly it will be useful due to the way Bukkit loads permissions.

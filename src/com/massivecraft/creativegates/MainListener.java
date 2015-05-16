@@ -228,7 +228,11 @@ public class MainListener implements Listener
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void useGate(PlayerMoveEvent event)
 	{
-		// If a player is moving from one block to another ...
+		// If a player ...
+		Player player = event.getPlayer();
+		if (MUtil.isNpc(player)) return;
+		
+		// ... is moving from one block to another ...
 		if (MUtil.isSameBlock(event)) return;
 		
 		// ... and there is a gate in the new block ...
@@ -250,7 +254,6 @@ public class MainListener implements Listener
 		if ( ! uconf.isEnabled()) return;
 		
 		// ... and we have permission to use gates ...
-		Player player = event.getPlayer();
 		if ( ! Perm.USE.has(player, true)) return;
 		
 		// ... and the gate has enter enabled ...
@@ -353,6 +356,7 @@ public class MainListener implements Listener
     {
 		// If a player ...
 		final Player player = event.getPlayer();
+		if (MUtil.isNpc(player)) return;
 		
 		// ... is clicking a block ...
 		final Block clickedBlock = event.getClickedBlock();
