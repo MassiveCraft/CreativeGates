@@ -230,7 +230,7 @@ public class MainListener implements Listener
 	{
 		// If a player ...
 		Player player = event.getPlayer();
-		if (MUtil.isNpc(player)) return;
+		if (MUtil.isntPlayer(player)) return;
 		
 		// ... is moving from one block to another ...
 		if (MUtil.isSameBlock(event)) return;
@@ -356,7 +356,7 @@ public class MainListener implements Listener
     {
 		// If a player ...
 		final Player player = event.getPlayer();
-		if (MUtil.isNpc(player)) return;
+		if (MUtil.isntPlayer(player)) return;
 		
 		// ... is clicking a block ...
 		final Block clickedBlock = event.getClickedBlock();
