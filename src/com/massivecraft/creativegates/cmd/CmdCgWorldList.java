@@ -83,7 +83,7 @@ public class CmdCgWorldList extends MassiveCommand
 		lines.add(Txt.parse("<v>%d <k>%s", countAll, "SUM"));
 		
 		// Send Lines
-		this.sendMessage(Txt.getPage(lines, page, "Gates per World", sender));	
+		this.message(Txt.getPage(lines, page, "Gates per World", sender));	
 	}
 	
 }
