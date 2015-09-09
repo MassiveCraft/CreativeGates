@@ -5,7 +5,6 @@ import java.util.List;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.MConf;
-import com.massivecraft.massivecore.cmd.HelpCommand;
 import com.massivecraft.massivecore.cmd.MassiveCommand;
 import com.massivecraft.massivecore.cmd.VersionCommand;
 import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
@@ -26,7 +25,6 @@ public class CmdCg extends MassiveCommand
 	public CmdCg()
 	{
 		// Add SubCommands
-		this.addSubCommand(HelpCommand.get());
 		this.addSubCommand(this.cmdCgWorld);
 		this.addSubCommand(this.cmdCgVersion);
 		

@@ -1,7 +1,6 @@
 package com.massivecraft.creativegates.cmd;
 
 import com.massivecraft.creativegates.Perm;
-import com.massivecraft.massivecore.cmd.HelpCommand;
 import com.massivecraft.massivecore.cmd.MassiveCommand;
 import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
 
@@ -21,7 +20,6 @@ public class CmdCgWorld extends MassiveCommand
 	public CmdCgWorld()
 	{
 		// Add SubCommands
-		this.addSubCommand(HelpCommand.get());
 		this.addSubCommand(this.cmdCgWorldList);
 		this.addSubCommand(this.cmdCgWorldDelete);
 		
