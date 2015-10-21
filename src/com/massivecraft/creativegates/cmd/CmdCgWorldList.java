@@ -27,7 +27,7 @@ public class CmdCgWorldList extends MassiveCommand
 	public CmdCgWorldList()
 	{
 		// Aliases
-		this.addAliases("l", "list");
+		this.addAliases("list");
 		
 		// Parameters
 		this.addParameter(Parameter.getPage());
