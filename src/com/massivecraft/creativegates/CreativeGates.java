@@ -65,6 +65,9 @@ public class CreativeGates extends MassivePlugin
 	{
 		if ( ! preEnable()) return;
 		
+		// Version Synchronized
+		this.setVersionSynchronized(true);
+		
 		// Initialize Aspects
 		this.aspect = AspectColl.get().get(Const.ASPECT, true);
 		this.aspect.register();
