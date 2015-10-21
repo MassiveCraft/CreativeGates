@@ -1,9 +1,9 @@
 package com.massivecraft.creativegates;
 
 import com.massivecraft.creativegates.entity.UGate;
-import com.massivecraft.massivecore.Predictate;
+import com.massivecraft.massivecore.Predicate;
 
-public class NetworkIdEqualsPredictate implements Predictate<UGate>
+public class NetworkIdEqualsPredicate implements Predicate<UGate>
 {
 	// -------------------------------------------- //
 	// FIELDS
@@ -16,7 +16,7 @@ public class NetworkIdEqualsPredictate implements Predictate<UGate>
 	// CONSTRUCT
 	// -------------------------------------------- //
 	
-	public NetworkIdEqualsPredictate(String networkId)
+	public NetworkIdEqualsPredicate(String networkId)
 	{
 		this.networkId = networkId;
 	}

@@ -24,9 +24,9 @@ public class CmdCg extends MassiveCommand
 	
 	public CmdCg()
 	{
-		// Add SubCommands
-		this.addSubCommand(this.cmdCgWorld);
-		this.addSubCommand(this.cmdCgVersion);
+		// Children
+		this.addChild(this.cmdCgWorld);
+		this.addChild(this.cmdCgVersion);
 		
 		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG.node));

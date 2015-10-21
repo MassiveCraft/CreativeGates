@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.ExitComparator;
-import com.massivecraft.creativegates.NetworkIdEqualsPredictate;
+import com.massivecraft.creativegates.NetworkIdEqualsPredicate;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.store.Coll;
 import com.massivecraft.massivecore.store.MStore;
@@ -68,7 +68,7 @@ public class UGateColl extends Coll<UGate>
 	public List<UGate> getGateChain(String networkId)
 	{
 		List<UGate> ret = new ArrayList<UGate>();
-		ret.addAll(this.getAll(new NetworkIdEqualsPredictate(networkId), ExitComparator.get()));
+		ret.addAll(this.getAll(new NetworkIdEqualsPredicate(networkId), ExitComparator.get()));
 		return ret;
 	}
 

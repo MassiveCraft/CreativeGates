@@ -19,9 +19,9 @@ public class CmdCgWorld extends MassiveCommand
 	
 	public CmdCgWorld()
 	{
-		// Add SubCommands
-		this.addSubCommand(this.cmdCgWorldList);
-		this.addSubCommand(this.cmdCgWorldDelete);
+		// Children
+		this.addChild(this.cmdCgWorldList);
+		this.addChild(this.cmdCgWorldDelete);
 		
 		// Aliases
 		this.addAliases("world");

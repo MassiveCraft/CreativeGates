@@ -6,8 +6,8 @@ import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.cmd.MassiveCommand;
-import com.massivecraft.massivecore.cmd.arg.ARString;
 import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
+import com.massivecraft.massivecore.cmd.type.TypeString;
 
 public class CmdCgWorldDelete extends MassiveCommand
 {
@@ -20,8 +20,8 @@ public class CmdCgWorldDelete extends MassiveCommand
 		// Aliases
 		this.addAliases("delete");
 		
-		// Args
-		this.addArg(ARString.get(), "world", true);
+		// Parameters
+		this.addParameter(TypeString.get(), "world", true);
 		
 		// Requirements
 		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD_DELETE.node));
@@ -34,7 +34,7 @@ public class CmdCgWorldDelete extends MassiveCommand
 	@Override
 	public void perform() throws MassiveException
 	{
-		// Args
+		// Parameters
 		String world = this.readArg();
 		
 		// Apply
