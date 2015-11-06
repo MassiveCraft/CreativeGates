@@ -5,9 +5,9 @@ import java.util.List;
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.MConf;
-import com.massivecraft.massivecore.cmd.MassiveCommand;
-import com.massivecraft.massivecore.cmd.VersionCommand;
-import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
+import com.massivecraft.massivecore.command.MassiveCommand;
+import com.massivecraft.massivecore.command.VersionCommand;
+import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
 
 public class CmdCg extends MassiveCommand
 {
@@ -29,7 +29,7 @@ public class CmdCg extends MassiveCommand
 		this.addChild(this.cmdCgVersion);
 		
 		// Requirements
-		this.addRequirements(ReqHasPerm.get(Perm.CG.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG.node));
 	}
 	
 	// -------------------------------------------- //

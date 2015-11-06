@@ -5,9 +5,9 @@ import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.massivecore.MassiveException;
-import com.massivecraft.massivecore.cmd.MassiveCommand;
-import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
-import com.massivecraft.massivecore.cmd.type.TypeString;
+import com.massivecraft.massivecore.command.MassiveCommand;
+import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
+import com.massivecraft.massivecore.command.type.primitive.TypeString;
 
 public class CmdCgWorldDelete extends MassiveCommand
 {
@@ -24,7 +24,7 @@ public class CmdCgWorldDelete extends MassiveCommand
 		this.addParameter(TypeString.get(), "world", true);
 		
 		// Requirements
-		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD_DELETE.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD_DELETE.node));
 	}
 	
 	// -------------------------------------------- //

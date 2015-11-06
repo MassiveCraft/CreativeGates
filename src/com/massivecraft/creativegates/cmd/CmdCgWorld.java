@@ -1,8 +1,8 @@
 package com.massivecraft.creativegates.cmd;
 
 import com.massivecraft.creativegates.Perm;
-import com.massivecraft.massivecore.cmd.MassiveCommand;
-import com.massivecraft.massivecore.cmd.req.ReqHasPerm;
+import com.massivecraft.massivecore.command.MassiveCommand;
+import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
 
 public class CmdCgWorld extends MassiveCommand
 {
@@ -27,7 +27,7 @@ public class CmdCgWorld extends MassiveCommand
 		this.addAliases("world");
 		
 		// Requirements
-		this.addRequirements(ReqHasPerm.get(Perm.CG_WORLD.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD.node));
 	}
 	
 }
