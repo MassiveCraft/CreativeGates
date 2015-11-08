@@ -9,7 +9,7 @@ import com.massivecraft.massivecore.store.Colls;
 import com.massivecraft.massivecore.store.Entity;
 import com.massivecraft.massivecore.util.MUtil;
 
-public abstract class XColls<C extends Coll<E>, E> extends Colls<C, E>
+public abstract class XColls<C extends Coll<E>, E extends Entity<E>> extends Colls<C, E>
 {
 	@Override
 	public C get(Object o)
