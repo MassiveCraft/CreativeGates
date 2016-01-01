@@ -187,7 +187,7 @@ public class UGate extends Entity<UGate>
 			if ( ! ugate.isExitEnabled()) continue;
 			
 			PS destinationPs = ugate.getExit();
-			String destinationDesc = (MConf.get().teleportationMessageActive ? "the gate destination" : null);
+			String destinationDesc = (MConf.get().teleportationMessageActive ? "the gate destination" : "");
 			Destination destination = new DestinationSimple(destinationPs, destinationDesc);
 			
 			try
