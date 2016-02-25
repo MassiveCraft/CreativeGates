@@ -32,7 +32,13 @@ public class CreativeGates extends MassivePlugin
 	
 	private static CreativeGates i;
 	public static CreativeGates get() { return i; }
-	public CreativeGates() { CreativeGates.i = this; }
+	public CreativeGates()
+	{
+		CreativeGates.i = this;
+		
+		// Version Synchronized
+		this.setVersionSynchronized(true);
+	}
 	
 	// -------------------------------------------- //
 	// FIELDS
@@ -52,22 +58,13 @@ public class CreativeGates extends MassivePlugin
 	public boolean isFilling() { return this.filling; }
 	public void setFilling(boolean filling) { this.filling = filling; }
 	
-	// Commands
-	private CmdCg cmdCg;
-	public CmdCg getCmdCg() { return this.cmdCg; }
-	
 	// -------------------------------------------- //
 	// OVERRIDE
 	// -------------------------------------------- //
 	
 	@Override
-	public void onEnable()
+	public void onEnableInner()
 	{
-		if ( ! preEnable()) return;
-		
-		// Version Synchronized
-		this.setVersionSynchronized(true);
-		
 		// Initialize Aspects
 		this.aspect = AspectColl.get().get(Const.ASPECT, true);
 		this.aspect.register();
@@ -76,18 +73,22 @@ public class CreativeGates extends MassivePlugin
 			"<i>What the config options are set to."
 		);
 
-		// Collections
+		// Index
 		this.getIndex().clear();
-		MConfColl.get().init();
-		UConfColls.get().init();
-		UGateColls.get().init();
 		
-		// Commands
-		this.cmdCg = new CmdCg();
-		this.cmdCg.register(this);
+		// Activate
+		this.activate(
+			// Coll
+			MConfColl.get(),
+			UConfColls.get(),
+			UGateColls.get(),
 		
-		// Setup Listeners
-		MainListener.get().activate();
+			// Engine
+			EngineMain.get(),
+			
+			// Command
+			CmdCg.get()
+		);
 	
 		// Schedule a permission update.
 		// Possibly it will be useful due to the way Bukkit loads permissions.
@@ -98,8 +99,6 @@ public class CreativeGates extends MassivePlugin
 				MConf.get().updatePerms();
 			}
 		});
-		
-		postEnable();
 	}
 	
 	@Override

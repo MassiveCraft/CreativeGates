@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockFadeEvent;
@@ -41,6 +38,7 @@ import com.massivecraft.creativegates.entity.UConf;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColls;
+import com.massivecraft.massivecore.Engine;
 import com.massivecraft.massivecore.MassiveCore;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.util.IdUtil;
@@ -48,29 +46,14 @@ import com.massivecraft.massivecore.util.InventoryUtil;
 import com.massivecraft.massivecore.util.MUtil;
 import com.massivecraft.massivecore.util.Txt;
 
-public class MainListener implements Listener
+public class EngineMain extends Engine
 {
 	// -------------------------------------------- //
 	// INSTANCE & CONSTRUCT
 	// -------------------------------------------- //
 	
-	private static MainListener i = new MainListener();
-	public static MainListener get() { return i; }
-	public MainListener() {}
-	
-	// -------------------------------------------- //
-	// ACTIVATE & DEACTIVATE
-	// -------------------------------------------- //
-	
-	public void activate()
-	{
-		Bukkit.getPluginManager().registerEvents(this, CreativeGates.get());
-	}
-	
-	public void deactivate()
-	{
-		HandlerList.unregisterAll(this);
-	}
+	private static EngineMain i = new EngineMain();
+	public static EngineMain get() { return i; }
 	
 	// -------------------------------------------- //
 	// IS X NEARBY (UTIL)

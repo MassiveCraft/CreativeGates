@@ -12,6 +12,13 @@ import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
 public class CmdCg extends MassiveCommand
 {
 	// -------------------------------------------- //
+	// INSTANCE
+	// -------------------------------------------- //
+	
+	private static CmdCg i = new CmdCg();
+	public static CmdCg get() { return i; }
+	
+	// -------------------------------------------- //
 	// FIELDS
 	// -------------------------------------------- //
 	
