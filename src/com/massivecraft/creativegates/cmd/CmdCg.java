@@ -6,7 +6,7 @@ import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.massivecore.command.MassiveCommand;
-import com.massivecraft.massivecore.command.VersionCommand;
+import com.massivecraft.massivecore.command.MassiveCommandVersion;
 import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
 
 public class CmdCg extends MassiveCommand
@@ -23,7 +23,7 @@ public class CmdCg extends MassiveCommand
 	// -------------------------------------------- //
 	
 	public CmdCgWorld cmdCgWorld = new CmdCgWorld();
-	public VersionCommand cmdCgVersion = new VersionCommand(CreativeGates.get(), Perm.CG_VERSION.node, "v", "version");
+	public MassiveCommandVersion cmdCgVersion = new MassiveCommandVersion(CreativeGates.get(), Perm.CG_VERSION.node, "v", "version");
 	
 	// -------------------------------------------- //
 	// CONSTRUCT
