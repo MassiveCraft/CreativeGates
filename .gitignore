@@ -3,6 +3,12 @@
 /.project
 /.settings
 
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # netbeans
 /nbproject
 

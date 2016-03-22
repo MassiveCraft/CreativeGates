@@ -298,7 +298,7 @@ public class UGate extends Entity<UGate>
 		{
 			Material blockMaterial = block.getType();
 			
-			if (blockMaterial != Material.PORTAL && blockMaterial != Material.STATIONARY_WATER && ! CreativeGates.isVoid(blockMaterial)) continue;
+			if (blockMaterial != Material.PORTAL && blockMaterial != Material.STATIONARY_WATER && blockMaterial != Material.WATER && ! CreativeGates.isVoid(blockMaterial)) continue;
 			
 			block.setType(material);
 			
