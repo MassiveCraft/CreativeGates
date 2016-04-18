@@ -23,6 +23,7 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
@@ -59,28 +60,12 @@ public class EngineMain extends Engine
 	// IS X NEARBY (UTIL)
 	// -------------------------------------------- //
 	
-	public static boolean isPortalNearby(Block block)
-	{
-		final int radius = 2; 
-		for (int dx = -radius; dx <= radius; dx++)
-		{
-			for (int dy = -radius; dy <= radius; dy++)
-			{
-				for (int dz = -radius; dz <= radius; dz++)
-				{
-					if (block.getRelative(dx, dy, dz).getType() == Material.PORTAL) return true;
-				}
-			}
-		}
-		return false;
-	}
-	
 	public static boolean isGateNearby(Block block)
 	{
 		UConf uconf = UConf.get(block);
 		if ( ! uconf.isEnabled()) return false;
 		
-		final int radius = 2; 
+		final int radius = 3; 
 		for (int dx = -radius; dx <= radius; dx++)
 		{
 			for (int dy = -radius; dy <= radius; dy++)
@@ -194,11 +179,15 @@ public class EngineMain extends Engine
 		// If a zombie pigman is spawning ...
 		if (event.getEntityType() != EntityType.PIG_ZOMBIE) return;
 		
-		// ... near a portal ...
-		if ( ! isPortalNearby(event.getLocation().getBlock())) return;
+		// ... because of a nether portal ...
+		if (event.getSpawnReason() != SpawnReason.NETHER_PORTAL) return;
+		
+		// ... near a gate ...
+		Location location = event.getLocation();
+		if ( ! isGateNearby(location.getBlock())) return;
 		
 		// ... and we are blocking zombie pigman portal spawn ...
-		if (UConf.get(event.getLocation()).isPigmanPortalSpawnAllowed()) return;
+		if (UConf.get(location).isPigmanPortalSpawnAllowed()) return;
 		
 		// ... then block the spawn event.
 		event.setCancelled(true);
@@ -499,7 +488,7 @@ public class EngineMain extends Engine
 			if (currentGate == null)
 			{
 				// ... and there is no gate ...
-				if (isPortalNearby(clickedBlock))
+				if (isGateNearby(clickedBlock))
 				{
 					// ... but there is portal nearby.
 					
