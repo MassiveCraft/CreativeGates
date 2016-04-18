@@ -448,7 +448,7 @@ public class EngineMain extends Engine
 				// (decrease count in hand)
 				ItemStack newItem = new ItemStack(currentItem);
 				newItem.setAmount(newItem.getAmount() - 1);
-				player.setItemInHand(newItem);
+				InventoryUtil.setWeapon(player, newItem);
 				
 				// (message)
 				message = Txt.parse("<i>The %s disappears.", Txt.getMaterialName(material));
@@ -461,7 +461,7 @@ public class EngineMain extends Engine
 				// (decrease count in hand)
 				ItemStack newItemNamed = new ItemStack(currentItem);
 				newItemNamed.setAmount(newItemNamed.getAmount() - 1);
-				player.setItemInHand(newItemNamed);
+				InventoryUtil.setWeapon(player, newItemNamed);
 				
 				// (add one unnamed)
 				ItemStack newItemUnnamed = new ItemStack(currentItem);
