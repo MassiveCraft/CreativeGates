@@ -79,15 +79,15 @@ public class CreativeGates extends MassivePlugin
 		// Activate
 		this.activate(
 			// Coll
-			MConfColl.get(),
-			UConfColls.get(),
-			UGateColls.get(),
+			MConfColl.class,
+			UConfColls.class,
+			UGateColls.class,
 		
 			// Engine
-			EngineMain.get(),
+			EngineMain.class,
 			
 			// Command
-			CmdCg.get()
+			CmdCg.class
 		);
 	
 		// Schedule a permission update.
