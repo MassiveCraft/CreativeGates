@@ -14,7 +14,7 @@ import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.MassiveCommand;
 import com.massivecraft.massivecore.command.Parameter;
 import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
-import com.massivecraft.massivecore.mixin.Mixin;
+import com.massivecraft.massivecore.mixin.MixinWorld;
 import com.massivecraft.massivecore.util.MUtil;
 import com.massivecraft.massivecore.util.Txt;
 
@@ -71,7 +71,7 @@ public class CmdCgWorldList extends MassiveCommand
 			String world = entry.getKey();
 			int count = entry.getValue();
 			
-			if (Mixin.getWorldIds().contains(world))
+			if (MixinWorld.get().getWorldIds().contains(world))
 			{
 				lines.add(Txt.parse("<v>%d <g>%s", count, world));
 			}

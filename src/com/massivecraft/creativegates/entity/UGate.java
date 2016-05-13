@@ -17,7 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.massivecraft.creativegates.CreativeGates;
-import com.massivecraft.massivecore.mixin.Mixin;
+import com.massivecraft.massivecore.mixin.MixinTeleport;
 import com.massivecraft.massivecore.mixin.TeleporterException;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.store.Entity;
@@ -192,7 +192,7 @@ public class UGate extends Entity<UGate>
 			
 			try
 			{
-				Mixin.teleport(player, destination, 0);
+				MixinTeleport.get().teleport(player, destination, 0);
 				this.setUsedMillis(System.currentTimeMillis());
 				this.fxKitUse(player);
 				return;
