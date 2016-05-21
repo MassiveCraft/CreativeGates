@@ -2,7 +2,7 @@ package com.massivecraft.creativegates;
 
 import org.bukkit.command.CommandSender;
 
-import com.massivecraft.massivecore.util.PermUtil;
+import com.massivecraft.massivecore.util.PermissionUtil;
 
 public enum Perm
 {
@@ -42,7 +42,7 @@ public enum Perm
 	
 	public boolean has(CommandSender sender, boolean informSenderIfNot)
 	{
-		return PermUtil.has(sender, this.node, informSenderIfNot);
+		return PermissionUtil.has(sender, this.node, informSenderIfNot);
 	}
 	
 	public boolean has(CommandSender sender)
