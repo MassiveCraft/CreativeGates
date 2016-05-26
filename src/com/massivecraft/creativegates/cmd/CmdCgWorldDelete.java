@@ -24,7 +24,7 @@ public class CmdCgWorldDelete extends MassiveCommand
 		this.addParameter(TypeString.get(), "world", true);
 		
 		// Requirements
-		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD_DELETE.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD_DELETE));
 	}
 	
 	// -------------------------------------------- //

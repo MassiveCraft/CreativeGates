@@ -23,7 +23,7 @@ public class CmdCg extends MassiveCommand
 	// -------------------------------------------- //
 	
 	public CmdCgWorld cmdCgWorld = new CmdCgWorld();
-	public MassiveCommandVersion cmdCgVersion = new MassiveCommandVersion(CreativeGates.get(), Perm.CG_VERSION.node, "v", "version");
+	public MassiveCommandVersion cmdCgVersion = new MassiveCommandVersion(CreativeGates.get()).setAliases("v", "version").addRequirements(RequirementHasPerm.get(Perm.CG_VERSION));
 	
 	// -------------------------------------------- //
 	// CONSTRUCT
@@ -36,7 +36,7 @@ public class CmdCg extends MassiveCommand
 		this.addChild(this.cmdCgVersion);
 		
 		// Requirements
-		this.addRequirements(RequirementHasPerm.get(Perm.CG.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG));
 	}
 	
 	// -------------------------------------------- //

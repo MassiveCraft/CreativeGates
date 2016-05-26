@@ -27,7 +27,7 @@ public class CmdCgWorld extends MassiveCommand
 		this.addAliases("world");
 		
 		// Requirements
-		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD));
 	}
 	
 }

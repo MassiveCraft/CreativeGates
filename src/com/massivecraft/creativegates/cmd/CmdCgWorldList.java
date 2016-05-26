@@ -33,7 +33,7 @@ public class CmdCgWorldList extends MassiveCommand
 		this.addParameter(Parameter.getPage());
 		
 		// Requirements
-		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD_LIST.node));
+		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD_LIST));
 	}
 	
 	// -------------------------------------------- //

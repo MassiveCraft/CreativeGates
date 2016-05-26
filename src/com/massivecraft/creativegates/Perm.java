@@ -2,21 +2,22 @@ package com.massivecraft.creativegates;
 
 import org.bukkit.command.CommandSender;
 
+import com.massivecraft.massivecore.Identified;
 import com.massivecraft.massivecore.util.PermissionUtil;
 
-public enum Perm
+public enum Perm implements Identified
 {
 	// -------------------------------------------- //
 	// ENUM
 	// -------------------------------------------- //
 	
-	CREATE("create"),
-	USE("use"),
-	CG("cg"),
-	CG_WORLD("cg.world"),
-	CG_WORLD_LIST("cg.world.list"),
-	CG_WORLD_DELETE("cg.world.delete"),
-	CG_VERSION("cg.version"),
+	CREATE,
+	USE,
+	CG,
+	CG_WORLD,
+	CG_WORLD_LIST,
+	CG_WORLD_DELETE,
+	CG_VERSION,
 	
 	// END OF LIST
 	;
@@ -25,15 +26,16 @@ public enum Perm
 	// FIELDS
 	// -------------------------------------------- //
 	
-	public final String node;
+	private final String id;
+	@Override public String getId() { return this.id; }
 	
 	// -------------------------------------------- //
 	// CONSTRUCT
 	// -------------------------------------------- //
 	
-	Perm(final String node)
+	Perm()
 	{
-		this.node = "creativegates." + node;
+		this.id = PermissionUtil.createPermissionId(CreativeGates.get(), this);
 	}
 	
 	// -------------------------------------------- //
@@ -42,7 +44,7 @@ public enum Perm
 	
 	public boolean has(CommandSender sender, boolean informSenderIfNot)
 	{
-		return PermissionUtil.hasPermission(sender, this.node, informSenderIfNot);
+		return PermissionUtil.hasPermission(sender, this.id, informSenderIfNot);
 	}
 	
 	public boolean has(CommandSender sender)
