@@ -11,7 +11,6 @@ import com.massivecraft.creativegates.ExitComparator;
 import com.massivecraft.creativegates.NetworkIdEqualsPredicate;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.store.Coll;
-import com.massivecraft.massivecore.store.MStore;
 
 public class UGateColl extends Coll<UGate>
 {
@@ -21,7 +20,7 @@ public class UGateColl extends Coll<UGate>
 	
 	public UGateColl(String name)
 	{
-		super(name, UGate.class, MStore.getDb(), CreativeGates.get());
+		super(name);
 	}
 	
 	// -------------------------------------------- //
