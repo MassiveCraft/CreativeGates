@@ -86,8 +86,8 @@ public class EngineMain extends Engine
 	// PORTAL
 	
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void stabilizePortalContent(BlockPhysicsEvent event)
-    {
+	public void stabilizePortalContent(BlockPhysicsEvent event)
+	{
 		// If a portal block is running physics ...
 		Block block = event.getBlock();
 		if (block.getType() != Material.PORTAL) return;
@@ -97,7 +97,7 @@ public class EngineMain extends Engine
 		
 		// ... then block the physics to stop the portal from disappearing.
 		event.setCancelled(true);
-    }
+	}
 	
 	public static boolean isPortalBlockStable(Block block)
 	{
@@ -113,13 +113,13 @@ public class EngineMain extends Engine
 	// WATER
 	
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void stabilizePortalContent(BlockFromToEvent event)
-    {
+	public void stabilizePortalContent(BlockFromToEvent event)
+	{
 		UConf uconf = UConfColls.get().getForWorld(event.getBlock().getWorld().getName()).get(MassiveCore.INSTANCE);
 		if ( ! uconf.isUsingWater()) return;
 		if (UGate.get(event.getBlock()) == null && UGate.get(event.getToBlock()) == null) return;
 		event.setCancelled(true);
-    }
+	}
 	
 	public static void stabilizePortalContentBlock(Block block, Cancellable cancellable)
 	{
@@ -198,7 +198,7 @@ public class EngineMain extends Engine
 	// -------------------------------------------- //
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void useGate(PlayerMoveEvent event)
+	public void useGate(PlayerMoveEvent event)
 	{
 		// If a player ...
 		Player player = event.getPlayer();
@@ -324,8 +324,8 @@ public class EngineMain extends Engine
 	// -------------------------------------------- //
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void tools(PlayerInteractEvent event)
-    {
+	public void tools(PlayerInteractEvent event)
+	{
 		// If a player ...
 		final Player player = event.getPlayer();
 		if (MUtil.isntPlayer(player)) return;
@@ -578,6 +578,6 @@ public class EngineMain extends Engine
 			
 		}
 		
-    }
+	}
 	
 }
