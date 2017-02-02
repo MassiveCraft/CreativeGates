@@ -3,6 +3,8 @@ package com.massivecraft.creativegates;
 import java.util.EnumSet;
 import java.util.Set;
 
+import com.massivecraft.creativegates.cmd.type.TypePermissionDefault;
+import com.massivecraft.massivecore.command.type.RegistryType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,6 +19,7 @@ import com.massivecraft.massivecore.Aspect;
 import com.massivecraft.massivecore.AspectColl;
 import com.massivecraft.massivecore.MassivePlugin;
 import com.massivecraft.massivecore.Multiverse;
+import org.bukkit.permissions.PermissionDefault;
 
 public class CreativeGates extends MassivePlugin
 {
@@ -75,6 +78,9 @@ public class CreativeGates extends MassivePlugin
 
 		// Index
 		this.getIndex().clear();
+		
+		// types
+		RegistryType.register(PermissionDefault.class, TypePermissionDefault.get());
 		
 		// Activate
 		this.activate(

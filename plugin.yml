@@ -16,6 +16,7 @@ permissions:
   creativegates.cg.world.list: {description: gate count per world, default: false}
   creativegates.cg.world.delete: {description: delete all gates in world, default: false}
   creativegates.cg.version: {description: see plugin version, default: false}
+  creativegates.cg.config: {description: edit configuration, default: false}
 # -------------------------------------------- #
 # STAR NOTATION
 # -------------------------------------------- #
@@ -29,6 +30,7 @@ permissions:
       creativegates.cg.world.list: true
       creativegates.cg.world.delete: true
       creativegates.cg.version: true
+      creativegates.cg.config: true
 # -------------------------------------------- #
 # KITS
 # -------------------------------------------- #
@@ -40,6 +42,7 @@ permissions:
     default: false
     children:
       creativegates.kit.rank2: true
+      creativegates.cg.config: true
   creativegates.kit.rank2:
     default: false
     children:

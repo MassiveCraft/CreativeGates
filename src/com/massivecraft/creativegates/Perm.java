@@ -18,6 +18,7 @@ public enum Perm implements Identified
 	CG_WORLD_LIST,
 	CG_WORLD_DELETE,
 	CG_VERSION,
+	CG_CONFIG,
 	
 	// END OF LIST
 	;
