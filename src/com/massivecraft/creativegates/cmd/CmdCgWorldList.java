@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.massivecraft.creativegates.Perm;
+import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColl;
 import com.massivecraft.creativegates.entity.UGateColls;
@@ -26,9 +27,6 @@ public class CmdCgWorldList extends MassiveCommand
 	
 	public CmdCgWorldList()
 	{
-		// Aliases
-		this.addAliases("list");
-		
 		// Parameters
 		this.addParameter(Parameter.getPage());
 		
@@ -39,6 +37,12 @@ public class CmdCgWorldList extends MassiveCommand
 	// -------------------------------------------- //
 	// OVERRIDE
 	// -------------------------------------------- //
+	
+	@Override
+	public List<String> getAliases()
+	{
+		return MConf.get().aliasesCgWorldList;
+	}
 	
 	@Override
 	public void perform() throws MassiveException

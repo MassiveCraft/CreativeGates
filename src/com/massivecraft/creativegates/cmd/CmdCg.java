@@ -2,12 +2,9 @@ package com.massivecraft.creativegates.cmd;
 
 import java.util.List;
 
-import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.massivecore.command.MassiveCommand;
-import com.massivecraft.massivecore.command.MassiveCommandVersion;
-import com.massivecraft.massivecore.command.editor.CommandEditSingleton;
 import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
 
 public class CmdCg extends MassiveCommand
@@ -24,8 +21,8 @@ public class CmdCg extends MassiveCommand
 	// -------------------------------------------- //
 	
 	public CmdCgWorld cmdCgWorld = new CmdCgWorld();
-	public MassiveCommandVersion cmdCgVersion = new MassiveCommandVersion(CreativeGates.get()).setAliases("v", "version").addRequirements(RequirementHasPerm.get(Perm.CG_VERSION));
-	public MassiveCommand cmdCgConfig = new CmdCgConfig();
+	public CmdCgConfig cmdCgConfig = new CmdCgConfig();
+	public CmdCgVersion cmdCgVersion = new CmdCgVersion();
 	
 	// -------------------------------------------- //
 	// CONSTRUCT
@@ -35,8 +32,8 @@ public class CmdCg extends MassiveCommand
 	{
 		// Children
 		this.addChild(this.cmdCgWorld);
-		this.addChild(this.cmdCgVersion);
 		this.addChild(this.cmdCgConfig);
+		this.addChild(this.cmdCgVersion);
 		
 		// Requirements
 		this.addRequirements(RequirementHasPerm.get(Perm.CG));

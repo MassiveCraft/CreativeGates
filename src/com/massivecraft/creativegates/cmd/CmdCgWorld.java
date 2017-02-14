@@ -1,8 +1,11 @@
 package com.massivecraft.creativegates.cmd;
 
 import com.massivecraft.creativegates.Perm;
+import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.massivecore.command.MassiveCommand;
 import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
+
+import java.util.List;
 
 public class CmdCgWorld extends MassiveCommand
 {
@@ -23,11 +26,18 @@ public class CmdCgWorld extends MassiveCommand
 		this.addChild(this.cmdCgWorldList);
 		this.addChild(this.cmdCgWorldDelete);
 		
-		// Aliases
-		this.addAliases("world");
-		
 		// Requirements
 		this.addRequirements(RequirementHasPerm.get(Perm.CG_WORLD));
+	}
+	
+	// -------------------------------------------- //
+	// OVERRIDE
+	// -------------------------------------------- //
+	
+	@Override
+	public List<String> getAliases()
+	{
+		return MConf.get().aliasesCgWorld;
 	}
 	
 }

@@ -2,12 +2,7 @@ package com.massivecraft.creativegates.entity;
 
 import java.util.List;
 
-import com.massivecraft.creativegates.cmd.type.TypePermissionDefault;
 import com.massivecraft.massivecore.command.editor.annotation.EditorName;
-import com.massivecraft.massivecore.command.editor.annotation.EditorType;
-import com.massivecraft.massivecore.command.editor.annotation.EditorTypeInner;
-import com.massivecraft.massivecore.command.type.TypePermission;
-import com.massivecraft.massivecore.command.type.TypeStringCommand;
 import org.bukkit.permissions.PermissionDefault;
 
 import com.massivecraft.creativegates.Perm;
@@ -37,7 +32,13 @@ public class MConf extends Entity<MConf>
 	// FIELDS
 	// -------------------------------------------- //
 	
+	// Aliases
 	public List<String> aliasesCg = MUtil.list("cg", "creativegates", "creativegate");
+	public List<String> aliasesCgWorld = MUtil.list("world");
+	public List<String> aliasesCgWorldList = MUtil.list("list");
+	public List<String> aliasesCgWorldDelete = MUtil.list("delete");
+	public List<String> aliasesCgConfig = MUtil.list("config");
+	public List<String> aliasesCgVersion = MUtil.list("v", "version");
 	
 	public boolean teleportationSoundActive = true;
 	public boolean teleportationMessageActive = true;
