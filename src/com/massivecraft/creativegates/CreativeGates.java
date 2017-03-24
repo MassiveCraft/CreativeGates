@@ -35,13 +35,7 @@ public class CreativeGates extends MassivePlugin
 	
 	private static CreativeGates i;
 	public static CreativeGates get() { return i; }
-	public CreativeGates()
-	{
-		CreativeGates.i = this;
-		
-		// Version Synchronized
-		this.setVersionSynchronized(true);
-	}
+	public CreativeGates() { CreativeGates.i = this; }
 	
 	// -------------------------------------------- //
 	// FIELDS
