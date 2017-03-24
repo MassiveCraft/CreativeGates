@@ -15,7 +15,7 @@ public class MaterialCountUtil
 {
 	public static Map<Material, Integer> count(Collection<Block> blocks)
 	{
-		Map<Material, Integer> ret = new HashMap<Material, Integer>();
+		Map<Material, Integer> ret = new HashMap<>();
 		for (Block block : blocks)
 		{
 			Material material = block.getType();
@@ -43,7 +43,7 @@ public class MaterialCountUtil
 	
 	public static String desc(Map<Material, Integer> materialCounts)
 	{
-		List<String> parts = new ArrayList<String>();
+		List<String> parts = new ArrayList<>();
 		for (Entry<Material, Integer> entry : materialCounts.entrySet())
 		{
 			Material material = entry.getKey();

@@ -51,10 +51,10 @@ public class CmdCgWorldList extends MassiveCommand
 		int page = this.readArg();
 		
 		// Create Lines
-		List<String> lines = new ArrayList<String>();
+		List<String> lines = new ArrayList<>();
 		
 		// count the gates
-		Map<String, Integer> world2count = new HashMap<String, Integer>();
+		Map<String, Integer> world2count = new HashMap<>();
 		int countAll = 0;
 		for (UGateColl coll : UGateColls.get().getColls())
 		{

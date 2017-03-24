@@ -53,7 +53,7 @@ public class FloodUtil
 		// Add in the frame as well.
 		blocks = expandedByOne(blocks, gateOrientaion.expandFaces);
 		
-		return new SimpleEntry<GateOrientation, Set<Block>>(gateOrientaion, blocks);
+		return new SimpleEntry<>(gateOrientaion, blocks);
 	}
 	
 	public static Set<Block> getFloodBlocks(Block startBlock, Set<Block> foundBlocks, Set<BlockFace> expandFaces, int maxarea)
@@ -91,7 +91,7 @@ public class FloodUtil
 	
 	public static Set<Block> expandedByOne(Set<Block> blocks, Set<BlockFace> expandFaces)
 	{
-		Set<Block> ret = new HashSet<Block>();
+		Set<Block> ret = new HashSet<>();
 		
 		ret.addAll(blocks);
 		

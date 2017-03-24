@@ -63,8 +63,8 @@ public class UConf extends Entity<UConf>
 	private Map<Material, Integer> blocksrequired = MUtil.map(
 		Material.EMERALD_BLOCK, 2
 	);
-	public Map<Material, Integer> getBlocksrequired() { return new HashMap<Material, Integer>(this.blocksrequired); }
-	public void setBlocksrequired(Map<Material, Integer> blocksrequired) { this.blocksrequired = new HashMap<Material, Integer>(blocksrequired); this.changed(); }
+	public Map<Material, Integer> getBlocksrequired() { return new HashMap<>(this.blocksrequired); }
+	public void setBlocksrequired(Map<Material, Integer> blocksrequired) { this.blocksrequired = new HashMap<>(blocksrequired); this.changed(); }
 	
 	private boolean removingCreateToolName = true;
 	public boolean isRemovingCreateToolName() { return this.removingCreateToolName; }

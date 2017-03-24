@@ -12,7 +12,7 @@ public class IndexCombined extends IndexAbstract
 	// FIELDS
 	// -------------------------------------------- //
 	
-	protected final Map<String, IndexWorld> worldToIndex = new ConcurrentHashMap<String, IndexWorld>(8, 0.9f, 1);
+	protected final Map<String, IndexWorld> worldToIndex = new ConcurrentHashMap<>(8, 0.9f, 1);
 	public Map<String, IndexWorld> getWorldToIndex() { return this.worldToIndex; }
 	
 	// -------------------------------------------- //

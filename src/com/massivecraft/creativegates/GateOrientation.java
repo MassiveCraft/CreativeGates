@@ -33,7 +33,7 @@ public enum GateOrientation
 	
 	GateOrientation(Collection<BlockFace> expandFaces)
 	{
-		Set<BlockFace> expandFacesTemp = new LinkedHashSet<BlockFace>();
+		Set<BlockFace> expandFacesTemp = new LinkedHashSet<>();
 		expandFacesTemp.addAll(expandFaces);
 		this.expandFaces = Collections.unmodifiableSet(expandFacesTemp);
 	}

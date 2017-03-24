@@ -65,7 +65,7 @@ public class UGateColl extends Coll<UGate>
 	
 	public List<UGate> getGateChain(String networkId)
 	{
-		List<UGate> ret = new ArrayList<UGate>();
+		List<UGate> ret = new ArrayList<>();
 		ret.addAll(this.getAll(new NetworkIdEqualsPredicate(networkId), ExitComparator.get()));
 		return ret;
 	}

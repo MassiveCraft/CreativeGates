@@ -47,7 +47,7 @@ public class CreativeGates extends MassivePlugin
 	
 	// Index
 	private final IndexCombined index = new IndexCombined();
-	public IndexCombined getIndex() { return this.index; };
+	public IndexCombined getIndex() { return this.index; }
 	
 	// Filling
 	private boolean filling = false;

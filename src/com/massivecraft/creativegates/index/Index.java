@@ -5,8 +5,8 @@ import com.massivecraft.massivecore.ps.PS;
 
 public interface Index
 {
-	public void add(UGate ugate);
-	public void remove(UGate ugate);
-	public void clear();
-	public UGate get(PS ps);
+	void add(UGate ugate);
+	void remove(UGate ugate);
+	void clear();
+	UGate get(PS ps);
 }

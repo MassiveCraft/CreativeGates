@@ -12,7 +12,7 @@ public class IndexWorld extends IndexAbstract
 	// FIELDS
 	// -------------------------------------------- //
 	
-	final protected Map<PS, UGate> coordToGate = new ConcurrentHashMap<PS, UGate>(8, 0.9f, 1);
+	final protected Map<PS, UGate> coordToGate = new ConcurrentHashMap<>(8, 0.9f, 1);
 	public Map<PS, UGate> getCoordToGate() { return this.coordToGate; }
 	
 	// -------------------------------------------- //

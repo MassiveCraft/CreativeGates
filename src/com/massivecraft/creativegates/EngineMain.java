@@ -278,7 +278,7 @@ public class EngineMain extends Engine
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void destroyGate(BlockPistonExtendEvent event)
 	{
-		Set<Block> blocks = new HashSet<Block>();
+		Set<Block> blocks = new HashSet<>();
 		
 		Block piston = event.getBlock();
 		Block extension = piston.getRelative(event.getDirection());
@@ -416,7 +416,7 @@ public class EngineMain extends Engine
 			exit = exit.withYaw(gateOrientation.getExitYaw(exit, PS.valueOf(blocks.iterator().next())));
 			
 			// ... calculate the coords ...
-			Set<PS> coords = new HashSet<PS>();
+			Set<PS> coords = new HashSet<>();
 			for (Block block : blocks)
 			{
 				coords.add(PS.valueOf(block).withWorld(null));

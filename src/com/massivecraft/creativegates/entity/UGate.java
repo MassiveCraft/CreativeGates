@@ -113,13 +113,13 @@ public class UGate extends Entity<UGate>
 	public PS getExit() { return this.exit; }
 	public void setExit(PS exit) { this.exit = exit; this.changed(); }
 	
-	private Set<PS> coords = new TreeSet<PS>();
+	private Set<PS> coords = new TreeSet<>();
 	public Set<PS> getCoords() { return Collections.unmodifiableSet(this.coords);}
 	public void setCoords(Collection<PS> coords)
 	{
 		if (this.attached()) CreativeGates.get().getIndex().remove(this);
 		
-		this.coords = new TreeSet<PS>(coords);
+		this.coords = new TreeSet<>(coords);
 		
 		if (this.attached()) CreativeGates.get().getIndex().add(this);
 			
@@ -208,7 +208,7 @@ public class UGate extends Entity<UGate>
 	
 	public List<UGate> getGateChain()
 	{
-		List<UGate> ret = new ArrayList<UGate>();
+		List<UGate> ret = new ArrayList<>();
 		
 		List<UGate> rawchain = this.getColl().getGateChain(this.getNetworkId());
 		int myIndex = rawchain.indexOf(this);
@@ -229,7 +229,7 @@ public class UGate extends Entity<UGate>
 	// These blocks are sorted since the coords are sorted
 	public List<Block> getBlocks()
 	{
-		List<Block> ret = new ArrayList<Block>();
+		List<Block> ret = new ArrayList<>();
 		
 		World world = null;
 		try
