@@ -1,10 +1,16 @@
 package com.massivecraft.creativegates;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
+import com.massivecraft.creativegates.entity.UConf;
+import com.massivecraft.creativegates.entity.UConfColls;
+import com.massivecraft.creativegates.entity.UGate;
+import com.massivecraft.creativegates.entity.UGateColls;
+import com.massivecraft.massivecore.Engine;
+import com.massivecraft.massivecore.MassiveCore;
+import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.massivecore.util.IdUtil;
+import com.massivecraft.massivecore.util.InventoryUtil;
+import com.massivecraft.massivecore.util.MUtil;
+import com.massivecraft.massivecore.util.Txt;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,17 +41,10 @@ import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.massivecraft.creativegates.entity.UConf;
-import com.massivecraft.creativegates.entity.UConfColls;
-import com.massivecraft.creativegates.entity.UGate;
-import com.massivecraft.creativegates.entity.UGateColls;
-import com.massivecraft.massivecore.Engine;
-import com.massivecraft.massivecore.MassiveCore;
-import com.massivecraft.massivecore.ps.PS;
-import com.massivecraft.massivecore.util.IdUtil;
-import com.massivecraft.massivecore.util.InventoryUtil;
-import com.massivecraft.massivecore.util.MUtil;
-import com.massivecraft.massivecore.util.Txt;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class EngineMain extends Engine
 {

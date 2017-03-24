@@ -1,11 +1,11 @@
 package com.massivecraft.creativegates.cmd;
 
-import java.util.List;
-
 import com.massivecraft.creativegates.Perm;
 import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.massivecore.command.MassiveCommand;
 import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
+
+import java.util.List;
 
 public class CmdCg extends MassiveCommand
 {

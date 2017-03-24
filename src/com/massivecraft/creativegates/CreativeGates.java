@@ -1,15 +1,7 @@
 package com.massivecraft.creativegates;
 
-import java.util.EnumSet;
-import java.util.Set;
-
-import com.massivecraft.creativegates.cmd.type.TypePermissionDefault;
-import com.massivecraft.massivecore.command.type.RegistryType;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-
 import com.massivecraft.creativegates.cmd.CmdCg;
+import com.massivecraft.creativegates.cmd.type.TypePermissionDefault;
 import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.creativegates.entity.MConfColl;
 import com.massivecraft.creativegates.entity.UConfColls;
@@ -19,7 +11,14 @@ import com.massivecraft.massivecore.Aspect;
 import com.massivecraft.massivecore.AspectColl;
 import com.massivecraft.massivecore.MassivePlugin;
 import com.massivecraft.massivecore.Multiverse;
+import com.massivecraft.massivecore.command.type.RegistryType;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.permissions.PermissionDefault;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 public class CreativeGates extends MassivePlugin
 {

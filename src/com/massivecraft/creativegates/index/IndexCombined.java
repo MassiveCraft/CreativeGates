@@ -1,10 +1,10 @@
 package com.massivecraft.creativegates.index;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.massivecore.ps.PS;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class IndexCombined extends IndexAbstract
 {

@@ -1,16 +1,15 @@
 package com.massivecraft.creativegates;
 
+import com.massivecraft.massivecore.util.Txt;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-
-import com.massivecraft.massivecore.util.Txt;
 
 public class MaterialCountUtil
 {

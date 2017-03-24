@@ -1,8 +1,8 @@
 package com.massivecraft.creativegates;
 
-import java.util.Comparator;
-
 import com.massivecraft.creativegates.entity.UGate;
+
+import java.util.Comparator;
 
 public class ExitComparator implements Comparator<UGate>
 {

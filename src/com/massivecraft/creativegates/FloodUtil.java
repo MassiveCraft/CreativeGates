@@ -1,14 +1,13 @@
 package com.massivecraft.creativegates;
 
-import java.util.HashSet;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.AbstractMap.SimpleEntry;
-
+import com.massivecraft.creativegates.entity.UConf;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
-import com.massivecraft.creativegates.entity.UConf;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class FloodUtil
 {

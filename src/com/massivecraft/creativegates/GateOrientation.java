@@ -1,14 +1,13 @@
 package com.massivecraft.creativegates;
 
+import com.massivecraft.massivecore.ps.PS;
+import com.massivecraft.massivecore.util.MUtil;
+import org.bukkit.block.BlockFace;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import org.bukkit.block.BlockFace;
-
-import com.massivecraft.massivecore.ps.PS;
-import com.massivecraft.massivecore.util.MUtil;
 
 public enum GateOrientation
 {

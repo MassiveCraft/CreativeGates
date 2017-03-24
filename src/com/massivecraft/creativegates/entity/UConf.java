@@ -1,12 +1,11 @@
 package com.massivecraft.creativegates.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.Material;
-
 import com.massivecraft.massivecore.store.Entity;
 import com.massivecraft.massivecore.util.MUtil;
+import org.bukkit.Material;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UConf extends Entity<UConf>
 {

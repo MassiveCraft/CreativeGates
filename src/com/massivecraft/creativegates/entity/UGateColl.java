@@ -1,16 +1,15 @@
 package com.massivecraft.creativegates.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-
 import com.massivecraft.creativegates.CreativeGates;
 import com.massivecraft.creativegates.ExitComparator;
 import com.massivecraft.creativegates.NetworkIdEqualsPredicate;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.store.Coll;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UGateColl extends Coll<UGate>
 {
