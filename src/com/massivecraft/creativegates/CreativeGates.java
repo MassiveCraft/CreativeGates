@@ -1,11 +1,7 @@
 package com.massivecraft.creativegates;
 
-import com.massivecraft.creativegates.cmd.CmdCg;
 import com.massivecraft.creativegates.cmd.type.TypePermissionDefault;
 import com.massivecraft.creativegates.entity.MConf;
-import com.massivecraft.creativegates.entity.MConfColl;
-import com.massivecraft.creativegates.entity.UConfColls;
-import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.creativegates.index.IndexCombined;
 import com.massivecraft.massivecore.Aspect;
 import com.massivecraft.massivecore.AspectColl;
@@ -76,18 +72,7 @@ public class CreativeGates extends MassivePlugin
 		RegistryType.register(PermissionDefault.class, TypePermissionDefault.get());
 		
 		// Activate
-		this.activate(
-			// Coll
-			MConfColl.class,
-			UConfColls.class,
-			UGateColls.class,
-		
-			// Engine
-			EngineMain.class,
-			
-			// Command
-			CmdCg.class
-		);
+		this.activateAuto();
 	
 		// Schedule a permission update.
 		// Possibly it will be useful due to the way Bukkit loads permissions.
