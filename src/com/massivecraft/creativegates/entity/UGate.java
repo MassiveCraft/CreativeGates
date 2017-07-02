@@ -1,6 +1,7 @@
 package com.massivecraft.creativegates.entity;
 
 import com.massivecraft.creativegates.CreativeGates;
+import com.massivecraft.massivecore.mixin.MixinMessage;
 import com.massivecraft.massivecore.mixin.MixinTeleport;
 import com.massivecraft.massivecore.mixin.TeleporterException;
 import com.massivecraft.massivecore.ps.PS;
@@ -179,7 +180,7 @@ public class UGate extends Entity<UGate>
 	{
 		List<UGate> gateChain = this.getGateChain();
 		
-		String message = null;
+		String message;
 		
 		for (UGate ugate : gateChain)
 		{
@@ -198,12 +199,13 @@ public class UGate extends Entity<UGate>
 			}
 			catch (TeleporterException e)
 			{
-				player.sendMessage(e.getMessage());
+				message = e.getMessage();
+				MixinMessage.get().messageOne(player, message);
 			}
 		}
 		
 		message = Txt.parse("<i>This gate does not seem to lead anywhere.");
-		player.sendMessage(message);
+		MixinMessage.get().messageOne(player, message);
 	}
 	
 	public List<UGate> getGateChain()

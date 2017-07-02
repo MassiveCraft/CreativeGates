@@ -6,6 +6,7 @@ import com.massivecraft.creativegates.entity.UGate;
 import com.massivecraft.creativegates.entity.UGateColls;
 import com.massivecraft.massivecore.Engine;
 import com.massivecraft.massivecore.MassiveCore;
+import com.massivecraft.massivecore.mixin.MixinMessage;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.util.IdUtil;
 import com.massivecraft.massivecore.util.InventoryUtil;
@@ -232,7 +233,7 @@ public class EngineMain extends Engine
 		if ( ! ugate.isEnterEnabled())
 		{
 			String message = Txt.parse("<i>This gate has enter disabled.");
-			player.sendMessage(message);
+			MixinMessage.get().messageOne(player, message);
 			return;
 		}
 		
@@ -375,7 +376,7 @@ public class EngineMain extends Engine
 			if (currentGate != null)
 			{
 				message = Txt.parse("<b>There is no room for a new gate since there already is one here.");
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 				return;
 			}
 			
@@ -384,7 +385,7 @@ public class EngineMain extends Engine
 			if ( ! currentItemMeta.hasDisplayName())
 			{
 				message = Txt.parse("<b>You must name the %s before creating a gate with it.", Txt.getMaterialName(material));
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 				return;
 			}
 			String newNetworkId = ChatColor.stripColor(currentItemMeta.getDisplayName());
@@ -395,7 +396,7 @@ public class EngineMain extends Engine
 			if (gateFloodInfo == null)
 			{
 				message = Txt.parse("<b>There is no frame for the gate, or it's to big.", Txt.getMaterialName(material));
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 				return;
 			}
 			
@@ -407,7 +408,7 @@ public class EngineMain extends Engine
 			if ( ! MaterialCountUtil.has(materialCounts, uconf.getBlocksrequired()))
 			{
 				message = Txt.parse("<b>The frame must contain %s<b>.", MaterialCountUtil.desc(uconf.getBlocksrequired()));
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 				return;
 			}
 			
@@ -438,7 +439,7 @@ public class EngineMain extends Engine
 			
 			// ... fx-inform the player ...
 			message = Txt.parse("<g>A \"<h>%s<g>\" gate takes form in front of you.", newNetworkId);
-			player.sendMessage(message);
+			MixinMessage.get().messageOne(player, message);
 			
 			// ... item cost ...
 			if (uconf.isRemovingCreateToolItem())
@@ -450,7 +451,7 @@ public class EngineMain extends Engine
 				
 				// (message)
 				message = Txt.parse("<i>The %s disappears.", Txt.getMaterialName(material));
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 			}
 			else if (uconf.isRemovingCreateToolName())
 			{
@@ -472,8 +473,7 @@ public class EngineMain extends Engine
 				
 				// (message)
 				message = Txt.parse("<i>The %s seems to have lost it's power.", Txt.getMaterialName(material));
-				player.sendMessage(message);
-				
+				MixinMessage.get().messageOne(player, message);
 			}
 		}
 		else
@@ -489,7 +489,8 @@ public class EngineMain extends Engine
 					// ... but there is portal nearby.
 					
 					// ... exit with a message.
-					player.sendMessage(Txt.parse("<i>You use the %s on the %s but there seem to be no gate.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType())));
+					message = Txt.parse("<i>You use the %s on the %s but there seem to be no gate.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
+					MixinMessage.get().messageOne(player, message);
 					return;
 				}
 				else
@@ -510,7 +511,7 @@ public class EngineMain extends Engine
 			
 			// ... send use action description ...
 			message = Txt.parse("<i>You use the %s on the %s...", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
-			player.sendMessage(message);
+			MixinMessage.get().messageOne(player, message);
 			
 			// ... check restriction ...
 			if (currentGate.isRestricted())
@@ -518,12 +519,12 @@ public class EngineMain extends Engine
 				if (currentGate.isCreator(player))
 				{
 					message = Txt.parse("<i>... the gate is restricted but you are the creator ...");
-					player.sendMessage(message);
+					MixinMessage.get().messageOne(player, message);
 				}
 				else
 				{
 					message = Txt.parse("<b>... the gate is restricted and you are not the creator.");
-					player.sendMessage(message);
+					MixinMessage.get().messageOne(player, message);
 					return;
 				}
 			}
@@ -532,13 +533,13 @@ public class EngineMain extends Engine
 			{
 				// ... we are trying to inspect ...
 				message = Txt.parse("<i>Some gate inscriptions are revealed:");
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 				
 				message = Txt.parse("<k>network: <v>%s", currentGate.getNetworkId());
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 				
 				message = Txt.parse("<k>gates: <v>%d", currentGate.getGateChain().size());
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 			}
 			else if (material == uconf.getMaterialSecret())
 			{
@@ -551,12 +552,12 @@ public class EngineMain extends Engine
 					currentGate.setRestricted(secret);
 					
 					message = (secret ? Txt.parse("<h>Only you <i>can read the gate inscriptions now.") : Txt.parse("<h>Anyone <i>can read the gate inscriptions now."));
-					player.sendMessage(message);
+					MixinMessage.get().messageOne(player, message);
 				}
 				else
 				{
 					message = Txt.parse("<i>It seems <h>only the gate creator <i>can change inscription readability.", Txt.getMaterialName(material), Txt.getMaterialName(clickedBlock.getType()));
-					player.sendMessage(message);
+					MixinMessage.get().messageOne(player, message);
 				}
 			}
 			else if (material == uconf.getMaterialMode())
@@ -569,7 +570,7 @@ public class EngineMain extends Engine
 				String exit = currentGate.isExitEnabled() ? Txt.parse("<g>exit enabled") : Txt.parse("<b>exit disabled");
 				
 				message = Txt.parse("<i>The gate now has %s <i>and %s<i>.", enter, exit);
-				player.sendMessage(message);
+				MixinMessage.get().messageOne(player, message);
 			}
 			
 		}
