@@ -44,6 +44,9 @@ public class MConf extends Entity<MConf>
 	
 	public PermissionDefault permissionDefaultCreate = PermissionDefault.TRUE;
 	public PermissionDefault permissionDefaultUse = PermissionDefault.TRUE;
+	
+	public boolean verboseCreatePermission = true;
+	public boolean verboseUsePermission = true;
 
 	public void updatePerms()
 	{

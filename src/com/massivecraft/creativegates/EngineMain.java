@@ -1,5 +1,6 @@
 package com.massivecraft.creativegates;
 
+import com.massivecraft.creativegates.entity.MConf;
 import com.massivecraft.creativegates.entity.UConf;
 import com.massivecraft.creativegates.entity.UConfColls;
 import com.massivecraft.creativegates.entity.UGate;
@@ -227,7 +228,7 @@ public class EngineMain extends Engine
 		if ( ! uconf.isEnabled()) return;
 		
 		// ... and we have permission to use gates ...
-		if ( ! Perm.USE.has(player, true)) return;
+		if ( ! Perm.USE.has(player, MConf.get().verboseUsePermission)) return;
 		
 		// ... and the gate has enter enabled ...
 		if ( ! ugate.isEnterEnabled())
@@ -370,7 +371,7 @@ public class EngineMain extends Engine
 			// ... we are trying to create ...
 			
 			// ... check permission node ...
-			if ( ! Perm.CREATE.has(player, true)) return;
+			if ( ! Perm.CREATE.has(player, MConf.get().verboseCreatePermission)) return;
 			
 			// ... check if the place is occupied ...
 			if (currentGate != null)
