@@ -1,5 +1,6 @@
 package com.massivecraft.creativegates;
 
+import com.massivecraft.massivecore.collections.MassiveSet;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.util.MUtil;
 import org.bukkit.block.BlockFace;
@@ -33,8 +34,7 @@ public enum GateOrientation
 	
 	GateOrientation(Collection<BlockFace> expandFaces)
 	{
-		Set<BlockFace> expandFacesTemp = new LinkedHashSet<>();
-		expandFacesTemp.addAll(expandFaces);
+		Set<BlockFace> expandFacesTemp = new MassiveSet<>(expandFaces);
 		this.expandFaces = Collections.unmodifiableSet(expandFacesTemp);
 	}
 	
