@@ -46,48 +46,92 @@ public class UConf extends Entity<UConf>
 	
 	private boolean enabled = true;
 	public boolean isEnabled() { return this.enabled; }
-	public void setEnabled(boolean enabled) { this.enabled = enabled; this.changed(); }
+	public void setEnabled(boolean enabled)
+	{
+		this.changed(this.enabled, enabled);
+		this.enabled = enabled;
+	}
 	
 	private boolean usingWater = false;
 	public boolean isUsingWater() { return this.usingWater; }
-	public void setUsingWater(boolean usingWater) { this.usingWater = usingWater; this.changed(); }
+	public void setUsingWater(boolean usingWater)
+	{
+		this.changed(this.usingWater, usingWater);
+		this.usingWater = usingWater;
+	}
 	
 	private boolean pigmanPortalSpawnAllowed = true;
 	public boolean isPigmanPortalSpawnAllowed() { return this.pigmanPortalSpawnAllowed; }
-	public void setPigmanPortalSpawnAllowed(boolean pigmanPortalSpawnAllowed) { this.pigmanPortalSpawnAllowed = pigmanPortalSpawnAllowed; this.changed(); }
+	public void setPigmanPortalSpawnAllowed(boolean pigmanPortalSpawnAllowed)
+	{
+		this.changed(this.pigmanPortalSpawnAllowed, pigmanPortalSpawnAllowed);
+		this.pigmanPortalSpawnAllowed = pigmanPortalSpawnAllowed;
+	}
 	
 	private int maxarea = 200;
 	public int getMaxarea() { return this.maxarea; }
-	public void setMaxarea(int maxarea) { this.maxarea = maxarea; this.changed(); }
+	public void setMaxarea(int maxarea)
+	{
+		this.changed(this.maxarea, maxarea);
+		this.maxarea = maxarea;
+	}
 	
 	private Map<Material, Integer> blocksrequired = MUtil.map(
 		Material.EMERALD_BLOCK, 2
 	);
 	public Map<Material, Integer> getBlocksrequired() { return new HashMap<>(this.blocksrequired); }
-	public void setBlocksrequired(Map<Material, Integer> blocksrequired) { this.blocksrequired = new HashMap<>(blocksrequired); this.changed(); }
+	public void setBlocksrequired(Map<Material, Integer> blocksrequired)
+	{
+		this.changed(this.blocksrequired, blocksrequired);
+		this.blocksrequired = new HashMap<>(blocksrequired);
+	}
 	
 	private boolean removingCreateToolName = true;
 	public boolean isRemovingCreateToolName() { return this.removingCreateToolName; }
-	public void setRemovingCreateToolName(boolean removingCreateToolName) { this.removingCreateToolName = removingCreateToolName; this.changed(); }
+	public void setRemovingCreateToolName(boolean removingCreateToolName)
+	{
+		this.changed(this.removingCreateToolName, removingCreateToolName);
+		this.removingCreateToolName = removingCreateToolName;
+	}
 	
 	private boolean removingCreateToolItem = false;
 	public boolean isRemovingCreateToolItem() { return this.removingCreateToolItem; }
-	public void setRemovingCreateToolItem(boolean removingCreateToolItem) { this.removingCreateToolItem = removingCreateToolItem; this.changed(); }
+	public void setRemovingCreateToolItem(boolean removingCreateToolItem)
+	{
+		this.changed(this.removingCreateToolItem, removingCreateToolItem);
+		this.removingCreateToolItem = removingCreateToolItem;
+	}
 	
 	private Material materialCreate = Material.WATCH;
 	public Material getMaterialCreate() { return this.materialCreate; }
-	public void setMaterialCreate(Material materialCreate) { this.materialCreate = materialCreate; this.changed(); }
+	public void setMaterialCreate(Material materialCreate)
+	{
+		this.changed(this.materialCreate, materialCreate);
+		this.materialCreate = materialCreate;
+	}
 	
 	private Material materialInspect = Material.BLAZE_POWDER;
 	public Material getMaterialInspect() { return this.materialInspect; }
-	public void setMaterialInspect(Material materialInspect) { this.materialInspect = materialInspect; this.changed(); }
+	public void setMaterialInspect(Material materialInspect)
+	{
+		this.changed(this.materialInspect, materialInspect);
+		this.materialInspect = materialInspect;
+	}
 	
 	private Material materialSecret = Material.MAGMA_CREAM;
 	public Material getMaterialSecret() { return this.materialSecret; }
-	public void setMaterialSecret(Material materialSecret) { this.materialSecret = materialSecret; this.changed(); }
+	public void setMaterialSecret(Material materialSecret)
+	{
+		this.changed(this.materialSecret, materialSecret);
+		this.materialSecret = materialSecret;
+	}
 	
 	private Material materialMode = Material.BLAZE_ROD;
 	public Material getMaterialMode() { return this.materialMode; }
-	public void setMaterialMode(Material materialMode) { this.materialMode = materialMode; this.changed(); }
+	public void setMaterialMode(Material materialMode)
+	{
+		this.changed(this.materialMode, materialMode);
+		this.materialMode = materialMode;
+	}
 	
 }
