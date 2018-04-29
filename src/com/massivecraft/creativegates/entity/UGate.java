@@ -45,15 +45,15 @@ public class UGate extends Entity<UGate>
 	@Override
 	public UGate load(UGate that)
 	{
-		this.setCreatorId(that.getCreatorId());
-		this.setCreatedMillis(that.getCreatedMillis());
-		this.setUsedMillis(that.getUsedMillis());
-		this.setNetworkId(that.getNetworkId());
-		this.setRestricted(that.isRestricted());
-		this.setEnterEnabled(that.isEnterEnabled());
-		this.setExitEnabled(that.isExitEnabled());
-		this.setExit(that.getExit());
-		this.setCoords(that.getCoords());
+		this.creatorId = that.creatorId;
+		this.createdMillis = that.createdMillis;
+		this.usedMillis = that.usedMillis;
+		this.networkId = that.networkId;
+		this.restricted = that.restricted;
+		this.enterEnabled = that.enterEnabled;
+		this.exitEnabled = that.exitEnabled;
+		this.exit = that.exit;
+		this.setCoordsNoChanged(that.coords);
 		
 		return this;
 	}
@@ -84,47 +84,82 @@ public class UGate extends Entity<UGate>
 	
 	private String creatorId = null;
 	public String getCreatorId() { return this.creatorId; }
-	public void setCreatorId(String creatorId) { this.creatorId = creatorId; this.changed(); }
+	public void setCreatorId(String creatorId)
+	{
+		this.changed(this.creatorId, creatorId);
+		this.creatorId = creatorId;
+	}
 	
 	private long createdMillis = System.currentTimeMillis();
 	public long getCreatedMillis() { return this.createdMillis; }
-	public void setCreatedMillis(long createdMillis) { this.createdMillis = createdMillis; this.changed(); }
+	public void setCreatedMillis(long createdMillis)
+	{
+		this.changed(this.createdMillis, createdMillis);
+		this.createdMillis = createdMillis;
+	}
 	
 	private long usedMillis = 0;
 	public long getUsedMillis() { return this.usedMillis; }
-	public void setUsedMillis(long usedMillis) { this.usedMillis = usedMillis; this.changed(); }
+	public void setUsedMillis(long usedMillis)
+	{
+		this.changed(this.usedMillis, usedMillis);
+		this.usedMillis = usedMillis;
+	}
 	
 	private String networkId = null;
 	public String getNetworkId() { return this.networkId; }
-	public void setNetworkId(String networkId) { this.networkId = networkId; this.changed(); }
+	public void setNetworkId(String networkId)
+	{
+		this.changed(this.networkId, networkId);
+		this.networkId = networkId;
+	}
 	
 	private boolean restricted = false;
 	public boolean isRestricted() { return this.restricted; }
-	public void setRestricted(boolean restricted) { this.restricted = restricted; this.changed(); }
+	public void setRestricted(boolean restricted)
+	{
+		this.changed(this.restricted, restricted);
+		this.restricted = restricted;
+	}
 	
 	private boolean enterEnabled = true;
 	public boolean isEnterEnabled() { return this.enterEnabled; }
-	public void setEnterEnabled(boolean enterEnabled) { this.enterEnabled = enterEnabled; this.changed(); }
+	public void setEnterEnabled(boolean enterEnabled)
+	{
+		this.changed(this.enterEnabled, enterEnabled);
+		this.enterEnabled = enterEnabled;
+	}
 	
 	private boolean exitEnabled = true;
 	public boolean isExitEnabled() { return this.exitEnabled; }
-	public void setExitEnabled(boolean exitEnabled) { this.exitEnabled = exitEnabled; this.changed(); }
+	public void setExitEnabled(boolean exitEnabled)
+	{
+		this.changed(this.exitEnabled, exitEnabled);
+		this.exitEnabled = exitEnabled;
+	}
 	
 	private PS exit = null;
 	public PS getExit() { return this.exit; }
-	public void setExit(PS exit) { this.exit = exit; this.changed(); }
+	public void setExit(PS exit)
+	{
+		this.changed(this.exit, exit);
+		this.exit = exit;
+	}
 	
 	private Set<PS> coords = new TreeSet<>();
 	public Set<PS> getCoords() { return Collections.unmodifiableSet(this.coords);}
-	public void setCoords(Collection<PS> coords)
+	private void setCoordsNoChanged(Collection<PS> coords)
 	{
 		if (this.attached()) CreativeGates.get().getIndex().remove(this);
 		
 		this.coords = new TreeSet<>(coords);
 		
 		if (this.attached()) CreativeGates.get().getIndex().add(this);
-			
-		this.changed();
+	}
+	public void setCoords(Collection<PS> coords)
+	{
+		this.changed(this.coords, coords);
+		this.setCoordsNoChanged(coords);
 	}
 	
 	// -------------------------------------------- //
